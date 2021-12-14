@@ -19,6 +19,10 @@ const PostSchema = new Schema(
       required: true,
       index: true,
     },
+    category: {
+      type: String,
+      default: "자유",
+    },
     likes: {
       type: Number,
       default: 0,
