@@ -1,7 +1,7 @@
-const { Schema } = require("mongoose");
-const shortId = require("./types/short-id");
-const commentSchema = require("./comment");
-const postSchema = require("./post");
+const { Schema } = require('mongoose');
+const shortId = require('./types/short-id');
+const commentSchema = require('./comment');
+const postSchema = require('./post');
 
 const UserSchema = new Schema(
   {
@@ -23,7 +23,7 @@ const UserSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = UserSchema;

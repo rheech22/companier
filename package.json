@@ -4,7 +4,7 @@
   "description": "- 최종 서비스 명을 위 괄호 부분에 작성하세요. - 최종 서비스의 한 줄 소개를 작성하세요.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +18,13 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "mongo": "^0.1.0",
+    "mongoose": "^6.1.1",
     "morgan": "^1.10.0",
     "nanoid": "^3.1.30"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3"
   }
 }
