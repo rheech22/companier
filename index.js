@@ -7,8 +7,6 @@ const app = express();
 
 app.use(morgan('dev'));
 
-// git test
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
