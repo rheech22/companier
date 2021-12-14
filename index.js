@@ -1,15 +1,7 @@
-const express = require('express');
+const app = require('./app');
 
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
+const PORT = 3000;
 
-const app = express();
-
-app.use(morgan('dev'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(PORT, function () {
+  console.log(`App listening on port ${PORT}!`);
 });
