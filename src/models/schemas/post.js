@@ -1,12 +1,11 @@
-const { Schema } = require('mongoose');
+const { Schema } = require("mongoose");
 
-const shortId = require('./types/short-id');
+const shortId = require("./types/short-id");
 
-const CommentSchema = require('./comment');
+const CommentSchema = require("./comment");
 
 const PostSchema = new Schema(
   {
-    shortId,
     title: {
       type: String,
       required: true,
@@ -17,13 +16,13 @@ const PostSchema = new Schema(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
       index: true,
     },
     category: {
       type: String,
-      default: '자유',
+      default: "자유",
     },
     likes: {
       type: Number,
@@ -37,7 +36,7 @@ const PostSchema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 module.exports = PostSchema;

@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // 라우터 추가하기
 
 app.use("/", indexRouter);
-//app.use('/users', userRouter);
+app.use("/users", userRouter);
 
 app.use("/auth/kakao", kakaoRouter);
 app.use("/auth/kakao/callback", kakaoCallbackRouter);

@@ -1,19 +1,19 @@
-const { Router } = require('express');
+const { Router } = require("express");
 
 const router = Router();
 
-const { User } = require('../models/schemas/user');
+const { User } = require("../models/schemas/user");
 
 // const users = [
 //   { id: 1, name: 'zed' },
 // ];
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const users = await User.find({});
   res.send(users);
 });
 
-router.post('/add_user', async (req, res) => {
+router.post("/add_user", async (req, res) => {
   const user = new User(req.body);
   try {
     await user.save();

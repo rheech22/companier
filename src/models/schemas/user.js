@@ -7,7 +7,6 @@ const postSchema = require("./post");
 
 const UserSchema = new Schema(
   {
-    shortId,
     email: {
       type: String,
       required: true,
