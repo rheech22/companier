@@ -2,9 +2,14 @@ const { Router } = require("express");
 
 const router = Router();
 
-// 템플릿 engine 저장 안한 경로: C:\Users\(사용자명)\Desktop\teamProject\project-template\routes
 router.get("/", (req, res) => {
-  res.render("index.html"); // views/index.html 파일을 렌더링
+  if (!req.session.kakao) {
+    //카카오 로그인을 안해서 세션에 없으면
+    res.render("index.html");
+  } else {
+    //카카오 로그인을 해서 세션에 kakao가 존재하면
+    res.render("kakaoLogin.html"); //
+  }
 });
 
 module.exports = router;
