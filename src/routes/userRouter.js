@@ -39,7 +39,7 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { nickname } = req.body;
 
-  if (!nickname) return res.status(400).end();
+  if (!nickname) res.status(400).end();
 
   const user = await User.updateOne({ _id: id }, { nickname });
 
