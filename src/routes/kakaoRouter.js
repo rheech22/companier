@@ -1,8 +1,9 @@
 const { Router } = require("express");
+require("dotenv").config();
 
 const router = Router();
-const clientID = "7dca59cc856275bad0761da4409be580";
-const redirectUri = "http://localhost:3000/auth/kakao/callback";
+const clientID = process.env.CLIENT_ID;
+const redirectUri = process.env.LOGIN_REDIRECT_URI;
 // 템플릿 engine 저장 안한 경로: C:\Users\(사용자명)\Desktop\teamProject\project-template\routes
 router.get("/", (req, res) => {
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectUri}&response_type=code&scope=profile_nickname,profile_nickname`;
