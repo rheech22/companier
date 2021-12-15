@@ -48,10 +48,6 @@ router.get("/", async (req, res) => {
   }
 
   req.session.kakao = user.data;
-
-  console.log("aaaaa req.session 출력하기");
-  console.log(req.session);
-
   res.redirect("/");
 });
 
