@@ -2,6 +2,8 @@ const app = require("./app");
 
 require("./db");
 
+require('./models');
+
 const PORT = 3000;
 
 app.listen(PORT, () => {

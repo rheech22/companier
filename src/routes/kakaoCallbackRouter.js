@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
       url: "https://kapi.kakao.com/v2/user/me",
       headers: {
         Authorization: `Bearer ${token.data.access_token}`,
-      }, //헤더에 내용을 보고 보내주겠다.
+      }, // 헤더에 내용을 보고 보내주겠다.
     });
   } catch (e) {
     res.json(e.data);
