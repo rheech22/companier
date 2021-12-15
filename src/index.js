@@ -1,6 +1,6 @@
-const app = require("./app");
+const app = require('./app');
 
-require("./db");
+require('./db');
 
 require('./models');
 

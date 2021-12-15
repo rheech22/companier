@@ -9,7 +9,7 @@ const db = mongoose.connection;
 
 const handleConnectionOpen = () => {
   console.log('Connected to DB');
-  console.log(db);
+  // console.log(db);
 };
 
 const handleConnectionError = (error) => {
