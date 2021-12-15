@@ -12,7 +12,6 @@ router.get("/", (req, res) => {
 
 router.get("/logout", (req, res) => {
   delete req.session.kakao; //세션 목록에서 kakao 제거
-  console.log(req.session);
   req.session.save(() => {
     //제거 성공시 루트 페이지로 이동
     res.redirect("/");
