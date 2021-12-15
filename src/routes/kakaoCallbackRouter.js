@@ -4,12 +4,14 @@ const qs = require("qs");
 
 const router = Router();
 
+require("dotenv").config();
+
 router.get("/", async (req, res) => {
   let token;
   const kakao = {
-    clientID: "7dca59cc856275bad0761da4409be580",
-    clientSecret: "kdasYwJPjzGgOZxRbqDdcJFio2Wu4OjA",
-    redirectUri: "http://localhost:3000/auth/kakao/callback",
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectUri: process.env.LOGIN_REDIRECT_URI,
   };
 
   try {
