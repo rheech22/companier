@@ -1,12 +1,12 @@
-const { Router } = require('express');
-const axios = require('axios');
-const qs = require('qs');
-
+const { Router } = require("express");
+const axios = require("axios");
+const qs = require("qs");
+const { User } = require("../models");
 const router = Router();
 
-require('dotenv').config();
+require("dotenv").config();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   let token;
   const kakao = {
     clientID: process.env.CLIENT_ID,
@@ -16,13 +16,13 @@ router.get('/', async (req, res) => {
 
   try {
     token = await axios({
-      method: 'POST',
-      url: 'https://kauth.kakao.com/oauth/token',
+      method: "POST",
+      url: "https://kauth.kakao.com/oauth/token",
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        "content-type": "application/x-www-form-urlencoded",
       },
       data: qs.stringify({
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         client_id: kakao.clientID,
         client_secret: kakao.clientSecret,
         redirectUri: kakao.redirectUri,
@@ -37,11 +37,11 @@ router.get('/', async (req, res) => {
 
   try {
     user = await axios({
-      method: 'get',
-      url: 'https://kapi.kakao.com/v2/user/me',
+      method: "get",
+      url: "https://kapi.kakao.com/v2/user/me",
       headers: {
         Authorization: `Bearer ${token.data.access_token}`,
-      }, // 헤더에 내용을 보고 보내주겠다.
+      },
     });
   } catch (e) {
     res.json(e.data);
@@ -49,10 +49,22 @@ router.get('/', async (req, res) => {
 
   req.session.kakao = user.data;
 
-  console.log('aaaaa req.session 출력하기');
-  console.log(req.session);
+  const newUser = await User.findOne({
+    email: req.session.kakao.kakao_account.email,
+  });
 
-  res.redirect('/');
+  if (!newUser) {
+    try {
+      await User.create({
+        email: req.session.kakao.kakao_account.email,
+        nickname: req.session.kakao.kakao_account.profile.nickname,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  res.redirect("/");
 });
 
 module.exports = router;
