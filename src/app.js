@@ -6,6 +6,7 @@ const session = require('express-session');
 // 라우터 목록
 const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
+const postRouter = require('./routes/postRouter');
 
 const kakaoRouter = require('./routes/kakaoRouter');
 const kakaoCallbackRouter = require('./routes/kakaoCallbackRouter');
@@ -37,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
+app.use('/posts', postRouter);
 
 app.use('/auth/kakao', kakaoRouter);
 app.use('/auth/kakao/callback', kakaoCallbackRouter);
