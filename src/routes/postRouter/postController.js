@@ -30,6 +30,8 @@ const createPost = async (req, res) => {
 const deletePost = async (req, res) => {
   const { id } = req.params;
 
+  // 추후에 요청자와 post 작성자가 일치하는지 검증하는 로직 추가해야 함
+
   const post = await Post.deleteOne({ _id: id });
 
   if (!post) res.status(404).end();
@@ -37,8 +39,35 @@ const deletePost = async (req, res) => {
   res.send(204);
 };
 
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+
+  const {
+    title,
+    content,
+    category,
+  } = req.body;
+
+  if (!title || !content || !category) {
+    res.status(400).end();
+  }
+
+  // 추후에 요청자와 post 작성자가 일치하는지 검증하는 로직 추가해야 함
+
+  const post = await Post.updateOne({ _id: id }, {
+    title,
+    content,
+    category,
+  });
+
+  if (!post) res.status(404).end();
+
+  res.json(post);
+};
+
 module.exports = {
   getPosts,
   createPost,
   deletePost,
+  updatePost,
 };

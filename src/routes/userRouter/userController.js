@@ -23,6 +23,7 @@ const createUser = async (req, res) => {
 
 const getUserDetail = async (req, res) => {
   const { id } = req.params;
+
   const user = await User.findOne({ _id: id });
 
   if (!user) res.status(404).end();
@@ -35,6 +36,8 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
   const { nickname } = req.body;
 
+  // 추후에 요청자 id와 prams.id가 일치하는지 검증하는 로직 추가해야 함
+
   if (!nickname) res.status(400).end();
 
   const user = await User.updateOne({ _id: id }, { nickname });
@@ -46,6 +49,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
+
+  // 추후에 요청자 id와 prams.id가 일치하는지 검증하는 로직 추가해야 함
 
   const user = await User.deleteOne({ _id: id });
 
