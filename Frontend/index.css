@@ -48,6 +48,8 @@ nav {
   display: flex;
   justify-content: center;
   border-bottom: var(--border-gray);
+  z-index: 1;
+  background-color: white;
 }
 
 .header {
