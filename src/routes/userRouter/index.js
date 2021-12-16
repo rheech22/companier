@@ -3,14 +3,14 @@ const { Router } = require('express');
 const router = Router();
 
 const {
-  getUser,
+  getUsers,
   getUserDetail,
   createUser,
   updateUser,
   deleteUser,
 } = require('./userController');
 
-router.get('/', getUser);
+router.get('/', getUsers);
 router.post('/', getUserDetail);
 router.get('/:id', createUser);
 router.put('/:id', updateUser);

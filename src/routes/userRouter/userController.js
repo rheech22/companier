@@ -1,7 +1,7 @@
 const { User } = require('../../models');
 
 // 모든 유저 반환 - 필요없을 수도...
-const getUser = async (req, res) => {
+const getUsers = async (req, res) => {
   const users = await User.find({});
   res.json(users);
 };
@@ -55,7 +55,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  getUser,
+  getUsers,
   createUser,
   getUserDetail,
   updateUser,
