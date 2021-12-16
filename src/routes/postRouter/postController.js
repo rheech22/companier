@@ -5,6 +5,16 @@ const getPosts = async (req, res) => {
   res.json(posts);
 };
 
+const getPostDetail = async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findOne({ _id: id });
+
+  if (!post) res.status(404).end();
+
+  res.json(post);
+};
+
 const createPost = async (req, res) => {
   const {
     title,
@@ -67,6 +77,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   getPosts,
+  getPostDetail,
   createPost,
   deletePost,
   updatePost,
