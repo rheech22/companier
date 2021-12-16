@@ -1,4 +1,4 @@
-const { Post, User } = require("../../../models");
+const { Post, User } = require('../../../models');
 
 const getPosts = async (req, res) => {
   const posts = await Post.find({});
@@ -20,7 +20,7 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: "CH" });
+    const user = await User.findOne({ nickname: 'CH' });
     const post = await Post.create({
       title,
       content,
@@ -62,7 +62,7 @@ const updatePost = async (req, res) => {
       title,
       content,
       category,
-    }
+    },
   );
 
   if (!post) res.status(404).end();

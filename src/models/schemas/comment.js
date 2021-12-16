@@ -1,5 +1,5 @@
-const { Schema } = require("mongoose");
-const reCommentSchema = require("./re-comment");
+const { Schema } = require('mongoose');
+const reCommentSchema = require('./re-comment');
 
 const CommentSchema = new Schema(
   {
@@ -9,18 +9,23 @@ const CommentSchema = new Schema(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     likes: {
       type: Number,
       default: 0,
     },
+    parent: {
+      type: Schema.Types.ObjectId,
+      ref: 'Post',
+      required: true,
+    },
     reComments: [reCommentSchema],
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = CommentSchema;
