@@ -7,6 +7,10 @@ const postSchema = require("./post");
 
 const UserSchema = new Schema(
   {
+    // kakaoId: {
+    //   type: String,
+    //   required: true,
+    // },
     email: {
       type: String,
       required: true,

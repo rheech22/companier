@@ -57,6 +57,7 @@ router.get("/", async (req, res) => {
   if (!newUser) {
     try {
       await User.create({
+        //kakaoId: req.session.kakao.id,
         email: req.session.kakao.kakao_account.email,
         nickname: req.session.kakao.kakao_account.profile.nickname,
       });
