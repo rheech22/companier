@@ -16,7 +16,7 @@ const CommentSchema = new Schema(
       type: Number,
       default: 0,
     },
-    parent: {
+    parentPost: {
       type: Schema.Types.ObjectId,
       ref: 'Post',
       required: true,

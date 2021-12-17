@@ -22,7 +22,7 @@ const createComment = async (req, res) => {
     const newComment = await Comment.create({
       content,
       author: user.id,
-      parent: post.id,
+      parentPost: post.id,
     });
     // 포스트에 댓글 추가
     post.comments.push(newComment);
@@ -48,15 +48,15 @@ const deleteComment = async (req, res) => {
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
       .populate('author')
-      .populate('parent');
+      .populate('parentPost');
 
-    const { author, parent } = comment;
+    const { author, parentPost } = comment;
 
     if (user.id !== author.id) return res.status(401).end();
 
     await Comment.deleteOne({ _id: id });
     // 포스트에 포함된 댓글 삭제
-    const post = await Post.findOne({ _id: parent.id })
+    const post = await Post.findOne({ _id: parentPost.id })
       .populate('comments');
 
     const newComments = post.comments.filter((item) => item.id !== id);
@@ -70,7 +70,48 @@ const deleteComment = async (req, res) => {
   }
 };
 
+const updateComment = async (req, res) => {
+  const {
+    params: { id },
+    body: {
+      content,
+    },
+    // user, // 실제 환경에선 req.user 필요
+  } = req;
+
+  try {
+    // 임시로 유저 확정
+    const user = await User.findOne({ nickname: 'CH' });
+
+    // 댓글 수정
+    const comment = await Comment.findOne({ _id: id })
+      .populate('author')
+      .populate('parentPost');
+
+    const { author, parentPost } = comment;
+
+    if (user.id !== author.id) return res.status(401).end();
+
+    await Comment.updateOne({ _id: id }, { content });
+
+    // 포스트에 포함된 댓글 수정
+    const post = await Post.findOne({ _id: parentPost.id })
+      .populate('comments');
+
+    const updatedComment = post.comments.find((item) => item.id === id);
+
+    updatedComment.content = content;
+
+    post.save();
+
+    res.status(201).end();
+  } catch (error) {
+    res.status(400).end();
+  }
+};
+
 module.exports = {
   createComment,
   deleteComment,
+  updateComment,
 };
