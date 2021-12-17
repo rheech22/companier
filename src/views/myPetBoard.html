@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/myPetBoard.css" />
+    <title>PET</title>
+  </head>
+
+  <body>
+    <div id="warp">
+      <header>
+        <nav>
+          <div class="header">
+            <div class="header__left">
+              <div class="header__logo"><a href="/">반려in</a></div>
+              <ul class="header__menu-list">
+                <li><a href="/protectPosts">보호 중입니다</a></li>
+                <li><a href="/myPetBoard">반려 이야기</a></li>
+              </ul>
+            </div>
+            <div class="header__right">
+              <div class="header__my-page">
+                <a href="/myPage">마이페이지</a>
+              </div>
+              <button class="btn header__login-btn">
+                <% if(locals.data) {%>
+                <a href="/auth/kakao/logout">로그아웃</a>
+                <%} else {%>
+                <a href="/auth/kakao">로그인</a>
+                <%}%>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main role="main">
+        <div class="main__container">
+          <div class="main__title">
+            <h1>나의 반려동물 자랑하기</h1>
+          </div>
+          <section class="main-content__section"></section>
+        </div>
+      </main>
+    </div>
+    <script src="/js/myPetBoard.js"></script>
+  </body>
+</html>
