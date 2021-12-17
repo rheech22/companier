@@ -43,7 +43,15 @@
   margin-bottom: 18px;
 }
 
+.mypet-datail__body p,
+.mypet-datail__body img {
+  margin: 15px 0;
+}
+
 /* 반려 이야기 - 댓글  */
+.comment-feed {
+  margin-bottom: 30px;
+}
 
 .comment-feed__header {
   color: #424242;
