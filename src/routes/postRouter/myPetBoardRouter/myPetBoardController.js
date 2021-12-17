@@ -33,14 +33,24 @@ const getPosts = async (req, res) => {
   }
 };
 
+//게시물(상세) 페이지
 const getPostDetail = async (req, res) => {
   const { id } = req.params;
 
-  const post = await Post.findOne({ _id: id });
+  const post = await Post.findOne({ _id: id }).populate("author");
 
   if (!post) res.status(404).end();
 
-  res.json(post);
+  if (!req.session.kakao) {
+    // 카카오 로그인을 안해서 세션에 없으면 isLogined는 제외하고 렌더링
+    res.render("myPetBoardDetail.html", { data: post });
+  } else {
+    // 카카오 로그인을 해서 세션에 kakao가 존재하면 isLogined까지 렌더링(로그아웃, 로그인 구분)
+    res.render("myPetBoardDetail.html", {
+      isLogined: "true",
+      data: post,
+    });
+  }
 };
 
 const createPost = async (req, res) => {

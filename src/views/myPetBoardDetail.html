@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/reset.css" />
-    <link rel="stylesheet" href="./style/index.css" />
-    <link rel="stylesheet" href="./style/myPetBoard.css" />
-    <link rel="stylesheet" href="./style/myPetBoardDetail.css" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/myPetBoard.css" />
+    <link rel="stylesheet" href="/css/myPetBoardDetail.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -24,16 +24,20 @@
         <nav>
           <div class="header">
             <div class="header__left">
-              <div class="header__logo"><a href="#">반려in</a></div>
+              <div class="header__logo"><a href="/">반려in</a></div>
               <ul class="header__menu-list">
-                <li><a href="#">보호 중입니다</a></li>
-                <li><a href="myPetBoard.html">반려 이야기</a></li>
+                <li><a href="/protectPosts">보호 중입니다</a></li>
+                <li><a href="/myPetBoard">반려 이야기</a></li>
               </ul>
             </div>
             <div class="header__right">
               <div class="header__my-page"><a href="#">마이페이지</a></div>
               <button class="btn header__login-btn">
-                <a href="#">로그아웃</a>
+                <% if(locals.isLogined) {%>
+                <a href="/auth/kakao/logout">로그아웃</a>
+                <%} else {%>
+                <a href="/auth/kakao">로그인</a>
+                <%}%>
               </button>
             </div>
           </div>
@@ -45,25 +49,23 @@
           <section class="mypet-datail__content">
             <header class="mypet-datail__header">
               <div class="mypet-datail__title">
-                <h1>제목</h1>
+                <h1><%=data.title%></h1>
               </div>
               <div class="mypet-datail__profile">
                 <div class="profile__info">
-                  <span>작성자: <span>홍길동</span></span>
-                  <span>2021.12.17. 15:56</span>
+                  <span
+                    >작성자: <span><%=locals.data.author.nickname%></span></span
+                  >
+                  <span><%=data.createdAt%></span>
                 </div>
                 <div>
-                  <span>조회수 : <span>0</span></span>
+                  <span>조회수 : <span><%=data.views%></span></span>
                 </div>
               </div>
             </header>
             <section class="mypet-datail__body">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Explicabo atque, debitis labore quidem iste eveniet, eius,
-                officiis a veniam accusamus doloremque? Incidunt, aperiam sint
-                accusantium sapiente in aut accusamus iste?.
-              </p>
+              <p>이 밑은 진짜 db 내용(연결 확인용)</p>
+              <p><%=data.content%></p>
               <img
                 src="https://via.placeholder.com/600x400/B2B2B2/FFFFFF/?text=NO%20Image"
                 alt=""
@@ -107,7 +109,7 @@
                 autem fugit ab asperiores molestiae.
               </p>
             </section>
-
+            <!--여기부터는 댓글, 대댓글-->
             <section class="datail-comment__container">
               <section class="comment-feed">
                 <h1 class="comment-feed__header">댓글 <span>3</span>개</h1>

@@ -46,7 +46,7 @@
             <!--스크립트 for문을 이용하여 게시물 생성-->
             <%for(let i = 0; i < locals.posts.length; i++) {%>
             <article class="main-content__article">
-              <a href="./myPetBoardDetail.html">
+              <a href="/myPetBoard/<%=locals.posts[i]._id%>">
                 <div class="main-content__wrap">
                   <div class="main-content__img">
                     <img

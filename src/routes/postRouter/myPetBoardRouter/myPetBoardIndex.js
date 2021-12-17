@@ -9,8 +9,8 @@ const {
   updatePost,
 } = require("./myPetBoardController");
 
-router.get("/", getPosts);
-router.get("/:id", getPostDetail);
+router.get("/", getPosts); // 게시물 전체 라우터
+router.get("/:id", getPostDetail); // 상세 페이지 라우터
 router.post("/", createPost);
 router.delete("/:id", deletePost);
 router.put("/:id", updatePost);
