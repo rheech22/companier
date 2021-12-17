@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
     res.render("index.html");
   } else {
     //카카오 로그인을 해서 세션에 kakao가 존재하면
-    res.render("index.html", { data: "true" });
+    res.render("index.html", { isLogined: "true" });
   }
 });
 
