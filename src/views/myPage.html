@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/myPage.css" />
-    <link rel="stylesheet" href="./style/index.css" />
-    <link rel="stylesheet" href="./style/myPetBoard.css" />
+    <link rel="stylesheet" href="/style/myPage.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/myPetBoard.css" />
     <title>Document</title>
   </head>
   <body>
@@ -25,11 +25,7 @@
               <a href="/myPage">마이페이지</a>
             </div>
             <button class="btn header__login-btn">
-              <% if(locals.isLogined) {%>
               <a href="/auth/kakao/logout">로그아웃</a>
-              <%} else {%>
-                <a href="/login">로그인</a>
-              <%}%>
             </button>
           </div>
         </div>

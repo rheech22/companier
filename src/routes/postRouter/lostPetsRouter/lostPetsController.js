@@ -1,18 +1,25 @@
-const { Post, User } = require('../../../models');
+const { Post, User } = require("../../../models");
 
 const getPosts = async (req, res) => {
-  const posts = await Post.find({});
-  res.json(posts);
+  // 전체 게시물 보여주기
+  if (!req.session.kakao) {
+    res.render("lostPets.html");
+  } else {
+    res.render("lostPets.html", { isLogined: "true" });
+  }
 };
 
 const getPostDetail = async (req, res) => {
-  const { id } = req.params;
-
-  const post = await Post.findOne({ _id: id });
-
-  if (!post) res.status(404).end();
-
-  res.json(post);
+  // 개별 게시물 보여주기
+  // const { id } = req.params;
+  // const post = await Post.findOne({ _id: id });
+  // if (!post) res.status(404).end();
+  // res.json(post);
+  if (!req.session.kakao) {
+    res.render("lostPetsDetail.html");
+  } else {
+    res.render("lostPetsDetail.html", { isLogined: "true" });
+  }
 };
 
 const createPost = async (req, res) => {
@@ -20,7 +27,7 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: "CH" });
     const post = await Post.create({
       title,
       content,
@@ -62,7 +69,7 @@ const updatePost = async (req, res) => {
       title,
       content,
       category,
-    },
+    }
   );
 
   if (!post) res.status(404).end();
