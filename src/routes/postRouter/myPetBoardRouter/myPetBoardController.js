@@ -1,4 +1,4 @@
-const { Post, User } = require("../../../models");
+const { Post, User } = require('../../../models');
 
 const getPosts = async (req, res) => {
   const page = Number(req.query.page || 1); // url 쿼리에서 page 받기, 기본값 1
@@ -9,13 +9,13 @@ const getPosts = async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
-      .populate("author"),
+      .populate('author'),
   ]);
   const totalPage = Math.ceil(total / perPage);
 
   if (!req.session.kakao) {
     // 카카오 로그인을 안해서 세션에 없으면 isLogined는 제외하고 렌더링
-    res.render("myPetBoard.html", {
+    res.render('myPetBoard.html', {
       posts,
       page,
       perPage,
@@ -23,8 +23,8 @@ const getPosts = async (req, res) => {
     });
   } else {
     // 카카오 로그인을 해서 세션에 kakao가 존재하면 isLogined까지 렌더링(로그아웃, 로그인 구분)
-    res.render("myPetBoard.html", {
-      isLogined: "true",
+    res.render('myPetBoard.html', {
+      isLogined: 'true',
       posts,
       page,
       perPage,
@@ -33,21 +33,21 @@ const getPosts = async (req, res) => {
   }
 };
 
-//게시물(상세) 페이지
+// 게시물(상세) 페이지
 const getPostDetail = async (req, res) => {
   const { id } = req.params;
 
-  const post = await Post.findOne({ _id: id }).populate("author");
+  const post = await Post.findOne({ _id: id }).populate('author');
 
   if (!post) res.status(404).end();
 
   if (!req.session.kakao) {
     // 카카오 로그인을 안해서 세션에 없으면 isLogined는 제외하고 렌더링
-    res.render("myPetBoardDetail.html", { data: post });
+    res.render('myPetBoardDetail.html', { data: post });
   } else {
     // 카카오 로그인을 해서 세션에 kakao가 존재하면 isLogined까지 렌더링(로그아웃, 로그인 구분)
-    res.render("myPetBoardDetail.html", {
-      isLogined: "true",
+    res.render('myPetBoardDetail.html', {
+      isLogined: 'true',
       data: post,
     });
   }
@@ -58,7 +58,8 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: "CH" });
+    const user = await User.findOne({ nickname: 'LCH' });
+    console.log(user);
     const post = await Post.create({
       title,
       content,
@@ -100,7 +101,7 @@ const updatePost = async (req, res) => {
       title,
       content,
       category,
-    }
+    },
   );
 
   if (!post) res.status(404).end();

@@ -20,7 +20,7 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
     const post = await Post.create({
       title,
       content,
