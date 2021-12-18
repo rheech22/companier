@@ -11,16 +11,18 @@ const {
   updateReComment,
 } = require('./apiController');
 
-router.get('/', (req, res) => {
-  res.send('Hello API');
-});
+// URL은 논의 후에 확정하는 걸로...
 
+// id => post.id
 router.post('/:id/comments', createComment); // 댓글 생성
-router.delete('/:id/delete-comment', deleteComment); // 댓글 삭제
-router.put('/:id/update-comment', updateComment); // 댓글 수정
 
+// id => comment.id
+router.delete('/comments/:id', deleteComment); // 댓글 삭제
+router.put('/comments/:id', updateComment); // 댓글 수정
 router.post('/:id/recomments', createReComment); // 대댓글 생성
-router.delete('/:id/delete-recomment', deleteReComment); // 대댓글 삭제
-router.put('/:id/update-recomment', updateReComment); // 대댓글 수정
+
+// id => recomment.id
+router.delete('/recomments/:id', deleteReComment); // 대댓글 삭제
+router.put('/recomments/:id', updateReComment); // 대댓글 수정
 
 module.exports = router;
