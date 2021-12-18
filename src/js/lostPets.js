@@ -1,38 +1,114 @@
-function renderLostPetContent() {
-  const lostContent = document.querySelector(".lost-content");
-  // 밑에 보시면 <a href="./lostPets/1"> 이렇게 되어있는데, 1은 임시 id값입니다. 빈 페이지로 넘겨드릴 예정이라
-  // 해당 게시물의 id 값은 데이터를 받아오셔서 1 대신 넣으시면 라우터에서 /:id로 이동해서 마찬가지로 빈 페이지를 넘겨드릴 겁니다.
-  for (let i = 0; i < 10; i++) {
-    const content = `
-      <article class="lost-content__item">
-        <a href="./lostPets/1"> 
-          <img
-            class="lost-content__img"
-            src="https://img.animalplanet.co.kr/news/2021/03/24/700/9919ots6h81rwz2u6609.jpg"
-          />
-          <div class="lost-content__info">
-            <div class="lost-content__kind-sex">
-              <span>[개] 믹스견 / 여</span>
-            </div>
-            <div class="lost-content__age-weight">
-              <span>2020(년생) (살) / 4.5(Kg)</span>
-            </div>
-            <div class="lost-content__date">
-              <span>2021년 12월 16일</span>
-            </div>
-            <div class="lost-content__place">
-              <span>경상남도 남해군</span>
-            </div>
-            <div class="lost-content__special">
-              <span>경계심이 있음. 온순함</span>
-            </div>
-            <div class="lost-content__state"><span>보호중</span></div>
-          </div>
-        </a>
-      </article>
-  `;
-    lostContent.innerHTML += content;
+// TODO: require is not defined 에러 해결
+const convert = require("xml-js");
+const request = require("request");
+
+const HOST =
+  "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc";
+const SERVICE_KEY = process.env.API_KEY;
+
+const limit = 10;
+let pageNo = 1;
+let requestUrl = `${HOST}/abandonmentPublic?PageNo=${pageNo}&numOfRows=${limit}&ServiceKey=${SERVICE_KEY}`;
+
+// API 호출하여 화면에 데이터 표시
+request.get(requestUrl, (err, res, body) => {
+  if (err) {
+    console.log(`err => ${err}`);
+  } else {
+    if (res.statusCode == 200) {
+      const animalArr = parseXmlData(body);
+      const lostPetList = animalArr.map(createLostPetItem);
+      const lostContent = document.querySelector(".lost-content");
+      lostContent.innerHTML = lostPetList.join("");
+    }
   }
+});
+
+// 데이터 가공하는 함수
+function parseXmlData(body) {
+  const options = {
+    compact: true,
+    spaces: 4,
+    textFn: removeJsonTextAttribute,
+  };
+
+  function removeJsonTextAttribute(value, parentElement) {
+    try {
+      var keyNo = Object.keys(parentElement._parent).length;
+      var keyName = Object.keys(parentElement._parent)[keyNo - 1];
+      parentElement._parent[keyName] = value;
+    } catch (e) {}
+  }
+
+  const result = body;
+  const xmlToJson = convert.xml2json(result, options);
+  const parsedData = JSON.parse(xmlToJson);
+  const {
+    response: {
+      body: {
+        items: { item },
+      },
+    },
+  } = parsedData;
+
+  return item;
 }
 
-renderLostPetContent();
+// 템플릿에 데이터 주입하는 함수
+function createLostPetItem(animal) {
+  const {
+    age,
+    careAddr,
+    careNm,
+    careTel,
+    chargeNm,
+    colorCd,
+    desertionNo,
+    filename,
+    happenDt,
+    happenPlace,
+    kindCd,
+    neuterYn,
+    noticeEdt,
+    noticeNo,
+    noticeSdt,
+    officetel,
+    orgNm,
+    popfile,
+    processState,
+    sexCd,
+    specialMark,
+    weight,
+  } = animal;
+
+  const template = `
+    <article class="lost-content__item">
+      <a href="./lostPets/${desertionNo}">
+        <img
+          class="lost-content__img"
+          src="${filename}"
+        />
+        <div class="lost-content__info">
+          <div class="lost-content__kind-sex">
+            <span>${kindCd} / ${sexCd}</span>
+          </div>
+          <div class="lost-content__age-weight">
+            <span>${age} / ${weight}</span>
+          </div>
+          <div class="lost-content__date">
+            <span>${happenDt}</span>
+          </div>
+          <div class="lost-content__place">
+            <span>${happenPlace}</span>
+          </div>
+          <div class="lost-content__special">
+            <span>${specialMark}</span>
+          </div>
+          <div class="lost-content__state"><span>${processState}</span></div>
+        </div>
+      </a>
+    </article>
+`;
+
+  return template;
+}
