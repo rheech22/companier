@@ -16,7 +16,7 @@ const createComment = async (req, res) => {
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
     const post = await Post.findOne({ _id: id });
 
     // 댓글 생성
@@ -44,7 +44,7 @@ const deleteComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
 
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
@@ -82,7 +82,7 @@ const updateComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
 
     // 댓글 수정
     const comment = await Comment.findOne({ _id: id })
@@ -119,7 +119,7 @@ const createReComment = async (req, res) => {
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
     const comment = await Comment.findOne({ _id: id })
       .populate('parentPost');
 
@@ -160,7 +160,7 @@ const deleteReComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
 
     // 대댓글 삭제
     const reComment = await ReComment.findOne({ _id: id })
@@ -212,7 +212,7 @@ const updateReComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'CH' });
+    const user = await User.findOne({ nickname: 'LCH' });
 
     // 대댓글 수정
     const reComment = await ReComment.findOne({ _id: id })
