@@ -1,9 +1,4 @@
-const {
-  User,
-  Post,
-  Comment,
-  ReComment,
-} = require('../../models');
+const { User, Post, Comment, ReComment } = require("../../models");
 
 // 프론트에서 API 응답에 따라 html tag 속성으로 comment의 id가 포함되게 댓글을 그려주고,
 // 추후 댓글 수정이나 삭제 요청 시 해당 속성으로 id값을 불러와 API 요청을 할 수 있도록
@@ -16,7 +11,7 @@ const createComment = async (req, res) => {
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'LCH' });
+    const user = await User.findOne({ nickname: "LCH" });
     const post = await Post.findOne({ _id: id });
 
     // 댓글 생성
@@ -44,12 +39,12 @@ const deleteComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    const user = await User.findOne({ nickname: "LCH" });
 
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentPost');
+      .populate("author")
+      .populate("parentPost");
 
     const { author, parentPost } = comment;
 
@@ -57,8 +52,9 @@ const deleteComment = async (req, res) => {
 
     await Comment.deleteOne({ _id: id });
     // 포스트에 포함된 댓글 삭제
-    const post = await Post.findOne({ _id: parentPost.id })
-      .populate('comments');
+    const post = await Post.findOne({ _id: parentPost.id }).populate(
+      "comments"
+    );
 
     const newComments = post.comments.filter((item) => item.id !== id);
 
@@ -74,20 +70,18 @@ const deleteComment = async (req, res) => {
 const updateComment = async (req, res) => {
   const {
     params: { id },
-    body: {
-      content,
-    },
+    body: { content },
     // user, // 실제 환경에선 req.user 필요
   } = req;
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    const user = await User.findOne({ nickname: "LCH" });
 
     // 댓글 수정
     const comment = await Comment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentPost');
+      .populate("author")
+      .populate("parentPost");
 
     const { author, parentPost } = comment;
 
@@ -96,8 +90,9 @@ const updateComment = async (req, res) => {
     await Comment.updateOne({ _id: id }, { content });
 
     // 포스트에 포함된 댓글 수정
-    const post = await Post.findOne({ _id: parentPost.id })
-      .populate('comments');
+    const post = await Post.findOne({ _id: parentPost.id }).populate(
+      "comments"
+    );
 
     const updatedComment = post.comments.find((item) => item.id === id);
 
@@ -119,9 +114,8 @@ const createReComment = async (req, res) => {
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'LCH' });
-    const comment = await Comment.findOne({ _id: id })
-      .populate('parentPost');
+    const user = await User.findOne({ nickname: "LCH" });
+    const comment = await Comment.findOne({ _id: id }).populate("parentPost");
 
     // 대댓글 생성
     const newReComment = await ReComment.create({
@@ -137,10 +131,10 @@ const createReComment = async (req, res) => {
     const { parentPost } = comment;
 
     // 포스트에 대댓글 추가
-    const post = await Post.findOne({ _id: parentPost.id })
-      .populate('comments');
-    const updatedComment = post.comments
-      .find((item) => item.id === comment.id);
+    const post = await Post.findOne({ _id: parentPost.id }).populate(
+      "comments"
+    );
+    const updatedComment = post.comments.find((item) => item.id === comment.id);
 
     updatedComment.reComments.push(newReComment);
     post.save();
@@ -160,12 +154,12 @@ const deleteReComment = async (req, res) => {
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    const user = await User.findOne({ nickname: "LCH" });
 
     // 대댓글 삭제
     const reComment = await ReComment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentComment');
+      .populate("author")
+      .populate("parentComment");
 
     const { author, parentComment } = reComment;
 
@@ -175,8 +169,8 @@ const deleteReComment = async (req, res) => {
 
     // 댓글에 포함된 대댓글 삭제
     const comment = await Comment.findOne({ _id: parentComment.id })
-      .populate('reComments')
-      .populate('parentPost');
+      .populate("reComments")
+      .populate("parentPost");
 
     const newReComments = comment.reComments.filter((item) => item.id !== id);
 
@@ -186,11 +180,11 @@ const deleteReComment = async (req, res) => {
     const { parentPost } = comment;
 
     // 포스트에서 대댓글 삭제
-    const post = await Post.findOne({ _id: parentPost.id })
-      .populate('comments');
+    const post = await Post.findOne({ _id: parentPost.id }).populate(
+      "comments"
+    );
 
-    const updatedComment = post.comments
-      .find((item) => item.id === comment.id);
+    const updatedComment = post.comments.find((item) => item.id === comment.id);
 
     updatedComment.reComments = newReComments;
     post.save();
@@ -204,20 +198,18 @@ const deleteReComment = async (req, res) => {
 const updateReComment = async (req, res) => {
   const {
     params: { id },
-    body: {
-      content,
-    },
+    body: { content },
     // user, // 실제 환경에선 req.user 필요
   } = req;
 
   try {
     // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    const user = await User.findOne({ nickname: "LCH" });
 
     // 대댓글 수정
     const reComment = await ReComment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentComment');
+      .populate("author")
+      .populate("parentComment");
 
     const { author, parentComment } = reComment;
 
@@ -227,8 +219,8 @@ const updateReComment = async (req, res) => {
 
     // 댓글에 포함된 대댓글 수정
     const comment = await Comment.findOne({ _id: parentComment.id })
-      .populate('reComments')
-      .populate('parentPost');
+      .populate("reComments")
+      .populate("parentPost");
 
     const updatedReComment = comment.reComments.find((item) => item.id === id);
 
@@ -239,14 +231,15 @@ const updateReComment = async (req, res) => {
     const { parentPost } = comment;
 
     // 포스트에 포함된 대댓글 수정
-    const post = await Post.findOne({ _id: parentPost.id })
-      .populate('comments');
+    const post = await Post.findOne({ _id: parentPost.id }).populate(
+      "comments"
+    );
 
-    const updatedComment = post.comments
-      .find((item) => item.id === comment.id);
+    const updatedComment = post.comments.find((item) => item.id === comment.id);
 
-    const updatedPostReComment = updatedComment.reComments
-      .find((item) => item.id === id);
+    const updatedPostReComment = updatedComment.reComments.find(
+      (item) => item.id === id
+    );
 
     updatedPostReComment.content = content;
 

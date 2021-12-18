@@ -1,4 +1,4 @@
-const { User } = require('../../models');
+const { User } = require("../../models");
 
 // 모든 유저 반환 - 필요없을 수도...
 const getUsers = async (req, res) => {

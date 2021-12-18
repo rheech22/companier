@@ -10,7 +10,6 @@ const userRouter = require("./routes/userRouter");
 const myPetBoard = require("./routes/postRouter/myPetBoardRouter/myPetBoardIndex");
 const lostPetsRouter = require("./routes/postRouter/lostPetsRouter/lostPetsIndex");
 const myPageRouter = require("./routes/myPageRouter");
-const myInfoModifyRouter = require("./routes/myPageRouter/modifyInfo");
 const loginRouter = require("./routes/loginRouter");
 const kakaoRouter = require("./routes/loginRouter/kakaoRouter");
 const kakaoCallbackRouter = require("./routes/loginRouter/kakaoCallbackRouter");
@@ -48,7 +47,6 @@ app.use("/users", userRouter);
 app.use("/myPetBoard", myPetBoard); // 근황게시판
 app.use("/lostPets", lostPetsRouter); // 보호게시판(여기 수정 필요)
 app.use("/myPage", myPageRouter); // 마이페이지
-app.use("/myPage/modify", myInfoModifyRouter); // 내 정보변경 페이지
 app.use("/api", apiRouter); // 댓글 전송, 수정, 삭제, like 전송 등
 app.use("/login", loginRouter); //로그인 페이지로 이동
 app.use("/auth/kakao", kakaoRouter);
