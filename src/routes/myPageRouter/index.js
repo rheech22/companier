@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router } = require("express");
 
 const router = Router();
 
@@ -10,14 +10,16 @@ router.get("/", async (req, res) => {
     res.send(
       "<script>alert('로그인이 필요한 기능입니다.');location.href='/';</script>"
     );
-  const {
-    kakao_account: { email },
-  } = req.session.kakao;
+  } else {
+    const {
+      kakao_account: { email },
+    } = req.session.kakao;
 
-  // 카카오 로그인을 해서 세션에 kakao가 존재하면 user 객체와 함께 페이지 렌더링
-  const user = await User.findOne({ email });
-  
-  res.render("myPage.html", user);
+    // 카카오 로그인을 해서 세션에 kakao가 존재하면 user 객체와 함께 페이지 렌더링
+    const user = await User.findOne({ email });
+
+    res.render("myPage.html", user);
+  }
 });
 
 module.exports = router;
