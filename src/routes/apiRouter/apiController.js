@@ -9,22 +9,22 @@ const createComment = async (req, res) => {
   const {
     params: { id },
     body: { content },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
     // 유저 찾기
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
 
     if (!user) {
-      return res.status(401).end();
+      return res.status(404).end();
     }
 
     const post = await Post.findOne({ _id: id });
@@ -51,16 +51,15 @@ const createComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   const {
     params: { id },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
     // 유저 찾기
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
@@ -102,16 +101,19 @@ const updateComment = async (req, res) => {
     body: {
       content,
     },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    if (!content) {
+      return res.status(400).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
     // 유저 찾기
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
@@ -154,21 +156,21 @@ const createReComment = async (req, res) => {
   const {
     params: { id },
     body: { content },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
 
     if (!user) {
-      return res.status(401).end();
+      return res.status(404).end();
     }
 
     const comment = await Comment.findOne({ _id: id })
@@ -209,16 +211,16 @@ const createReComment = async (req, res) => {
 const deleteReComment = async (req, res) => {
   const {
     params: { id },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
 
@@ -273,16 +275,20 @@ const updateReComment = async (req, res) => {
     body: {
       content,
     },
-    session: {
-      kakao: {
-        kakao_account: {
-          email,
-        },
-      },
-    },
+    session,
   } = req;
 
   try {
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    if (!content) {
+      return res.status(400).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
     const user = await User.findOne({ email });
     // const user = await User.findOne({ nickname: 'TEST' });
 
