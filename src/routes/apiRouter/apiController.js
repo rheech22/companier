@@ -5,18 +5,28 @@ const {
   ReComment,
 } = require('../../models');
 
-// 프론트에서 API 응답에 따라 html tag 속성으로 comment의 id가 포함되게 댓글을 그려주고,
-// 추후 댓글 수정이나 삭제 요청 시 해당 속성으로 id값을 불러와 API 요청을 할 수 있도록
-// 하는 것이 좋은 구현 방식일지...
 const createComment = async (req, res) => {
   const {
     params: { id },
     body: { content },
-    // user, // 실제 환경에선 req.user로 댓글을 생성
+    session,
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
+    // 유저 찾기
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
+
+    if (!user) {
+      return res.status(404).end();
+    }
+
     const post = await Post.findOne({ _id: id });
 
     // 댓글 생성
@@ -28,23 +38,31 @@ const createComment = async (req, res) => {
     // 포스트에 댓글 추가
     post.comments.push(newComment);
     post.save();
+    // 유저에 댓글 추가
+    user.comments.push(newComment);
+    user.save();
 
-    // 테스트를 위해 우선 포스트 객체를 반환하도록 설정
-    res.json(post);
+    res.status(201).end();
   } catch (error) {
-    res.status(400);
+    res.status(400).end();
   }
 };
 
 const deleteComment = async (req, res) => {
   const {
     params: { id },
-    // user, // 실제 환경에선 req.user 필요
+    session,
   } = req;
 
   try {
-    // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+    // 유저 찾기
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
@@ -60,10 +78,16 @@ const deleteComment = async (req, res) => {
     const post = await Post.findOne({ _id: parentPost.id })
       .populate('comments');
 
-    const newComments = post.comments.filter((item) => item.id !== id);
+    const newPostComments = post.comments.filter((item) => item.id !== id);
 
-    post.comments = newComments;
+    post.comments = newPostComments;
     post.save();
+
+    // 유저에 포함된 댓글 삭제
+    const newUserComments = user.comments.filter((item) => item.id !== id);
+
+    user.comments = newUserComments;
+    user.save();
 
     res.status(204).end();
   } catch (error) {
@@ -77,12 +101,22 @@ const updateComment = async (req, res) => {
     body: {
       content,
     },
-    // user, // 실제 환경에선 req.user 필요
+    session,
   } = req;
 
   try {
-    // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    if (!content) {
+      return res.status(400).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+    // 유저 찾기
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 댓글 수정
     const comment = await Comment.findOne({ _id: id })
@@ -99,11 +133,18 @@ const updateComment = async (req, res) => {
     const post = await Post.findOne({ _id: parentPost.id })
       .populate('comments');
 
-    const updatedComment = post.comments.find((item) => item.id === id);
+    const updatedPostComment = post.comments.find((item) => item.id === id);
 
-    updatedComment.content = content;
+    updatedPostComment.content = content;
 
     post.save();
+
+    // 유저에 포함된 댓글 수정
+    const updatedUserComment = user.comments.find((item) => item.id === id);
+
+    updatedUserComment.content = content;
+
+    user.save();
 
     res.status(201).end();
   } catch (error) {
@@ -115,11 +156,23 @@ const createReComment = async (req, res) => {
   const {
     params: { id },
     body: { content },
-    // user, // 실제 환경에선 req.user로 댓글을 생성
+    session,
   } = req;
 
   try {
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
+
+    if (!user) {
+      return res.status(404).end();
+    }
+
     const comment = await Comment.findOne({ _id: id })
       .populate('parentPost');
 
@@ -139,28 +192,37 @@ const createReComment = async (req, res) => {
     // 포스트에 대댓글 추가
     const post = await Post.findOne({ _id: parentPost.id })
       .populate('comments');
-    const updatedComment = post.comments
+    const updatedPostComment = post.comments
       .find((item) => item.id === comment.id);
 
-    updatedComment.reComments.push(newReComment);
+    updatedPostComment.reComments.push(newReComment);
     post.save();
 
-    // 테스트를 위해 우선 포스트 객체를 반환하도록 설정
-    res.json(post);
+    // 유저에 대댓글 추가
+    user.reComments.push(newReComment);
+    user.save();
+
+    res.status(201).end();
   } catch (error) {
-    res.status(400);
+    res.status(400).end();
   }
 };
 
 const deleteReComment = async (req, res) => {
   const {
     params: { id },
-    // user, // 실제 환경에선 req.user 필요
+    session,
   } = req;
 
   try {
-    // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 대댓글 삭제
     const reComment = await ReComment.findOne({ _id: id })
@@ -195,6 +257,12 @@ const deleteReComment = async (req, res) => {
     updatedComment.reComments = newReComments;
     post.save();
 
+    // 유저에 포함된 대댓글 삭제
+    const newUserReComments = user.reComments.filter((item) => item.id !== id);
+
+    user.reComments = newUserReComments;
+    user.save();
+
     res.status(204).end();
   } catch (error) {
     res.status(400).end();
@@ -207,12 +275,22 @@ const updateReComment = async (req, res) => {
     body: {
       content,
     },
-    // user, // 실제 환경에선 req.user 필요
+    session,
   } = req;
 
   try {
-    // 임시로 유저 확정
-    const user = await User.findOne({ nickname: 'LCH' });
+    if (!session.kakao) {
+      return res.status(401).end();
+    }
+
+    if (!content) {
+      return res.status(400).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 대댓글 수정
     const reComment = await ReComment.findOne({ _id: id })
@@ -251,6 +329,13 @@ const updateReComment = async (req, res) => {
     updatedPostReComment.content = content;
 
     post.save();
+
+    // 유저에 포함된 대댓글 수정
+    const updatedUserReComment = user.reComments.find((item) => item.id === id);
+
+    updatedUserReComment.content = content;
+
+    user.save();
 
     res.status(201).end();
   } catch (error) {

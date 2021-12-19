@@ -58,14 +58,20 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: 'LCH' });
-    console.log(user);
+    const user = await User.findOne({ nickname: 'TEST' });
+
+    // 포스트 생성
     const post = await Post.create({
       title,
       content,
       author: user,
       category,
     });
+
+    // 유저 posts에 포스트 추가
+    user.posts.push(post);
+    user.save();
+
     res.status(201).json(post);
   } catch (error) {
     res.status(500).send(error);
