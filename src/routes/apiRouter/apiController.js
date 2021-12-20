@@ -144,7 +144,7 @@ const updateComment = async (req, res) => {
 
     user.save();
 
-    res.status(201).end();
+    res.status(200).end();
   } catch (error) {
     res.status(500).end();
   }
@@ -335,7 +335,7 @@ const updateReComment = async (req, res) => {
 
     user.save();
 
-    res.status(201).end();
+    res.status(200).end();
   } catch (error) {
     res.status(500).end();
   }
