@@ -34,6 +34,10 @@
 	align-items: center;
 }
 
+.main__container .pagination {
+	transform: translateX(-1.5em);
+}
+
 .pagination button {
 	width: 20px;
 	height: 20px;
@@ -97,13 +101,14 @@
 /* 내가 쓴 글 */
 
 #myPosts {
-	display: none;
+	display: block;
 }
 
 /* 내가 쓴 댓글 */
 
 #myComments {
-	display: block;
+	/* display: block; */
+	display: none;
 	margin: auto;
 	width: 50%;
 }
