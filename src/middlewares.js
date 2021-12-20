@@ -10,6 +10,19 @@ const isLoggedIn = (req, res, next) => {
   next();
 };
 
+const setLoggedInStatus = (req, res, next) => {
+  const { session } = req;
+
+  if (!session.kakao) {
+    req.isLoggedIn = false;
+  } else {
+    req.isLoggedIn = true;
+  }
+
+  next();
+};
+
 module.exports = {
   isLoggedIn,
+  setLoggedInStatus,
 };
