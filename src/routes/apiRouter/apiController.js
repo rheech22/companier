@@ -5,7 +5,7 @@ const {
   ReComment,
 } = require('../../models');
 
-const getPostContents = async (req, res) => {
+const getPost = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -31,6 +31,128 @@ const getPostContents = async (req, res) => {
     if (error.kind === 'ObjectId') {
       return res.status(400).end();
     }
+    res.status(500).end();
+  }
+};
+
+const createPost = async (req, res) => {
+  const {
+    body: {
+      title,
+      content,
+      category,
+    },
+    session,
+  } = req;
+
+  try {
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+
+    if (!title || !content || !category) return res.status(400).end();
+
+    // 포스트 생성
+    const post = await Post.create({
+      title,
+      content,
+      category,
+      author: user.id,
+    });
+
+    // 유저 posts에 포스트 추가
+    user.posts.push(post);
+    user.save();
+
+    res.status(201).end();
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const deletePost = async (req, res) => {
+  const {
+    params: { id },
+    session,
+  } = req;
+
+  try {
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+
+    const post = await Post.findOne({ _id: id }).populate('author');
+
+    const { author } = post;
+
+    if (user.id !== author.id) return res.status(401).end();
+
+    await Post.deleteOne({ _id: id });
+
+    // 유저에서 포스트 삭제
+    const newUserPosts = user.posts.filter((item) => item.id !== id);
+
+    user.posts = newUserPosts;
+    user.save();
+
+    res.status(204).end();
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
+    res.status(500).end();
+  }
+};
+
+const updatePost = async (req, res) => {
+  const {
+    params: { id },
+    body: {
+      title,
+      content,
+      category,
+    },
+    session,
+  } = req;
+
+  try {
+    if (!title || !content || !category) {
+      res.status(400).end();
+    }
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+
+    const post = await Post.findOne({ _id: id }).populate('author');
+
+    const { author } = post;
+
+    if (user.id !== author.id) return res.status(401).end();
+
+    await Post.updateOne(
+      { _id: id },
+      {
+        title,
+        content,
+        category,
+      },
+    );
+
+    const updatedUserPost = user.posts.find((item) => item.id === id);
+
+    updatedUserPost.title = title;
+    updatedUserPost.content = content;
+    updatedUserPost.category = category;
+
+    user.save();
+
+    res.status(200).end();
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
+    console.log(error);
     res.status(500).end();
   }
 };
@@ -372,5 +494,8 @@ module.exports = {
   createReComment,
   deleteReComment,
   updateReComment,
-  getPostContents,
+  getPost,
+  createPost,
+  deletePost,
+  updatePost,
 };

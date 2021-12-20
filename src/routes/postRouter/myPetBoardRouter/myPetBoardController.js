@@ -1,5 +1,6 @@
 const { Post, User } = require('../../../models');
 
+// 근황 게시판 페이지
 const getPosts = async (req, res) => {
   try {
     const page = Number(req.query.page || 1); // url 쿼리에서 page 받기, 기본값 1

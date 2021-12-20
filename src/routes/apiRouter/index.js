@@ -9,7 +9,10 @@ const {
   createReComment,
   deleteReComment,
   updateReComment,
-  getPostContents,
+  getPost,
+  createPost,
+  deletePost,
+  updatePost,
 } = require('./apiController');
 
 const {
@@ -18,8 +21,12 @@ const {
 
 // URL은 논의 후에 확정하는 걸로...
 
+router.post('/posts', isLoggedIn, createPost);
 // id => post.id
-router.get('/posts/:id', getPostContents);
+router.get('/posts/:id', getPost);
+router.delete('/posts/:id', isLoggedIn, deletePost);
+router.put('/posts/:id', isLoggedIn, updatePost);
+
 router.post('/:id/comments', isLoggedIn, createComment); // 댓글 생성
 
 // id => comment.id
