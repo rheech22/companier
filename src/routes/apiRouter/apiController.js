@@ -5,6 +5,36 @@ const {
   ReComment,
 } = require('../../models');
 
+const getPostContents = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await Post.findOne({ _id: id })
+      .populate('author', 'email nickname')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'author',
+          select: 'nickname',
+        },
+      })
+      .populate({
+        path: 'comments.reComments',
+        populate: {
+          path: 'author',
+          select: 'nickname',
+        },
+      });
+
+    res.status(200).json(post).end();
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
+    res.status(500).end();
+  }
+};
+
 const createComment = async (req, res) => {
   const {
     params: { id },
@@ -25,10 +55,6 @@ const createComment = async (req, res) => {
 
     const post = await Post.findOne({ _id: id });
 
-    if (!post) {
-      return res.status(400).end();
-    }
-
     // 댓글 생성
     const newComment = await Comment.create({
       content,
@@ -44,6 +70,9 @@ const createComment = async (req, res) => {
 
     res.status(201).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -64,10 +93,6 @@ const deleteComment = async (req, res) => {
     const comment = await Comment.findOne({ _id: id })
       .populate('author')
       .populate('parentPost');
-
-    if (!comment) {
-      return res.status(400).end();
-    }
 
     const { author, parentPost } = comment;
 
@@ -90,6 +115,9 @@ const deleteComment = async (req, res) => {
 
     res.status(204).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -118,10 +146,6 @@ const updateComment = async (req, res) => {
       .populate('author')
       .populate('parentPost');
 
-    if (!comment) {
-      return res.status(400).end();
-    }
-
     const { author, parentPost } = comment;
 
     if (user.id !== author.id) return res.status(401).end();
@@ -146,6 +170,9 @@ const updateComment = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -169,10 +196,6 @@ const createReComment = async (req, res) => {
 
     const comment = await Comment.findOne({ _id: id })
       .populate('parentPost');
-
-    if (!comment) {
-      return res.status(400).end();
-    }
 
     // 대댓글 생성
     const newReComment = await ReComment.create({
@@ -202,6 +225,9 @@ const createReComment = async (req, res) => {
 
     res.status(201).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -222,10 +248,6 @@ const deleteReComment = async (req, res) => {
     const reComment = await ReComment.findOne({ _id: id })
       .populate('author')
       .populate('parentComment');
-
-    if (!reComment) {
-      return res.status(400).end();
-    }
 
     const { author, parentComment } = reComment;
 
@@ -265,6 +287,9 @@ const deleteReComment = async (req, res) => {
 
     res.status(204).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -292,10 +317,6 @@ const updateReComment = async (req, res) => {
     const reComment = await ReComment.findOne({ _id: id })
       .populate('author')
       .populate('parentComment');
-
-    if (!reComment) {
-      return res.status(400).end();
-    }
 
     const { author, parentComment } = reComment;
 
@@ -337,6 +358,9 @@ const updateReComment = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
     res.status(500).end();
   }
 };
@@ -348,4 +372,5 @@ module.exports = {
   createReComment,
   deleteReComment,
   updateReComment,
+  getPostContents,
 };

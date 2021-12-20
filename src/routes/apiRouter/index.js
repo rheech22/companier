@@ -9,6 +9,7 @@ const {
   createReComment,
   deleteReComment,
   updateReComment,
+  getPostContents,
 } = require('./apiController');
 
 const {
@@ -18,6 +19,7 @@ const {
 // URL은 논의 후에 확정하는 걸로...
 
 // id => post.id
+router.get('/posts/:id', getPostContents);
 router.post('/:id/comments', isLoggedIn, createComment); // 댓글 생성
 
 // id => comment.id
