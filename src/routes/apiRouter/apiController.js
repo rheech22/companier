@@ -89,10 +89,29 @@ const deletePost = async (req, res) => {
 
     await Post.deleteOne({ _id: id });
 
+    // 댓글에서 포스트와 관련된 댓글 모두 삭제
+    await Comment.deleteMany({ parentPost: id });
+
+    // 대댓글에서 포스트와 관련된 대댓글 모두 삭제
+    await ReComment.deleteMany({ parentPost: id });
+
     // 유저에서 포스트 삭제
     const newUserPosts = user.posts.filter((item) => item.id !== id);
 
     user.posts = newUserPosts;
+
+    // 유저 댓글에서 포스트와 연관된 댓글 모두 삭제
+    const newUserComments = user.comments
+      .filter((item) => item.parentPost.toString() !== id);
+
+    user.comments = newUserComments;
+
+    // 유저 대댓글에서 포스트와 연관된 대댓글 모두 삭제
+    const newUserReComments = user.reComments
+      .filter((item) => item.parentPost.toString() !== id);
+
+    user.reComments = newUserReComments;
+
     user.save();
 
     res.status(204).end();
@@ -324,6 +343,7 @@ const createReComment = async (req, res) => {
       content,
       author: user.id,
       parentComment: comment.id,
+      parentPost: comment.parentPost.id,
     });
 
     // 댓글에 대댓글 추가
