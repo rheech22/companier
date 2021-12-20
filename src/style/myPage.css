@@ -1,158 +1,155 @@
 /* myPage */
 #myPage {
-  width: 100%;
-  position: relative;
-  top: 10em;
+	width: 100%;
+	position: relative;
+	top: 10em;
 }
 
 .myPage__title {
-  font-size: 1.4em;
-  margin-bottom: 1em;
-  text-align: center;
+	font-size: 1.4em;
+	margin-bottom: 1em;
+	text-align: center;
 }
 
 .myPage__select,
 .userInfo {
-  display: flex;
+	display: flex;
 }
 
 .myPage__select {
-  margin-bottom: 2em;
+	margin-bottom: 2em;
 }
 
 .myPage__select__category {
-  margin: auto;
-  font-size: 1.1em;
+	margin: auto;
+	font-size: 1.1em;
 }
 
 /* pagination */
 
 .pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 }
 
 .pagination button {
-  width: 20px;
-  height: 20px;
-  margin: 5px;
-  font-size: 10px;
-  border: none;
-  outline: none;
-  appearance: none;
-  cursor: pointer;
+	width: 20px;
+	height: 20px;
+	margin: 5px;
+	font-size: 10px;
+	border: none;
+	outline: none;
+	appearance: none;
+	cursor: pointer;
 }
 
 .pagination button:hover {
-  background-color: var(--btn-hover-color);
+	background-color: var(--btn-hover-color);
 }
 
 .pagination button.active {
-  background-color: var(--main-color-orange);
+	background-color: var(--main-color-orange);
 }
 
 /* userInfo */
 
 #userInfo {
-  position: absolute;
-  height: 1.6em;
-  width: 100%;
-  margin-left: 30em;
-  margin-bottom: 2em;
-  display: block;
-  text-align: left;
-  display: none;
+	position: absolute;
+	height: 1.6em;
+	width: 100%;
+	margin-left: 30em;
+	margin-bottom: 2em;
+	display: block;
+	text-align: left;
+	display: none;
 }
 
 .userInfo__modify {
-  display: flex;
-  height: 1.8em;
-  margin-bottom: 1.5em;
+	display: flex;
+	height: 1.8em;
+	margin-bottom: 1.5em;
 }
 
 .userInfo__modify__name,
 .userInfo__modify__input {
-  margin-right: 1em;
+	margin-right: 1em;
 }
 
 .userInfo__modify__input {
-  text-align: center;
+	text-align: center;
 }
 .userInfo__modify__name {
-  padding-top: 5px;
+	padding-top: 5px;
 }
 
 #userInfo__modify__btn {
-  height: 100%;
-  width: 5em;
+	height: 100%;
+	width: 5em;
 }
 
 #userInfo__exit {
-  width: 5em;
-  font-size: 1em;
+	width: 5em;
+	font-size: 1em;
 }
 
 /* 내가 쓴 글 */
 
 #myPosts {
-  display: none;
+	display: none;
 }
 
 /* 내가 쓴 댓글 */
 
 #myComments {
-  display: block;
-  margin: auto;
-  width: 50%;
+	display: block;
+	margin: auto;
+	width: 50%;
 }
 
 .myComments__list {
-  width: 100%;
-  height: 24em;
+	width: 100%;
+	height: 24em;
 }
 
 .content {
-  height: 15%;
-  margin-bottom: 0.7em;
+	height: 15%;
+	margin-bottom: 0.7em;
 }
 
 .content__info {
-  display: flex;
+	display: flex;
 }
 
 .content__info__link {
-  display: block;
-  width: 100%;
-  margin-bottom: 0.5em;
+	display: block;
+	width: 100%;
+	margin-bottom: 0.5em;
 }
 
 .content__info__comment {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 70%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 70%;
 }
 
 .deleteBox {
-  height: 3em;
-  display: flex;
-  align-items: center;
-}
-#deleteBox__btn {
+	display: flex;
+	align-items: center;
 }
 
 .content__seperator {
-  position: relative;
-  width: 100%;
-  top: 0.5em;
+	position: relative;
+	width: 100%;
+	top: 0.5em;
 }
 
 .content__seperator__line {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.2);
-  height: 1px;
-  width: 100%;
-  bottom: 0.7em;
+	position: absolute;
+	background: rgba(0, 0, 0, 0.2);
+	height: 1px;
+	width: 100%;
+	bottom: 0.7em;
 }
