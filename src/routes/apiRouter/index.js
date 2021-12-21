@@ -21,7 +21,7 @@ const {
 const { isLoggedIn } = require("../../middlewares");
 
 router.get("/user-detail", isLoggedIn, getUserDetail);
-router.put("/user-detail", updateUser);
+router.put("/user-detail", isLoggedIn, updateUser);
 router.delete("/user-detail", isLoggedIn, deleteUser);
 
 router.post("/posts", isLoggedIn, createPost);
