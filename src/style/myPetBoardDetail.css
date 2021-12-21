@@ -77,7 +77,12 @@
 .comment__content {
   font-size: 15px;
 }
-.comment__data,
+.comment__data {
+  font-size: 12px;
+  margin-right: 8px;
+  color: #979797;
+}
+
 .comment__link {
   font-size: 12px;
   margin-right: 8px;
