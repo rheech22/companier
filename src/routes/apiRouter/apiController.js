@@ -1,5 +1,8 @@
 const {
-  User, Post, Comment, ReComment,
+  User,
+  Post,
+  Comment,
+  ReComment,
 } = require('../../models');
 
 const getUserDetail = async (req, res) => {
@@ -68,7 +71,7 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   const {
-    body: { title, content, category },
+    body: { title, content },
     session,
   } = req;
 
@@ -77,13 +80,12 @@ const createPost = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (!title || !content || !category) return res.status(400).end();
+    if (!title || !content) return res.status(400).end();
 
     // 포스트 생성
     const post = await Post.create({
       title,
       content,
-      category,
       author: user.id,
     });
 
@@ -155,12 +157,12 @@ const deletePost = async (req, res) => {
 const updatePost = async (req, res) => {
   const {
     params: { id },
-    body: { title, content, category },
+    body: { title, content },
     session,
   } = req;
 
   try {
-    if (!title || !content || !category) {
+    if (!title || !content) {
       res.status(400).end();
     }
 
@@ -179,7 +181,6 @@ const updatePost = async (req, res) => {
       {
         title,
         content,
-        category,
       },
     );
 
@@ -187,7 +188,6 @@ const updatePost = async (req, res) => {
 
     updatedUserPost.title = title;
     updatedUserPost.content = content;
-    updatedUserPost.category = category;
 
     user.save();
 
