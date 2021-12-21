@@ -42,14 +42,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // 라우터 추가하기
 
 app.use("/", indexRouter);
-app.use("/users", userRouter);
+app.use("/login", loginRouter); // 로그인 페이지로 이동
+
+app.use("/api", apiRouter); // 댓글 전송, 수정, 삭제, like 전송 등
+
+app.use("/auth/kakao", kakaoRouter);
+app.use("/auth/kakao/callback", kakaoCallbackRouter);
 
 app.use("/myPetBoard", myPetBoard); // 근황게시판
 app.use("/lostPets", lostPetsRouter); // 보호게시판(여기 수정 필요)
 app.use("/myPage", myPageRouter); // 마이페이지
-app.use("/api", apiRouter); // 댓글 전송, 수정, 삭제, like 전송 등
-app.use("/login", loginRouter); //로그인 페이지로 이동
-app.use("/auth/kakao", kakaoRouter);
-app.use("/auth/kakao/callback", kakaoCallbackRouter);
+app.use("/myPage/modify", myInfoModifyRouter); // 내 정보변경 페이지
 
 module.exports = app;

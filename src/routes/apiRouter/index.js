@@ -19,7 +19,10 @@ const {
   isLoggedIn,
 } = require('../../middlewares');
 
-// URL은 논의 후에 확정하는 걸로...
+// id => user.id
+router.get('/users/:id', () => {});
+router.put('/users/:id', () => {});
+router.delete('/users/:id', () => {});
 
 router.post('/posts', isLoggedIn, createPost);
 // id => post.id
