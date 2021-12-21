@@ -1,9 +1,9 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 
-const shortId = require("./types/short-id");
-const commentSchema = require("./comment");
+const commentSchema = require('./comment');
 
-const postSchema = require("./post");
+const postSchema = require('./post');
+const reCommentSchema = require('./re-comment');
 
 const UserSchema = new Schema(
   {
@@ -21,10 +21,11 @@ const UserSchema = new Schema(
     },
     posts: [postSchema],
     comments: [commentSchema],
+    reComments: [reCommentSchema],
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = UserSchema;

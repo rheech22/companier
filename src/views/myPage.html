@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/style/myPage.css" />
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/myPetBoard.css" />
+    <script src="./js/dummyUser.js" defer></script>
+    <script src="./js/pagination.js" defer></script>
+    <script src="./js/userChange.js" defer></script>
+    <script src="./js/myComments.js" defer></script>
+    <script src="./js/myPosts.js" defer></script>
+
     <title>Document</title>
   </head>
   <body>
@@ -62,17 +68,15 @@
         <section id="myPosts">
           <div class="main__container">
             <section class="main-content__section"></section>
+            <div class="pagination"></div>
           </div>
         </section>
-        <script src="./js/myPosts.js"></script>
 
         <!-- 내가 쓴 댓글 -->
         <section id="myComments">
-          <div class="comments">
-            <section class="comments__list"></section>
-          </div>
+            <section class="myComments__list"></section>
+            <div class="pagination"></div>
         </section>
-        <script src="./js/myComments.js"></script>
       </section>
     </div>
     </main>
