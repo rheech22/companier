@@ -1,5 +1,8 @@
 const {
-  User, Post, Comment, ReComment,
+  User,
+  Post,
+  Comment,
+  ReComment,
 } = require('../../models');
 
 const getUserDetail = async (req, res) => {
@@ -12,9 +15,25 @@ const getUserDetail = async (req, res) => {
 
     if (!user) res.status(404).end();
 
-    console.log(user);
-
     res.status(200).json(user);
+  } catch (error) {
+    res.status(500);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { session } = req;
+
+  try {
+    const { email } = session.kakao.kakao_account;
+
+    await User.deleteOne({ email });
+
+    delete req.session.kakao;
+
+    req.session.save(() => {
+      res.redirect(204, '/');
+    });
   } catch (error) {
     res.status(500);
   }
@@ -52,7 +71,7 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   const {
-    body: { title, content, category },
+    body: { title, content },
     session,
   } = req;
 
@@ -61,13 +80,12 @@ const createPost = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (!title || !content || !category) return res.status(400).end();
+    if (!title || !content) return res.status(400).end();
 
     // 포스트 생성
     const post = await Post.create({
       title,
       content,
-      category,
       author: user.id,
     });
 
@@ -139,12 +157,12 @@ const deletePost = async (req, res) => {
 const updatePost = async (req, res) => {
   const {
     params: { id },
-    body: { title, content, category },
+    body: { title, content },
     session,
   } = req;
 
   try {
-    if (!title || !content || !category) {
+    if (!title || !content) {
       res.status(400).end();
     }
 
@@ -163,7 +181,6 @@ const updatePost = async (req, res) => {
       {
         title,
         content,
-        category,
       },
     );
 
@@ -171,7 +188,6 @@ const updatePost = async (req, res) => {
 
     updatedUserPost.title = title;
     updatedUserPost.content = content;
-    updatedUserPost.category = category;
 
     user.save();
 
@@ -520,4 +536,5 @@ module.exports = {
   deletePost,
   updatePost,
   getUserDetail,
+  deleteUser,
 };
