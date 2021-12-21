@@ -34,7 +34,13 @@ const getPostDetail = async (req, res) => {
   try {
     const { id } = req.params;
     const post = await Post.findOne({ _id: id }).populate("author");
-    if (!post) res.status(404).end();
+
+    post.views += 1;
+    post.save();
+
+    console.log(post);
+
+    if (!post) res.status(404).end(); // 현재는 콘솔에서 404로 출력됨. 프론트 쪽 끝나면 추가로 확인필요
 
     res.render("myPetBoardDetail.html", {
       isLogined: req.isLoggedIn,
