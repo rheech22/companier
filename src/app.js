@@ -2,11 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const path = require("path");
 
 // 라우터 목록
 const indexRouter = require("./routes/indexRouter");
-const userRouter = require("./routes/userRouter");
 const myPetBoard = require("./routes/postRouter/myPetBoardRouter/myPetBoardIndex");
 const lostPetsRouter = require("./routes/postRouter/lostPetsRouter/lostPetsIndex");
 const myPageRouter = require("./routes/myPageRouter");
@@ -52,6 +50,5 @@ app.use("/auth/kakao/callback", kakaoCallbackRouter);
 app.use("/myPetBoard", myPetBoard); // 근황게시판
 app.use("/lostPets", lostPetsRouter); // 보호게시판(여기 수정 필요)
 app.use("/myPage", myPageRouter); // 마이페이지
-app.use("/myPage/modify", myInfoModifyRouter); // 내 정보변경 페이지
 
 module.exports = app;

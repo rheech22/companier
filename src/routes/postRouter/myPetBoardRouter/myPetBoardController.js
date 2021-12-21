@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const { Post, User } = require("../../../models");
-=======
-const { Post } = require('../../../models');
->>>>>>> dd12c3846d997c3074ff5f0493fa3844719f0abf
 
 // 근황 게시판 페이지
 const getPosts = async (req, res) => {
