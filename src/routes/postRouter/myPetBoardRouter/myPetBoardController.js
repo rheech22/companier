@@ -1,4 +1,4 @@
-const { Post, User } = require("../../../models");
+const { Post, User } = require('../../../models');
 
 // 근황 게시판 페이지
 const getPosts = async (req, res) => {
@@ -12,12 +12,12 @@ const getPosts = async (req, res) => {
         .sort({ createdAt: -1 })
         .skip(perPage * (page - 1))
         .limit(perPage)
-        .populate("author"),
+        .populate('author'),
     ]);
 
     const totalPage = Math.ceil(total / perPage);
 
-    res.render("myPetBoard.html", {
+    res.render('myPetBoard.html', {
       isLogined: req.isLoggedIn,
       posts,
       page,
@@ -25,7 +25,7 @@ const getPosts = async (req, res) => {
       totalPage,
     });
   } catch (error) {
-    res.status(500).redirect("/");
+    res.status(500).redirect('/');
   }
 };
 
@@ -34,16 +34,22 @@ const getPostDetail = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findOne({ _id: id }).populate("author");
+    const post = await Post.findOne({ _id: id }).populate('author');
 
-    if (!post) res.status(404).end();
+    // if (!post) res.status(404).end();
 
-    res.render("myPetBoardDetail.html", {
+    post.views += 1;
+
+    console.log(post);
+
+    post.save();
+
+    res.render('myPetBoardDetail.html', {
       isLogined: req.isLoggedIn,
       data: post,
     });
   } catch (error) {
-    res.status(500).redirect("/");
+    res.status(500).redirect('/');
   }
 };
 
@@ -52,7 +58,7 @@ const createPost = async (req, res) => {
 
   try {
     // 테스트를 위해 유저 데이터를 임시로 특정
-    const user = await User.findOne({ nickname: "김동근1" });
+    const user = await User.findOne({ nickname: '김동근1' });
 
     // 포스트 생성
     const post = await Post.create({
@@ -101,7 +107,7 @@ const updatePost = async (req, res) => {
       title,
       content,
       category,
-    }
+    },
   );
 
   if (!post) res.status(404).end();

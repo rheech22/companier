@@ -13,14 +13,16 @@ const {
   createPost,
   deletePost,
   updatePost,
+  getUserDetail,
 } = require('./apiController');
 
 const {
   isLoggedIn,
 } = require('../../middlewares');
 
+router.get('/user-detail', isLoggedIn, getUserDetail);
+
 // id => user.id
-router.get('/users/:id', () => {});
 router.put('/users/:id', () => {});
 router.delete('/users/:id', () => {});
 
