@@ -20,9 +20,23 @@
 	margin-bottom: 2em;
 }
 
-.myPage__select__category {
+.myPage__select .list {
+	overflow: hidden;
 	margin: auto;
 	font-size: 1.1em;
+}
+
+.myPage__select .list li {
+	float: left;
+	margin-right: 14px;
+}
+
+.myPage__select .list li.is__on .myPage__select__category {
+	font-weight: bold;
+}
+
+.myPage__select .list .myPage__select__category {
+	font-size: 13px;
 }
 
 /* pagination */
@@ -67,7 +81,6 @@
 	margin-bottom: 2em;
 	display: block;
 	text-align: left;
-	display: none;
 }
 
 .userInfo__modify {
@@ -101,13 +114,12 @@
 /* 내가 쓴 글 */
 
 #myPosts {
-	display: block;
+	display: none;
 }
 
 /* 내가 쓴 댓글 */
 
 #myComments {
-	/* display: block; */
 	display: none;
 	margin: auto;
 	width: 50%;
