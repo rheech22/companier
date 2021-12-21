@@ -39,6 +39,7 @@
 
       <main role="main">
         <div class="lost">
+          <!-- 검색 필터 -->
           <div class="lost-search">
             <div class="lost-search__box">
               <form
@@ -70,51 +71,25 @@
                   <span>지역</span>
                   <select name="upr_cd">
                     <option value="">- 시/도 선택 -</option>
-                    <option value="">전체</option>
-                    <option value="6110000">서울특별시</option>
-                    <option value="6260000">부산광역시</option>
-                    <option value="6270000">대구광역시</option>
-                    <option value="6280000">인천광역시</option>
-                    <option value="6290000">광주광역시</option>
-                    <option value="6300000">대전광역시</option>
-                    <option value="6310000">울산광역시</option>
-                    <option value="5690000">세종특별자치시</option>
-                    <option value="6410000">경기도</option>
-                    <option value="6420000">강원도</option>
-                    <option value="6430000">충청북도</option>
-                    <option value="6440000">충청남도</option>
-                    <option value="6450000">전라북도</option>
-                    <option value="6460000">전라남도</option>
-                    <option value="6470000">경상북도</option>
-                    <option value="6480000">경상남도</option>
-                    <option value="6500000">제주특별자치도</option>
                   </select>
                   <select name="org_cd">
                     <option value="">- 시/군/구 선택 -</option>
-                    <option value="">전체</option>
                   </select>
                   <select name="care_reg_no">
                     <option value="">- 보호소 선택 -</option>
-                    <option value="">전체</option>
                   </select>
                 </div>
                 <div class="lost-search__kind">
                   <span>품종</span>
                   <select name="upkind">
                     <option value="">- 축종 선택 -</option>
-                    <option value="">전체</option>
-                    <option value="417000">개</option>
-                    <option value="422400">고양이</option>
-                    <option value="429900">기타</option>
                   </select>
                   <select name="kind">
                     <option value="">- 품종 선택 -</option>
-                    <option value="">전체</option>
                   </select>
                   <div class="lost-search__status">
                     <span>상태</span>
                     <select name="state">
-                      <option value="">전체</option>
                       <option value="notice">공고중</option>
                       <option value="protect">보호중</option>
                     </select>
@@ -127,10 +102,13 @@
             </div>
           </div>
 
+          <!-- 유기동물 목록 -->
           <div class="lost-content"></div>
         </div>
       </main>
     </div>
-    <script src="./js/lostPets.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/lostPetsApi.js"></script>
+    <script type="module" src="./js/lostPets.js"></script>
   </body>
 </html>
