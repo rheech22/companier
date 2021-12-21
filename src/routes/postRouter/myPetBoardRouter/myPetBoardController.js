@@ -4,7 +4,7 @@ const { Post } = require("../../../models");
 const getPosts = async (req, res) => {
   try {
     const page = Number(req.query.page || 1); // url 쿼리에서 page 받기, 기본값 1
-    const perPage = Number(req.query.perPage || 12); // url 쿼리에서 peRage 받기, 기본값 12
+    const perPage = Number(req.query.perPage || 15); // url 쿼리에서 peRage 받기, 기본값 15
 
     const [total, posts] = await Promise.all([
       Post.countDocuments({}),
