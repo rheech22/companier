@@ -30,7 +30,7 @@ router.get("/posts", async (req, res) => {
 });
 
 //내가 쓴 댓글, 대댓글 받아오는 api
-router.get("/posts", async (req, res) => {
+router.get("/comments", async (req, res) => {
   const email = req.session.kakao.kakao_account.email;
   const user = await User.findOne({ email }); // 세션의 카카오 이메일로 유저를 찾음
   const comments = await Comment.find({ author: user }).populate("author");
