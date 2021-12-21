@@ -16,6 +16,7 @@ const {
   getUserDetail,
   updateUser,
   deleteUser,
+  getLostPets,
 } = require('./apiController');
 
 const { isLoggedIn } = require('../../middlewares');
@@ -42,5 +43,7 @@ router.post('/:id/recomments', isLoggedIn, createReComment); // 대댓글 생성
 // id => recomment.id
 router.delete('/recomments/:id', isLoggedIn, deleteReComment); // 대댓글 삭제
 router.put('/recomments/:id', isLoggedIn, updateReComment); // 대댓글 수정
+
+router.get('/lost-pets', getLostPets);
 
 module.exports = router;

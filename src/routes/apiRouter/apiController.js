@@ -1,6 +1,38 @@
+const axios = require('axios');
+
 const {
   User, Post, Comment, ReComment,
 } = require('../../models');
+
+const getLostPets = async (req, res) => {
+  try {
+    const {
+      query: {
+        limit,
+        pageNo,
+      },
+    } = req;
+    const { SERVICE_KEY } = process.env;
+
+    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+
+    const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${limit}&ServiceKey=${SERVICE_KEY}`;
+
+    const {
+      data: {
+        response: {
+          body: {
+            items: lostPets,
+          },
+        },
+      },
+    } = await axios.get(URL);
+
+    res.json(lostPets);
+  } catch (error) {
+    res.status(500);
+  }
+};
 
 const getUserDetail = async (req, res) => {
   const {
@@ -563,4 +595,5 @@ module.exports = {
   getUserDetail,
   updateUser,
   deleteUser,
+  getLostPets,
 };
