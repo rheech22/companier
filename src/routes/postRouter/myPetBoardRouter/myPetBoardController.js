@@ -33,9 +33,7 @@ const getPosts = async (req, res) => {
 const getPostDetail = async (req, res) => {
   try {
     const { id } = req.params;
-
     const post = await Post.findOne({ _id: id }).populate("author");
-
     if (!post) res.status(404).end();
 
     res.render("myPetBoardDetail.html", {
