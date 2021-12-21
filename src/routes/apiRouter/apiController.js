@@ -3,7 +3,9 @@ const {
 } = require('../../models');
 
 const getUserDetail = async (req, res) => {
-  const { session } = req;
+  const {
+    session,
+  } = req;
 
   try {
     const { email } = session.kakao.kakao_account;
@@ -20,23 +22,23 @@ const getUserDetail = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const {
+    params: { id },
     body: {
       nickname,
     },
-    session,
   } = req;
   try {
-    const { email } = session.kakao.kakao_account;
+    // const { email } = session.kakao.kakao_account;
     // const email = '1kimdg1@gmail.com';
 
     await User.updateOne(
-      { email },
+      { _id: id },
       {
         nickname,
       },
     );
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ _id: id });
 
     res.status(200).json(user);
   } catch (error) {
@@ -45,18 +47,18 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { session } = req;
+  const {
+    params: { id },
+  } = req;
 
   try {
-    const { email } = session.kakao.kakao_account;
-
-    await User.deleteOne({ email });
+    await User.deleteOne({ _id: id });
 
     delete req.session.kakao;
 
-    req.session.save(() => {
-      res.redirect(204, '/');
-    });
+    req.session.save();
+
+    res.redirect(204, '/');
   } catch (error) {
     res.status(500);
   }
