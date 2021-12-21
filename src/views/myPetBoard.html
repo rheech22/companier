@@ -56,10 +56,10 @@
                   </div>
                   <div class="main-content__info">
                     <p class="main-content__title">
-                      <%=locals.posts[i].title%><!--게시물 제목-->
+                      <%=locals.posts[i]?.title%><!--게시물 제목-->
                     </p>
                     <span class="main-content__author"
-                      ><%=locals.posts[i].author.nickname%></span
+                      ><%=locals.posts[i].author ? locals.posts[i].author.nickname : '탈퇴한 유저'%></span
                     ><!--작성자-->
                     <div class="main-content__cnt">
                       <!--조회수-->

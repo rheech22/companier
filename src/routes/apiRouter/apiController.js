@@ -171,7 +171,6 @@ const updatePost = async (req, res) => {
     if (error.kind === 'ObjectId') {
       return res.status(400).end();
     }
-    console.log(error);
     res.status(500).end();
   }
 };
@@ -188,7 +187,6 @@ const createComment = async (req, res) => {
 
     // 유저 찾기
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     if (!user) {
       return res.status(404).end();
@@ -228,7 +226,6 @@ const deleteComment = async (req, res) => {
     const { email } = session.kakao.kakao_account;
     // 유저 찾기
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
@@ -280,7 +277,6 @@ const updateComment = async (req, res) => {
     const { email } = session.kakao.kakao_account;
     // 유저 찾기
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 댓글 수정
     const comment = await Comment.findOne({ _id: id })
@@ -329,7 +325,6 @@ const createReComment = async (req, res) => {
     const { email } = session.kakao.kakao_account;
 
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     if (!user) {
       return res.status(404).end();
@@ -384,7 +379,6 @@ const deleteReComment = async (req, res) => {
     const { email } = session.kakao.kakao_account;
 
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 대댓글 삭제
     const reComment = await ReComment.findOne({ _id: id })
@@ -453,7 +447,6 @@ const updateReComment = async (req, res) => {
     const { email } = session.kakao.kakao_account;
 
     const user = await User.findOne({ email });
-    // const user = await User.findOne({ nickname: 'TEST' });
 
     // 대댓글 수정
     const reComment = await ReComment.findOne({ _id: id })
