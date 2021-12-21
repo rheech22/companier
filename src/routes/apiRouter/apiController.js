@@ -12,9 +12,25 @@ const getUserDetail = async (req, res) => {
 
     if (!user) res.status(404).end();
 
-    console.log(user);
-
     res.status(200).json(user);
+  } catch (error) {
+    res.status(500);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { session } = req;
+
+  try {
+    const { email } = session.kakao.kakao_account;
+
+    await User.deleteOne({ email });
+
+    delete req.session.kakao;
+
+    req.session.save(() => {
+      res.redirect(204, '/');
+    });
   } catch (error) {
     res.status(500);
   }
@@ -520,4 +536,5 @@ module.exports = {
   deletePost,
   updatePost,
   getUserDetail,
+  deleteUser,
 };

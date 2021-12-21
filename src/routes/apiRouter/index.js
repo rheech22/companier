@@ -14,6 +14,7 @@ const {
   deletePost,
   updatePost,
   getUserDetail,
+  deleteUser,
 } = require('./apiController');
 
 const {
@@ -24,7 +25,7 @@ router.get('/user-detail', isLoggedIn, getUserDetail);
 
 // id => user.id
 router.put('/users/:id', () => {});
-router.delete('/users/:id', () => {});
+router.delete('/users/:id', isLoggedIn, deleteUser);
 
 router.post('/posts', isLoggedIn, createPost);
 // id => post.id
