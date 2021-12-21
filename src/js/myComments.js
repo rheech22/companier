@@ -1,104 +1,54 @@
-const makeComments = () => {
-  const mainContent = document.querySelector(".comments__list");
+// 내 댓글 조회하기
 
-  const makeHTML = (postLink, comment, author, postTitle) => {
-    return `<article class="content">
-              <a href=${postLink}>
-                <div class = "content__info">
-                  <p class="content__info__comment">${comment}</p>
-                  <p class="content__info__date">${author}</p>
-                  <p class="content__info__post">${postTitle}</p>
-                </div>
-              </a>
-            <button id = "deleteComment" class="btn">삭제</button>
-            </article>
-            <div class="content__seperator">
-              <div class="content__seperator__line"></div>
-            </div>`;
-  };
+function makeComments() {
+	// 각 컨텐츠 칸을 이루는 HTML 구조
 
-  const user = {
-    posts: [
-      { title: "제목입니다.", content: "내용입니다.", views: "123" },
-      { title: "제목입니다1", content: "내용입니다2", views: "1323" },
-    ],
-    comments: [
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-      {
-        content: "내용321입니다.",
-        author: "작성자",
-        views: "123",
-        postLink: "#",
-        postTitle: "글 제목",
-      },
-    ],
-  };
+	const data = user.comments;
+	const displayTag = document.querySelector(".myComments__list");
+	const pagesTag = document.querySelector("#myComments > .pagination");
+	const elementName = "article";
+	const elementClass = "content";
+	const rows = 5;
+	const makeHTML = (data) => {
+		const { parentPost, content, timestamps } = data;
+		return `<form class = "content__info">
+					<a href=${parentPost} class="content__info__link">
+						<p class="content__info__comment">${content}</p>
+						<p class="content__info__post">${timestamps}</p>
+					</a>
+					<div class="deleteBox">
+						<button class="btn">삭제</button>
+					</div>
+				</form>
+				<div class="content__seperator">
+					<div class="content__seperator__line">
+				</div>`;
+	};
 
-  mainContent.innerHTML = user.comments
-    .map((obj) =>
-      makeHTML(obj.postLink, obj.content, obj.author, obj.postTitle)
-    )
-    .join("");
-};
+	pagination(
+		data,
+		rows,
+		displayTag,
+		elementName,
+		elementClass,
+		makeHTML,
+		pagesTag
+	);
+
+	// 댓글을 지울 시, 거기에 달린 대댓글은
+	// 1. 같이 지운다. 2. 대댓글은 남기고, 지워진 댓글은 "지워진 댓글입니다" 표시 ?
+
+	const deleteBtns = document.querySelectorAll(".deleteBox > .btn");
+	deleteBtns.forEach((btn) => {
+		btn.addEventListener("click", function (e) {
+			e.preventDefault();
+			// const ele = this.parentElement.parentElement;
+			// const id = ele.querySelector(".content__info__post");
+			// console.log(user.comments.indexOf(id.innerText));
+			const ele = this.parentElement.parentElement.parentElement;
+			if (confirm("댓글을 지우시겠어요?")) displayTag.removeChild(ele);
+		});
+	});
+}
 
 makeComments();
-
-const deleteBtn = document.getElementById("deleteComment");
-deleteBtn.addEventListener("click", (e) => {
-  alert("지우시겠습니까?");
-});

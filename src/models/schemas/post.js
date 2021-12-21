@@ -20,7 +20,7 @@ const PostSchema = new Schema(
     },
     category: {
       type: String,
-      default: '자유',
+      default: '반려 이야기',
     },
     likes: {
       type: Number,
