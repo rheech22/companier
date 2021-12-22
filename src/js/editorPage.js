@@ -1,6 +1,8 @@
 const postBtn = document.querySelector(".editor__content__submit");
 const title = document.querySelector(".editor__options__title-input");
 
+console.log(axios);
+
 //이미지 처리를 하는 핸들러, 고민 중...
 const imageHandler = () => {
   console.log("에디터에서 이미지 버튼이 클릭되었습니다");
@@ -20,13 +22,8 @@ const imageHandler = () => {
     formData.append("img", file);
     console.log("들어간 data: ", formData.get("img"));
     try {
-      await fetch("/api/imgFirst", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      await axios.post("/api/imgFirst", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
     } catch (error) {
       console.log("error");
