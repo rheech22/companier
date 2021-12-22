@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/reset.css" />
+    <link rel="stylesheet" href="./style/index.css" />
+    <link rel="stylesheet" href="./style/lostPets.css" />
+    <title>반려in</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <header>
+        <nav>
+          <div class="header">
+            <div class="header__left">
+              <div class="header__logo"><a href="/">반려in</a></div>
+              <ul class="header__menu-list">
+                <li><a href="/lostPets">보호 중입니다</a></li>
+                <li><a href="/myPetBoard">반려 이야기</a></li>
+              </ul>
+            </div>
+            <div class="header__right">
+              <div class="header__my-page">
+                <a href="/myPage">마이페이지</a>
+              </div>
+              <% if(locals.isLogined) {%>
+              <button
+                class="btn header__login-btn"
+                onclick="location.href='/auth/kakao/logout'"
+              >
+                로그아웃
+              </button>
+              <%} else {%>
+              <button
+                class="btn header__login-btn"
+                onclick="location.href='/login'"
+              >
+                로그인
+              </button>
+              <%}%>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main role="main">
+        <div class="lost">
+          <!-- 검색 필터 -->
+          <div class="lost-search">
+            <div class="lost-search__box">
+              <form
+                name="searchLostForm"
+                method="get"
+                action="./"
+                accept-charset="utf-8"
+                autocomplete="off"
+              >
+                <div class="lost-search__date">
+                  <span>날짜</span>
+                  <input
+                    type="date"
+                    id="bgnde"
+                    name="bgnde"
+                    placeholder="시작일"
+                    class="hasDatepicker"
+                  />
+                  <span>~</span>
+                  <input
+                    type="date"
+                    id="endde"
+                    name="endde"
+                    placeholder="종료일"
+                    class="hasDatepicker"
+                  />
+                </div>
+                <div class="lost-search__place">
+                  <span>지역</span>
+                  <select name="upr_cd">
+                    <option value="">- 시/도 선택 -</option>
+                  </select>
+                  <select name="org_cd">
+                    <option value="">- 시/군/구 선택 -</option>
+                  </select>
+                  <select name="care_reg_no">
+                    <option value="">- 보호소 선택 -</option>
+                  </select>
+                </div>
+                <div class="lost-search__kind">
+                  <span>품종</span>
+                  <select name="upkind">
+                    <option value="">- 축종 선택 -</option>
+                  </select>
+                  <select name="kind">
+                    <option value="">- 품종 선택 -</option>
+                  </select>
+                  <div class="lost-search__status">
+                    <span>상태</span>
+                    <select name="state">
+                      <option value="notice">공고중</option>
+                      <option value="protect">보호중</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="search-btn-container">
+                  <button class="btn search-btn"><a href="#">검색</a></button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 유기동물 목록 -->
+          <div class="lost-content"></div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./js/lostPets.js"></script>
+  </body>
+</html>
