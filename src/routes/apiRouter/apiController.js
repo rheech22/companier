@@ -4,6 +4,25 @@ const {
   User, Post, Comment, ReComment,
 } = require('../../models');
 
+const getUserLoggedIn = async (req, res) => {
+  try {
+    const {
+      isLoggedIn,
+      session,
+    } = req;
+
+    if (!isLoggedIn) return res.status(404).end();
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+
+    res.json(user).end();
+  } catch (error) {
+    res.status(500);
+  }
+};
+
 const getLostPets = async (req, res) => {
   try {
     const {
@@ -12,6 +31,7 @@ const getLostPets = async (req, res) => {
         pageNo,
       },
     } = req;
+
     const { SERVICE_KEY } = process.env;
 
     const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
@@ -21,7 +41,7 @@ const getLostPets = async (req, res) => {
     const {
       data: {
         response: {
-          body: lostPets
+          body: lostPets,
         },
       },
     } = await axios.get(URL);
@@ -594,4 +614,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getLostPets,
+  getUserLoggedIn,
 };

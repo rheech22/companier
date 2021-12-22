@@ -17,9 +17,12 @@ const {
   updateUser,
   deleteUser,
   getLostPets,
+  getUserLoggedIn,
 } = require('./apiController');
 
-const { isLoggedIn } = require('../../middlewares');
+const { isLoggedIn, setLoggedInStatus } = require('../../middlewares');
+
+router.get('/get-user', setLoggedInStatus, getUserLoggedIn);
 
 router.get('/user-detail', isLoggedIn, getUserDetail);
 
