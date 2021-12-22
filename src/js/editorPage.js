@@ -1,29 +1,6 @@
 const postBtn = document.querySelector(".editor__content__submit");
 const title = document.querySelector(".editor__options__title-input");
 
-//이미지 처리를 하는 핸들러, 고민 중...
-// const imageHandler = () => {
-//   console.log("에디터에서 이미지 버튼이 클릭되었습니다");
-
-//   const input = document.createElement("input");
-
-//   input.setAttribute("type", "file");
-//   input.setAttribute("accept", "image/*");
-//   input.click();
-
-//   input.addEventListener("change", async () => {
-//     const file = input.files[0];
-//     // multer에 맞는 형식으로 데이터 만들어준다.
-//     const formData = new FormData();
-//     formData.append("img", file);
-
-//     try {
-//     } catch (error) {
-//       console.log("error");
-//     }
-//   });
-// };
-
 // Quill editor
 let option = {
   placeholder: "내용을 입력해주세요.",
@@ -60,8 +37,7 @@ async function sendPost(e) {
   } else if (content === contentValidate) {
     return alert("내용을 입력하세요.");
   }
-  //server와 연결 확인 후, 응답에 따른 코드 추가로 작성 예정
-  const postResponse = await fetch("{{HOST}}/api/posts", {
+  const postResponse = await fetch("/api/posts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -69,6 +45,35 @@ async function sendPost(e) {
       content: content,
     }),
   });
-  console.log(postResponse);
+
+  if (postResponse.status === 201) {
+    alert("게시물이 등록되었습니다!");
+    window.location.assign("/myPetBoard");
+  } else {
+    alert("오류가 발생했습니다.");
+  }
 }
 postBtn.addEventListener("click", sendPost);
+
+//이미지 처리를 하는 핸들러, 고민 중...
+// const imageHandler = () => {
+//   console.log("에디터에서 이미지 버튼이 클릭되었습니다");
+
+//   const input = document.createElement("input");
+
+//   input.setAttribute("type", "file");
+//   input.setAttribute("accept", "image/*");
+//   input.click();
+
+//   input.addEventListener("change", async () => {
+//     const file = input.files[0];
+//     // multer에 맞는 형식으로 데이터 만들어준다.
+//     const formData = new FormData();
+//     formData.append("img", file);
+
+//     try {
+//     } catch (error) {
+//       console.log("error");
+//     }
+//   });
+// };
