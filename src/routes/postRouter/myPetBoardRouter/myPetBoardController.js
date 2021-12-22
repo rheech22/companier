@@ -52,6 +52,7 @@ const getPostDetail = async (req, res) => {
 };
 
 const getWritePage = (req, res) => {
+  console.log("test1");
   try {
     res.render("editorPage.html");
   } catch (error) {
