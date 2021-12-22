@@ -61,3 +61,5 @@ const paintLostPets = async () => {
 };
 
 paintLostPets();
+
+export { lostPetList };
