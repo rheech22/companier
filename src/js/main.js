@@ -17,3 +17,32 @@ function slide() {
 
 slide();
 setInterval(slide, 2000);
+
+const ctx = document.getElementById("myChart");
+
+const myChart = new Chart(ctx, {
+	type: "doughnut",
+	options: {
+		responsive: false,
+		plugins: {
+			title: {
+				display: true,
+				text: "지난 주 입양 통계",
+				padding: {
+					// top: 10,
+				},
+			},
+		},
+	},
+	data: {
+		labels: ["강아지", "고양이", "그 외"],
+		datasets: [
+			{
+				label: "My First Dataset",
+				data: [11, 2, 1],
+				backgroundColor: ["#ecbb7f", "#a48772", "#a47272"],
+				hoverOffset: 4,
+			},
+		],
+	},
+});

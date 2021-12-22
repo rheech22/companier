@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="/style/reset.css" />
 		<link rel="stylesheet" href="/style/index.css" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 		<script src="./js/main.js" defer></script>
 		<title>반려in</title>
 	</head>
@@ -59,7 +60,9 @@
 						지난 주에는 <br />14마리가 새 가족을 만났습니다! <br />새로운 가족이
 						되어주세요!
 					</h1>
-					<div class="news__statistics"></div>
+					<div class="news__statistics">
+						<canvas id="myChart" style="width: 300px; height: 300px"></canvas>
+					</div>
 				</section>
 
 				<!-- board -->
