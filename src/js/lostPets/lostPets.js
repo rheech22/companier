@@ -1,11 +1,3 @@
-import { getLostPets } from "./getLostPets.js";
-
-const lostPetData = await getLostPets(1);
-const { totalCount } = lostPetData; // pagination을 위한 전체 데이터 수
-const {
-  items: { item: lostPetList },
-} = lostPetData;
-
 const createLostPetItem = (item) => {
   const {
     age,
@@ -54,12 +46,10 @@ const createLostPetItem = (item) => {
   return lostPetTemplate;
 };
 
-const paintLostPets = async () => {
+const paintLostPets = (lostPetList) => {
   const lostContent = document.querySelector(".lost-content");
   const lostPetItems = lostPetList.map(createLostPetItem);
   lostContent.innerHTML = lostPetItems.join("");
 };
 
-paintLostPets();
-
-export { lostPetList };
+export { paintLostPets };
