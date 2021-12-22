@@ -1,10 +1,5 @@
-import { lostPetList } from "./lostPets.js";
-
-console.log(lostPetList);
-
 const createLostPetDetail = (item) => {
   const lostPetDetailTemplate = `
-<div class="lost-detail-container">
   <div class="lost-detail__img-container">
     <img
       class="lost-detail__img"
@@ -51,11 +46,11 @@ const createLostPetDetail = (item) => {
           </tr>
           <tr>
             <th>발견장소</th>
-            <td>${item.happenPlace}</td>
+            <td colspan="3">${item.happenPlace}</td>
           </tr>
           <tr>
             <th>특징</th>
-            <td>${item.specialMark}</td>
+            <td colspan="3">${item.specialMark}</td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +72,7 @@ const createLostPetDetail = (item) => {
           </tr>
           <tr>
             <th>관할기관</th>
-            <td>${item.orgNm}</td>
+            <td colspan="3">${item.orgNm}</td>
           </tr>
           <tr>
             <th>담당자</th>
@@ -89,18 +84,19 @@ const createLostPetDetail = (item) => {
       </table>
     </div>
   </div>
-</div>
 `;
 
   return lostPetDetailTemplate;
 };
 
-// const paintLostPetDetail = async () => {
-//   const lostDetail = document.querySelector(".lost-detail");
-//   const pathName = location.pathname.split("/")[2];
-//   const currentPet = lostPetList.find((item) => item.desertionNo === pathName);
-//   const lostPetDetail = createLostPetDetail(currentPet);
-//   lostDetail.innerHTML = lostPetDetail;
-// };
+const paintLostPetDetail = (lostPetList) => {
+  const lostDetail = document.querySelector(".lost-detail-container");
+  const pathName = location.pathname.split("/")[2];
+  const currentPet = lostPetList.find(
+    (item) => String(item.desertionNo) === pathName
+  );
+  const lostPetDetail = createLostPetDetail(currentPet);
+  lostDetail.innerHTML = lostPetDetail;
+};
 
-// paintLostPetDetail();
+export { paintLostPetDetail };
