@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-/* 유기동물 검색박스 */
+/* 검색 필터 */
 .lost-search__box {
   padding: 10px 30px;
   display: flex;
@@ -42,9 +42,7 @@
   width: 60px;
   height: 30px;
   font-size: 14px;
-  margin-left: auto;
-  margin-right: 10px;
-  margin-bottom: 5px;
+  margin: 5px auto;
 }
 
 .search-btn-container {
