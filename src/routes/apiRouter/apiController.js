@@ -574,7 +574,7 @@ const updateReComment = async (req, res) => {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
-      cb(null, "src/imgs/uploads");
+      cb(null, "src/uploads/imgs");
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
@@ -585,43 +585,13 @@ const upload = multer({
 });
 
 const process1 = async (req, res) => {
-  // const {
-  //   body: { formData },
-  // } = req;
-
-  console.log("req.body데이터");
-  console.log(req.body);
-  res.end();
-  return;
-  //console.log(formData);
-
-  // try {
-  //   const result = await axios.post(
-  //     "http://localhost:3000/api/imgSecond",
-  //     formData
-  //   );
-  //   //console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
-  //   const IMG_URL = result.data.url;
-  //   const editor = quillRef.current.getEditor();
-  //   const range = editor.getSelection();
-  //   // 가져온 위치에 이미지를 삽입한다
-  //   editor.insertEmbed(range, "image", IMG_URL);
-  // } catch (error) {
-  //   console.log(error);
-  // }
-};
-const process2 = (req, res) => {
-  console.log("테스트2");
-  console.log("test1: ", req);
   console.log("전달받은 파일", req.file);
   console.log("저장된 파일의 이름", req.file.filename);
-
-  // 파일이 저장된 경로를 클라이언트에게 반환해준다.
-  const IMG_URL = `http://localhost:3000/imgs/uploads/${req.file.filename}`;
+  const IMG_URL = `http://localhost:3000/uploads/imgs/${req.file.filename}`;
   console.log(IMG_URL);
   res.json({ url: IMG_URL });
-  return;
 };
+
 module.exports = {
   createComment,
   deleteComment,
@@ -638,6 +608,5 @@ module.exports = {
   deleteUser,
   getLostPets,
   process1,
-  process2,
   upload,
 };

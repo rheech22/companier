@@ -1,8 +1,6 @@
 const postBtn = document.querySelector(".editor__content__submit");
 const title = document.querySelector(".editor__options__title-input");
 
-console.log(axios);
-
 //이미지 처리를 하는 핸들러, 고민 중...
 const imageHandler = () => {
   console.log("에디터에서 이미지 버튼이 클릭되었습니다");
@@ -21,12 +19,23 @@ const imageHandler = () => {
     const formData = new FormData();
     formData.append("img", file);
     console.log("들어간 data: ", formData.get("img"));
+
     try {
-      await axios.post("/api/imgFirst", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const result = await axios.post("/api/imgFirst", formData, {
+        headers: {
+          "Content-Type":
+            "application/json; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        },
       });
+
+      const IMG_URL = result.data.url;
+
+      console.log("성공 시, 백엔드가 보내주는 데이터", IMG_URL);
+      console.log(quill);
+      const range = quill.getSelection();
+      quill.insertEmbed(range, "image", IMG_URL);
     } catch (error) {
-      console.log("error");
+      console.log("실패");
     }
   });
 };
