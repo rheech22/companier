@@ -17,6 +17,9 @@ const {
   updateUser,
   deleteUser,
   getLostPets,
+  process1,
+  process2,
+  upload,
 } = require("./apiController");
 
 const { isLoggedIn } = require("../../middlewares");
@@ -26,6 +29,9 @@ router.get("/user-detail", isLoggedIn, getUserDetail);
 // id => user.id
 router.put("/users/:id", isLoggedIn, updateUser);
 router.delete("/users/:id", isLoggedIn, deleteUser);
+
+router.post("/imgFirst", process1); //이미지 업로드
+router.post("/imgSecond", upload.single("img"), process2);
 
 router.post("/posts", isLoggedIn, createPost); // 포스트 생성
 // id => post.id

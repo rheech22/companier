@@ -17,8 +17,8 @@ const apiRouter = require("./routes/apiRouter");
 const app = express();
 // view 경로 설정
 app.set("views", `${__dirname}/views`); //가상경로
-app.set("imgs", `${__dirname}/views`);
-app.use(express.static("src")); //절대경로 src
+app.set("imgs", `${__dirname}/imgs`);
+app.use(express.static("src")); //정적파일의 절대경로는 src 부터
 
 // 화면 구성 엔진을 ejs로 설정
 app.set("view engine", "ejs");
