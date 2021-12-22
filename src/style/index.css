@@ -176,11 +176,23 @@ nav {
 .news__description {
 	margin-right: auto;
 	font-size: 2em;
+	width: 50%;
 }
 
 .news__statistics {
-	background: center/cover no-repeat
-		url("https://images.unsplash.com/photo-1533135044283-42dc2b70abfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+	height: 300px;
+	width: 50%;
+}
+
+.news__statistics #myChart {
+	width: 300px;
+	height: 300px;
+	margin: auto;
+}
+
+canvas {
+	width: 300px;
+	height: 300px;
 }
 
 /* board */
