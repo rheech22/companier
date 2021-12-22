@@ -25,7 +25,7 @@ const title = document.querySelector(".editor__options__title-input");
 // };
 
 // Quill editor
-var option = {
+let option = {
   placeholder: "내용을 입력해주세요.",
   theme: "snow",
   modules: {
@@ -44,7 +44,7 @@ var option = {
   },
 };
 
-var quill = new Quill("#quill", option);
+let quill = new Quill("#quill", option);
 
 async function sendPost(e) {
   e.preventDefault();
@@ -59,17 +59,16 @@ async function sendPost(e) {
     return alert("제목을 입력하세요");
   } else if (content === contentValidate) {
     return alert("내용을 입력하세요.");
-  } else {
-    //server와 연결 확인 후, 응답에 따른 코드 추가로 작성 예정
-    const postResponse = await fetch("{{HOST}}/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: title.value,
-        content: content,
-      }),
-    });
-    console.log(postResponse);
   }
+  //server와 연결 확인 후, 응답에 따른 코드 추가로 작성 예정
+  const postResponse = await fetch("{{HOST}}/api/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: title.value,
+      content: content,
+    }),
+  });
+  console.log(postResponse);
 }
 postBtn.addEventListener("click", sendPost);

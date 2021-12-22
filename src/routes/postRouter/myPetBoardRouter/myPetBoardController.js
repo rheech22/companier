@@ -51,7 +51,17 @@ const getPostDetail = async (req, res) => {
   }
 };
 
+const getWritePage = (req, res) => {
+  try {
+    res.render("editorPage.html");
+  } catch (error) {
+    console.log(error);
+    res.status(500).redirect("/");
+  }
+};
+
 module.exports = {
   getPosts,
   getPostDetail,
+  getWritePage,
 };
