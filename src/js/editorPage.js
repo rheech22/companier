@@ -1,6 +1,45 @@
 const postBtn = document.querySelector(".editor__content__submit");
 const title = document.querySelector(".editor__options__title-input");
 
+//이미지 처리를 하는 핸들러, 고민 중...
+const imageHandler = () => {
+  console.log("에디터에서 이미지 버튼이 클릭되었습니다");
+
+  const input = document.createElement("input");
+
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
+
+  input.addEventListener("change", async () => {
+    console.log("인풋: ", input);
+    const file = input.files[0];
+    console.log("파일즈 files: ", input.files[0]);
+    // multer에 맞는 형식으로 데이터 만들어준다.
+    const formData = new FormData();
+    formData.append("img", file);
+    console.log("들어간 data: ", formData.get("img"));
+
+    try {
+      const result = await axios.post("/api/imgFirst", formData, {
+        headers: {
+          "Content-Type":
+            "application/json; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        },
+      });
+
+      const IMG_URL = result.data.url;
+
+      console.log("성공 시, 백엔드가 보내주는 데이터", IMG_URL);
+      console.log(quill);
+      const range = quill.getSelection();
+      quill.insertEmbed(range, "image", IMG_URL);
+    } catch (error) {
+      console.log("실패");
+    }
+  });
+};
+
 // Quill editor
 let option = {
   placeholder: "내용을 입력해주세요.",
@@ -15,7 +54,7 @@ let option = {
         ["image"],
       ],
       handlers: {
-        // image: imageHandler,
+        image: imageHandler,
       },
     },
   },
@@ -39,7 +78,9 @@ async function sendPost(e) {
   }
   const postResponse = await fetch("/api/posts", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       title: title.value,
       content: content,
@@ -54,26 +95,3 @@ async function sendPost(e) {
   }
 }
 postBtn.addEventListener("click", sendPost);
-
-//이미지 처리를 하는 핸들러, 고민 중...
-// const imageHandler = () => {
-//   console.log("에디터에서 이미지 버튼이 클릭되었습니다");
-
-//   const input = document.createElement("input");
-
-//   input.setAttribute("type", "file");
-//   input.setAttribute("accept", "image/*");
-//   input.click();
-
-//   input.addEventListener("change", async () => {
-//     const file = input.files[0];
-//     // multer에 맞는 형식으로 데이터 만들어준다.
-//     const formData = new FormData();
-//     formData.append("img", file);
-
-//     try {
-//     } catch (error) {
-//       console.log("error");
-//     }
-//   });
-// };
