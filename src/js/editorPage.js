@@ -16,7 +16,6 @@ const title = document.querySelector(".editor__options__title-input");
 //     // multer에 맞는 형식으로 데이터 만들어준다.
 //     const formData = new FormData();
 //     formData.append("img", file);
-
 //     try {
 //     } catch (error) {
 //       console.log("error");
@@ -61,7 +60,7 @@ async function sendPost(e) {
     return alert("내용을 입력하세요.");
   }
   //server와 연결 확인 후, 응답에 따른 코드 추가로 작성 예정
-  const postResponse = await fetch("{{HOST}}/api/posts", {
+  const postResponse = await fetch("/api/posts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -69,6 +68,13 @@ async function sendPost(e) {
       content: content,
     }),
   });
+
+  console.log(content);
+
+  if (postResponse.status === 201) {
+    window.location.assign("/myPetBoard");
+  }
+
   console.log(postResponse);
 }
 postBtn.addEventListener("click", sendPost);
