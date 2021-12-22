@@ -1,4 +1,6 @@
 const axios = require("axios");
+const multer = require("multer");
+const path = require("path");
 
 const { User, Post, Comment, ReComment } = require("../../models");
 
