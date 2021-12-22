@@ -33,7 +33,7 @@ router.delete("/users/:id", isLoggedIn, deleteUser);
 router.post("/imgFirst", process1); //이미지 업로드
 router.post("/imgSecond", upload.single("img"), process2);
 
-router.post("/posts", isLoggedIn, createPost); // 포스트 생성
+router.post("/posts", createPost); // 포스트 생성
 // id => post.id
 router.get("/posts/:id", getPost);
 router.delete("/posts/:id", isLoggedIn, deletePost);

@@ -14,17 +14,19 @@ const imageHandler = () => {
   input.addEventListener("change", async () => {
     console.log("인풋: ", input);
     const file = input.files[0];
+    console.log("파일즈 files: ", input.files[0]);
     // multer에 맞는 형식으로 데이터 만들어준다.
     const formData = new FormData();
     formData.append("img", file);
-    console.log("에디터js formData: ", formData);
+    console.log("들어간 data: ", formData.get("img"));
     try {
       await fetch("/api/imgFirst", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: formData,
-        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
     } catch (error) {
       console.log("error");
@@ -70,7 +72,9 @@ async function sendPost(e) {
   }
   const postResponse = await fetch("/api/posts", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       title: title.value,
       content: content,
