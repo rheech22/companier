@@ -84,10 +84,10 @@
         <% for(let i=1; i <=locals.totalPage; i++) { %>
           <li>
             <% if(i==locals.page) {%>
-              <a class="list-paginator__pageBtn selected" href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>">
+              <a class="list-paginator__pageBtn selected" href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>">
                 <%= i%>
                   <%} else {%>
-                    <a class="list-paginator__pageBtn" href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>">
+                    <a class="list-paginator__pageBtn" href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>">
                       <%= i%>
                         <%}%>
                     </a>
