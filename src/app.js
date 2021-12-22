@@ -16,8 +16,9 @@ const apiRouter = require("./routes/apiRouter");
 
 const app = express();
 // view 경로 설정
-app.set("views", `${__dirname}/views`);
-app.use(express.static("src"));
+app.set("views", `${__dirname}/views`); //가상경로
+app.set("imgs", `${__dirname}/views`);
+app.use(express.static("src")); //절대경로 src
 
 // 화면 구성 엔진을 ejs로 설정
 app.set("view engine", "ejs");
@@ -37,8 +38,8 @@ app.use(cors()); // CORS 미들웨어 등록
 
 app.use(morgan("dev"));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: 5000000 }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // 라우터 추가하기
 
