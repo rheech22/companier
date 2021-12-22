@@ -18,9 +18,7 @@ const getLostPets = async (req, res) => {
 
     const {
       data: {
-        response: {
-          body: { items: lostPets },
-        },
+        response: { body: lostPets },
       },
     } = await axios.get(URL);
 
