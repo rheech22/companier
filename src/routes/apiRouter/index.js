@@ -18,7 +18,7 @@ const {
   deleteUser,
   getLostPets,
   getUserLoggedIn,
-  process1,
+  returnImgUrl,
   upload,
 } = require("./apiController");
 
@@ -30,7 +30,7 @@ router.get("/user-detail", isLoggedIn, getUserDetail);
 
 router.put("/users/:id", isLoggedIn, updateUser);
 router.delete("/users/:id", isLoggedIn, deleteUser);
-router.post("/imgFirst", upload.single("img"), process1); //이미지 업로드
+router.post("/imgFirst", upload.single("img"), returnImgUrl); //이미지 업로드
 
 router.post("/posts", isLoggedIn, createPost);
 // id => post.id

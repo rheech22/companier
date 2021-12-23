@@ -611,7 +611,7 @@ const upload = multer({
   }),
 });
 
-const process1 = async (req, res) => {
+const returnImgUrl = (req, res) => {
   console.log("전달받은 파일", req.file);
   console.log("저장된 파일의 이름", req.file.filename);
   const IMG_URL = `http://localhost:3000/uploads/imgs/${req.file.filename}`; // 경로 + 파일이름
@@ -635,6 +635,6 @@ module.exports = {
   deleteUser,
   getLostPets,
   getUserLoggedIn,
-  process1,
+  returnImgUrl,
   upload,
 };
