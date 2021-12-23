@@ -13,7 +13,6 @@ const pagination = (
   pageTag,
   pageCut
 ) => {
-  console.log(data.length);
   let currentPage = 1;
   const totalPage = Math.ceil(data.length / rows);
   let pageGroup = Math.ceil(currentPage / pageCut);
@@ -71,18 +70,17 @@ const pagination = (
   }
 
   prev.addEventListener("click", () => {
-    if (totalPage > pageCut) {
-      first = first > pageCut ? first - pageCut : first;
-      currentPage = first;
-      last =
-        last < pageCut
-          ? pageCut
-          : last === totalPage
-          ? first + pageCut
-          : last - pageCut;
-      displayList(data, displayTag, rows, currentPage);
-      setupPagination(first, last, pageTag);
-    }
+    first = first - pageCut < 1 ? 1 : first - pageCut;
+    last =
+      last - pageCut < 1
+        ? last
+        : last % pageCut !== 0
+        ? first + 4
+        : last - pageCut;
+    currentPage = first;
+    displayList(data, displayTag, rows, currentPage);
+    setupPagination(first, last, pageTag);
+    // }
   });
 
   next.addEventListener("click", () => {
