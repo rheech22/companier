@@ -25,7 +25,7 @@ const {
 const {
   isLoggedIn,
   setLoggedInStatus,
-  uploadImages,
+  uploadImagesS3,
 } = require('../../middlewares');
 
 router.get('/get-user', setLoggedInStatus, getUserLoggedIn);
@@ -35,13 +35,13 @@ router.get('/user-detail', isLoggedIn, getUserDetail);
 router.put('/users/:id', isLoggedIn, updateUser);
 router.delete('/users/:id', isLoggedIn, deleteUser);
 
-router.post('/return-imageUrl', uploadImages.single('img'), returnImageUrls); // 이미지 저장 - URL 반환
+router.post('/return-imageUrl', uploadImagesS3, returnImageUrls); // 이미지 저장 - URL 반환
 router.post('/clear-images', clearImages); // 이미지 삭제
 
 router.post('/posts', isLoggedIn, createPost);
 // id => post.id
 router.get('/posts/:id', getPost);
-router.delete('/posts/:id', isLoggedIn, deletePost);
+router.delete('/posts/:id', isLoggedIn, deletePost); // s3 삭제 추가해야 함
 router.put('/posts/:id', isLoggedIn, updatePost);
 
 router.post('/:id/comments', isLoggedIn, createComment); // 댓글 생성
