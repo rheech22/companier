@@ -88,7 +88,6 @@ async function sendPost(e) {
     }
   }
 
-  console.log("파일이름만 남긴것들");
   for (let i = 0; i < array.length; i++) {
     let temp = array[i].substring(34); // 파일 이름만 남기고 앞의 주소는 삭제
     deleteFileNames.push(temp);
