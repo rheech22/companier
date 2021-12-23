@@ -1,7 +1,7 @@
 import { mainTag } from "./main.js";
 import { postBody } from "./postBody.js";
 import { comments } from "./comments.js";
-import { commentPagination } from "./commentPagination.js";
+import { commentsBody } from "./commentsBody.js";
 import { commentInput } from "./commentInput.js";
 import { articleBottomBtns } from "./articleBottomBtns.js";
 import { checkLoginUser } from "./checkLoginUser.js";
@@ -16,8 +16,8 @@ const run = () => {
     console.log(checkLogin);
     mainTag();
     postBody(data);
+    commentsBody();
     comments();
-    commentPagination();
     commentInput();
     articleBottomBtns(data);
   });
