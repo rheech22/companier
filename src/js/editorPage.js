@@ -4,8 +4,6 @@ const title = document.querySelector(".editor__options__title-input");
 let array = []; // 나중에 이미지를 삭제할 때 비교할 비교용 배열
 
 const imageHandler = () => {
-  console.log("에디터에서 이미지 버튼이 클릭되었습니다");
-
   const input = document.createElement("input");
 
   input.setAttribute("type", "file");
@@ -13,13 +11,10 @@ const imageHandler = () => {
   input.click();
 
   input.addEventListener("change", async () => {
-    console.log("인풋: ", input);
     const file = input.files[0];
-    console.log("파일즈 files: ", input.files[0]);
     // multer에 맞는 형식으로 데이터 만들어준다.
     const formData = new FormData();
     formData.append("img", file);
-    console.log("들어간 data: ", formData.get("img"));
 
     try {
       const result = await axios.post("/api/imgFirst", formData, {
@@ -31,12 +26,10 @@ const imageHandler = () => {
 
       const IMG_URL = result.data.url;
       array.push(IMG_URL); // 비교용 배열에 img_url 추가
-      console.log("성공 시, 백엔드가 보내주는 데이터", IMG_URL);
-      console.log(quill);
       const range = quill.getSelection();
       quill.insertEmbed(range, "image", IMG_URL);
     } catch (error) {
-      console.log("실패");
+      console.log(error);
     }
   });
 };
@@ -88,8 +81,6 @@ async function sendPost(e) {
     deleteFileNames.push(temp);
   }
 
-  console.log("삭제될 것들");
-  console.log(deleteFileNames);
   // 값을 입력했는지 검증
   if (content === contentValidate && !title.value) {
     return alert("제목과 내용을 입력하세요.");
