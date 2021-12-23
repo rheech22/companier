@@ -1,11 +1,9 @@
-const { Router } = require("express");
-const { User } = require("../../models");
-const router = Router();
+const { User } = require('../../models');
 
 const logined = async (req, res) => {
   try {
     if (!req.isLoggedIn) {
-      res.redirect("/login");
+      res.redirect('/login');
       return;
     }
 
@@ -15,7 +13,7 @@ const logined = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    res.render("myPage.html", user);
+    res.render('myPage.html', user);
   } catch (error) {
     res.status(500).send(error);
   }
