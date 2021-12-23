@@ -50,7 +50,7 @@
         </div>
         <section class="main-content__section">
           <!--스크립트 for문을 이용하여 게시물 생성-->
-          <%for(let i=0; i < locals.posts.length; i++) {%>
+          <%for(let i=0; i < locals.posts?.length; i++) {%>
             <article class="main-content__article">
               <a href="/myPetBoard/<%=locals.posts[i]._id%>">
                 <div class="main-content__wrap">
@@ -85,11 +85,11 @@
           <li>
             <% if(i==locals.page) {%>
               <a class="list-paginator__pageBtn selected"
-                href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>">
+                href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>&author=<%=locals.author%>">
                 <%= i%>
                   <%} else {%>
                     <a class="list-paginator__pageBtn"
-                      href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>">
+                      href="/myPetBoard?page=<%=i%>&perPage=<%=locals.perPage%>&title=<%=locals.title%>&content=<%=locals.content%>&author=<%=locals.author%>">
                       <%= i%>
                         <%}%>
                     </a>

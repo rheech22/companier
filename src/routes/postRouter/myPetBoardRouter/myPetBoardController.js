@@ -9,6 +9,7 @@ const getPosts = async (req, res) => {
     const perPage = Number(query.perPage || 15); // url 쿼리에서 peRage 받기, 기본값 15
     const title = query.title || '';
     const content = query.content || '';
+    const author = query.author || '';
 
     const titleSearch = {
       title: {
@@ -36,6 +37,7 @@ const getPosts = async (req, res) => {
     const [total, posts] = await Promise.all([
       Post.countDocuments(searchConditions),
       Post.find(searchConditions)
+        .lean()
         .sort({ createdAt: -1 })
         .skip(perPage * (page - 1))
         .limit(perPage)
@@ -44,16 +46,36 @@ const getPosts = async (req, res) => {
 
     const totalPage = Math.ceil(total / perPage);
 
+    const authors = {
+      posts: null,
+      pages: 0,
+    };
+
+    if (query.author) {
+      const allPosts = await Post.find(searchConditions)
+        .lean()
+        .sort({ createdAt: -1 })
+        .skip(0)
+        .limit(0)
+        .populate('author');
+      const authorRegex = new RegExp(`${query.author}`, 'gi');
+      const authorsPosts = allPosts.filter((post) => post.author.nickname.match(authorRegex));
+      authors.posts = authorsPosts.slice((page - 1) * perPage, page * perPage);
+      authors.pages = authorsPosts.length ? Math.ceil(authorsPosts.length / perPage) : 1;
+    }
+
     res.render('myPetBoard.html', {
       isLogined: req.isLoggedIn,
-      posts,
+      posts: query.author ? authors.posts : posts,
       page,
       perPage,
-      totalPage,
+      totalPage: authors.pages || totalPage,
       title,
       content,
+      author,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).redirect('/');
   }
 };
