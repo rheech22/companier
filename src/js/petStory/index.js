@@ -11,7 +11,8 @@ const run = () => {
   window.addEventListener("DOMContentLoaded", async () => {
     let data = await getPetStoryDetail(location.pathname.split("/")[2]);
     let checkLogin = await checkLoginUser();
-
+    console.log("데이터 확인");
+    console.log(data);
     console.log(checkLogin);
     mainTag();
     postBody(data);

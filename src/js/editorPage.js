@@ -78,21 +78,18 @@ async function sendPost(e) {
   while ((temp = pattern.exec(content))) {
     matches.push(temp[1]);
   }
-  // 최종적으로 남게된 것과 이미지를 선택할 때 골라진 것들을 비교해 array에 삭제할 파일들의 url만을 남김
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < matches.length; j++) {
-      if (array[i] == matches[j]) {
-        array.splice(i, 1);
-        matches.splice(j, 1);
-      }
-    }
-  }
+  // 삭제될 것들만 골라냄
+  let filtered = array.filter((x) => {
+    if (!matches.includes(x)) return true;
+  });
 
-  for (let i = 0; i < array.length; i++) {
-    let temp = array[i].substring(34); // 파일 이름만 남기고 앞의 주소는 삭제
+  for (let i = 0; i < filtered.length; i++) {
+    let temp = filtered[i].substring(34); // 파일 이름만 남기고 앞의 주소는 삭제
     deleteFileNames.push(temp);
   }
 
+  console.log("삭제될 것들");
+  console.log(deleteFileNames);
   // 값을 입력했는지 검증
   if (content === contentValidate && !title.value) {
     return alert("제목과 내용을 입력하세요.");
