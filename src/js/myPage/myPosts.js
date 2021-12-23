@@ -1,4 +1,6 @@
-const makeMyPosts = () => {
+import { pagination } from "../component/pagination.js";
+
+const myPosts = (user) => {
 	const displayTag = document.querySelector(".main-content__section");
 	const pagesTag = document.querySelector(".main__container > .pagination");
 	const data = user.posts;
@@ -36,4 +38,4 @@ const makeMyPosts = () => {
 	);
 };
 
-makeMyPosts();
+export { myPosts };

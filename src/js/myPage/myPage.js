@@ -1,4 +1,4 @@
-(function myPage() {
+function myPage() {
 	const tabList = document.querySelectorAll(".myPage__select .list li");
 	const contents = document.querySelectorAll(".myPage__select__content");
 	let activeContent = "";
@@ -17,4 +17,6 @@
 				document.querySelector(activeContent).style.display = "block";
 			});
 	}
-})();
+}
+
+export { myPage };

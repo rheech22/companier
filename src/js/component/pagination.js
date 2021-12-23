@@ -12,7 +12,7 @@ const pagination = (
 	makeHTML,
 	pageTag
 ) => {
-	let currentPage = 31;
+	let currentPage = 1;
 	const totalPage = Math.ceil(data.length / rows);
 	let pageGroup = Math.ceil(currentPage / 10);
 	let last = pageGroup * 10;
@@ -87,3 +87,5 @@ const pagination = (
 	displayList(data, displayTag, rows, currentPage);
 	setupPagination(first, last, pageTag);
 };
+
+export { pagination };

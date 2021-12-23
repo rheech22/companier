@@ -28,4 +28,4 @@ const changeName = () => {
 	});
 };
 
-changeName();
+export { changeName };
