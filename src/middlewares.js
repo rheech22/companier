@@ -24,7 +24,7 @@ const setLoggedInStatus = (req, res, next) => {
   next();
 };
 
-const imageUpload = multer({
+const uploadImages = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
       cb(null, 'src/uploads/imgs');
@@ -40,5 +40,5 @@ const imageUpload = multer({
 module.exports = {
   isLoggedIn,
   setLoggedInStatus,
-  imageUpload,
+  uploadImages,
 };
