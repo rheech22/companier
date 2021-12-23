@@ -98,6 +98,7 @@ async function sendPost(e) {
       title: title.value,
       content: content,
       deleteFileNames: deleteFileNames,
+      thumbnail: matches[0],
     }),
   });
 

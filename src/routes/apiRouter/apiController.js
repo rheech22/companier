@@ -136,7 +136,7 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   const {
-    body: { title, content, deleteFileNames },
+    body: { title, content, deleteFileNames, thumbnail },
     session,
   } = req;
 
@@ -161,6 +161,7 @@ const createPost = async (req, res) => {
       title,
       content,
       author: user.id,
+      thumbnail,
     });
 
     // 유저 posts에 포스트 추가
