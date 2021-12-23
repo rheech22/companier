@@ -1,51 +1,63 @@
-const postBtn = document.querySelector(".editor__content__submit");
-const title = document.querySelector(".editor__options__title-input");
+const postBtn = document.querySelector('.editor__content__submit');
+const title = document.querySelector('.editor__options__title-input');
 
-let array = []; // 나중에 이미지를 삭제할 때 비교할 비교용 배열
+const imageUrls = []; // 나중에 이미지를 삭제할 때 비교할 비교용 배열
+let deleteFileNames; // 다른 함수에서도 접근 가능하도록 전역 선언
+
+const getImageUrl = async (formData) => {
+  try {
+    const response = await axios.post('/api/return-imageUrl', formData, {
+      headers: {
+        'Content-Type':
+            'application/json; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.log('이미지 URL을 가져오는데 실패했습니다');
+  }
+};
 
 const imageHandler = () => {
-  const input = document.createElement("input");
+  const input = document.createElement('input');
 
-  input.setAttribute("type", "file");
-  input.setAttribute("accept", "image/*");
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
   input.click();
 
-  input.addEventListener("change", async () => {
+  input.addEventListener('change', async () => {
     const file = input.files[0];
-    // multer에 맞는 형식으로 데이터 만들어준다.
+
+    // multer에 맞는 형식으로 데이터 생성
     const formData = new FormData();
-    formData.append("img", file);
 
-    try {
-      const result = await axios.post("/api/imgFirst", formData, {
-        headers: {
-          "Content-Type":
-            "application/json; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        },
-      });
+    formData.append('img', file);
 
-      const IMG_URL = result.data.url;
-      array.push(IMG_URL); // 비교용 배열에 img_url 추가
-      const range = quill.getSelection();
-      quill.insertEmbed(range, "image", IMG_URL);
-    } catch (error) {
-      console.log(error);
-    }
+    // 이미지 url 요청
+    const response = await getImageUrl(formData);
+
+    const { url } = response.data;
+
+    imageUrls.push(url); // 비교용 배열에 url 추가
+
+    const range = quill.getSelection();
+
+    quill.insertEmbed(range, 'image', url);
   });
 };
 
-// Quill editor
-let option = {
-  placeholder: "내용을 입력해주세요.",
-  theme: "snow",
+const editorOption = {
+  placeholder: '내용을 입력해주세요.',
+  theme: 'snow',
   modules: {
     toolbar: {
       container: [
-        [{ header: "1" }, { header: "2" }],
-        [{ size: ["small", false, "large", "huge"] }],
-        ["bold", "italic", "underline", "strike"],
+        [{ header: '1' }, { header: '2' }],
+        [{ size: ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
         [{ color: [] }, { background: [] }, { font: [] }, { align: [] }],
-        ["image"],
+        ['image'],
       ],
       handlers: {
         image: imageHandler,
@@ -54,59 +66,135 @@ let option = {
   },
 };
 
-let quill = new Quill("#quill", option);
+const deleteTempFiles = async (deleteFileNames) => {
+  const response = await axios({
+    url: '/api/clear-images',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      deleteFileNames,
+    },
+  });
+  return response;
+};
 
-async function sendPost(e) {
-  e.preventDefault();
+const postContents = async ({
+  titleText,
+  content,
+  thumbnail,
+}) => {
+  const response = await axios({
+    method: 'POST',
+    url: '/api/posts',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      title: titleText,
+      content,
+      thumbnail,
+    },
+  });
+  return response;
+};
 
-  const content = quill.root.innerHTML; //quill editor에 담긴 전체 글 내용 및 태그
-  const contentValidate = "<p><br></p>"; //user가 내용을 작성하지 않았을 때, content의 초기값
+const quill = new Quill('#quill', editorOption);
 
-  // 정규식을 이용해 content에서 img url만 뽑아내는 코드
-  let pattern = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-  let matches = [];
-  let temp = "";
-  let deleteFileNames = [];
+const setDeleteFiles = (matches, flag) => {
+  if (!flag) {
+    // 삭제 대상 추출
+    const notMatches = imageUrls.filter((url) => !matches.includes(url));
+
+    // img 하위 경로 추출
+    const deleteFiles = notMatches.map((url) => url.split('/imgs/')[1]);
+
+    return deleteFiles;
+  }
+
+  // flat === ture ? 전체 이미지 삭제
+  const deleteFiles = imageUrls.map((url) => url.split('/imgs/')[1]);
+
+  return deleteFiles;
+};
+
+const getMathes = (content) => {
+  // img 경로만 추출
+  const pattern = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+
+  const matches = [];
+
+  let temp = '';
 
   while ((temp = pattern.exec(content))) {
     matches.push(temp[1]);
   }
-  // 삭제될 것들만 골라냄
-  let filtered = array.filter((x) => {
-    if (!matches.includes(x)) return true;
-  });
 
-  for (let i = 0; i < filtered.length; i++) {
-    let temp = filtered[i].substring(34); // 파일 이름만 남기고 앞의 주소는 삭제
-    deleteFileNames.push(temp);
+  return matches;
+};
+
+async function sendPost(e) {
+  e.preventDefault();
+
+  const content = quill.root.innerHTML; // 전체 글 내용/태그
+  const contentValidate = '<p><br></p>'; // content 초기값
+
+  const matches = getMathes(content);
+
+  deleteFileNames = setDeleteFiles(matches);
+
+  // 등록취소된 파일 삭제 요청
+  const deleteResponse = await deleteTempFiles(deleteFileNames);
+
+  // 파일 삭제에 실패하면 리턴
+  if (deleteResponse.status !== 200) {
+    console.log('임시 파일 삭제에 실패했습니다');
+    return;
   }
 
-  // 값을 입력했는지 검증
-  if (content === contentValidate && !title.value) {
-    return alert("제목과 내용을 입력하세요.");
-  } else if (!title.value) {
-    return alert("제목을 입력하세요");
-  } else if (content === contentValidate) {
-    return alert("내용을 입력하세요.");
+  // 내용이나 제목입력안되면 리턴
+  if (content === contentValidate || !title.value) {
+    return alert('제목과 내용을 모두 입력해주세요');
   }
-  const postResponse = await fetch("/api/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: title.value,
-      content: content,
-      deleteFileNames: deleteFileNames,
-      thumbnail: matches[0],
-    }),
-  });
+
+  const contents = {
+    titleText: title.value,
+    content,
+    thumbnail: matches[0],
+  };
+
+  // 게시글 등록 API 요청
+  const postResponse = await postContents(contents);
 
   if (postResponse.status === 201) {
-    alert("게시물이 등록되었습니다!");
-    window.location.assign("/myPetBoard");
+    console.log('게시글 등록!');
+    // redirect되기 전에 beforeunload 이벤트 제거
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.location.assign('/myPetBoard');
   } else {
-    alert("오류가 발생했습니다.");
+    alert('등록에 실패했습니다😭');
   }
 }
-postBtn.addEventListener("click", sendPost);
+
+// 작성 중 페이지 이탈하면 서버 이미지 파일 삭제 요청
+const handleBeforeUnload = async (e) => {
+  e.preventDefault();
+
+  const content = quill.root.innerHTML;
+
+  const matches = getMathes(content);
+
+  // 전체 사진 삭제하도록 flag => true
+  deleteFileNames = setDeleteFiles(matches, true);
+
+  const response = await deleteTempFiles(deleteFileNames);
+
+  console.log(response.status);
+
+  e.returnValue = '';
+};
+
+postBtn.addEventListener('click', sendPost);
+
+window.addEventListener('beforeunload', handleBeforeUnload);
