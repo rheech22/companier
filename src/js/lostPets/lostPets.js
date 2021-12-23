@@ -3,8 +3,8 @@ const createLostPetItem = (item) => {
     age,
     desertionNo,
     happenDt,
-    happenPlace,
     kindCd,
+    orgNm,
     popfile,
     processState,
     sexCd,
@@ -29,10 +29,10 @@ const createLostPetItem = (item) => {
             <span>${age} / ${weight}</span>
           </div>
           <div class="lost-content__date">
-            <span>${happenDt}</span>
+            <span>${happenDt} 접수</span>
           </div>
           <div class="lost-content__place">
-            <span>${happenPlace}</span>
+            <span>${orgNm}</span>
           </div>
           <div class="lost-content__special">
             <span>${specialMark}</span>
@@ -47,9 +47,8 @@ const createLostPetItem = (item) => {
 };
 
 const paintLostPets = (lostPetList) => {
-  const lostContent = document.querySelector(".lost-content");
   const lostPetItems = lostPetList.map(createLostPetItem);
-  lostContent.innerHTML = lostPetItems.join("");
+  document.querySelector(".lost-content").innerHTML = lostPetItems.join("");
 };
 
 export { paintLostPets };

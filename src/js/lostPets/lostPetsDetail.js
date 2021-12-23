@@ -90,13 +90,12 @@ const createLostPetDetail = (item) => {
 };
 
 const paintLostPetDetail = (lostPetList) => {
-  const lostDetail = document.querySelector(".lost-detail-container");
   const pathName = location.pathname.split("/")[2];
   const currentPet = lostPetList.find(
     (item) => String(item.desertionNo) === pathName
   );
   const lostPetDetail = createLostPetDetail(currentPet);
-  lostDetail.innerHTML = lostPetDetail;
+  document.querySelector(".lost-detail-container").innerHTML = lostPetDetail;
 };
 
 export { paintLostPetDetail };
