@@ -1,8 +1,9 @@
-const commentInput = (isLogin) => {
-  console.log(isLogin);
+const commentInput = (isNotLogin) => {
+  console.log(isNotLogin);
   const commentInputForm = document.createElement("form");
 
-  if (isLogin) commentInputForm.classList.add("comment-feed__form", "hidden");
+  if (isNotLogin)
+    commentInputForm.classList.add("comment-feed__form", "hidden");
   else commentInputForm.classList.add("comment-feed__form");
 
   let commentInputTemplate = `
