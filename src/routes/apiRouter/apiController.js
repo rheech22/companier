@@ -1,6 +1,7 @@
 const axios = require("axios");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const { User, Post, Comment, ReComment } = require("../../models");
 
@@ -135,7 +136,7 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   const {
-    body: { title, content },
+    body: { title, content, deleteFileNames },
     session,
   } = req;
 
@@ -145,6 +146,15 @@ const createPost = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!title || !content) return res.status(400).end();
+
+    // 이미지 선택시 자동으로 업로드된 파일들 삭제
+    for (let i = 0; i < deleteFileNames.length; i++) {
+      fs.unlink(`src/uploads/imgs/${deleteFileNames[i]}`, (err) =>
+        err
+          ? console.log(err)
+          : console.log(`${deleteFileNames[i]} 파일이 정상적으로 삭제됨`)
+      );
+    }
 
     // 포스트 생성
     const post = await Post.create({
@@ -604,7 +614,7 @@ const upload = multer({
 const process1 = async (req, res) => {
   console.log("전달받은 파일", req.file);
   console.log("저장된 파일의 이름", req.file.filename);
-  const IMG_URL = `http://localhost:3000/uploads/imgs/${req.file.filename}`;
+  const IMG_URL = `http://localhost:3000/uploads/imgs/${req.file.filename}`; // 경로 + 파일이름
   console.log(IMG_URL);
   res.json({ url: IMG_URL });
 };
