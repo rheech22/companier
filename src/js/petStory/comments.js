@@ -1,36 +1,63 @@
+import { pagination } from "../component/pagination.js";
+import { user } from "./dummyUser.js";
+
 const comments = () => {
-  const commentSection = document.createElement("section");
-  commentSection.classList.add("datail-comment__container");
-
-  let commentTemplate = `
-      <section class="comment-feed">
-        <h1 class="comment-feed__header">댓글 <span>0</span>개</h1>
-        <ul class="comment__list">
-            <li class="comment__item">
-                <article class="comment__wrap">
-                    <div class="comment__author">홍길동</div>
-                    <div class="comment__content">내용</div>
-                    <div class="comment__info">
-                        <span class="comment__data">2021.12.17. 15:56</span>
-                        <a href="#" class="comment__link">답글쓰기</a>
-                    </div>
-                    <div class="comment__reply-list">
-                        <!-- 대댓글 -->
-                        <ul>
-                            <li></li>
-                        </ul>
-                    </div>
-                    <div class="comment__tool">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </div>
-                </article>
-            </li>
+  const displayTag = document.querySelector(".comment__list");
+  const elementName = "li";
+  const elementClass = "comment__item";
+  const pageTag = document.querySelector(".comment__pages ul");
+  let commentTemplate = (obj) => {
+    const { content, author, timestamps } = obj;
+    return `<article class="comment__wrap">
+      <div class="comment__author">${author}</div>
+      <div class="comment__content">${content}</div>
+      <div class="comment__info">
+        <span class="comment__data">${timestamps}</span>
+        <a href="#" class="comment__link">
+          답글쓰기
+        </a>
+      </div>
+      <div class="comment__reply-list">
+        <ul>
+          <li></li>
         </ul>
-    </section>              
-  `;
+      </div>
+      <div class="comment__tool">
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
+    </article>`;
+  };
 
-  commentSection.innerHTML = commentTemplate;
-  document.querySelector(".mypet-datail__content").appendChild(commentSection);
+  //   let data = {
+  //     comment: [
+  //       {
+  //         1: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //         2: {},
+  //       },
+  //     ],
+  //   };
+
+  pagination(
+    user.comments,
+    5,
+    displayTag,
+    elementName,
+    elementClass,
+    commentTemplate,
+    pageTag,
+    5
+  );
 };
 
 export { comments };
