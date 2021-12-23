@@ -1,4 +1,8 @@
-const postBody = () => {
+const postBody = (result) => {
+  const time = `${result.createdAt.split("-")[0]}년 ${
+    result.createdAt.split("-")[1]
+  }월 ${result.createdAt.split("-")[2].substr(0, 2)}일`;
+
   const postHeader = document.createElement("header");
   const postSection = document.createElement("section");
 
@@ -6,22 +10,20 @@ const postBody = () => {
   postSection.classList.add("mypet-datail__body");
   let postHeaderTemplate = `
         <div class="mypet-datail__title">
-            <h1>타이틀 들어가기</h1>
+            <h1>${result.title}</h1>
         </div>
         <div class="mypet-datail__profile">
             <div class="profile__info">
-                <span>작성자: <span>작성자 들어가기</span></span>
-                <span>작성시간 들어가기</span>
+                <span>작성자: <span>${result.author.nickname}</span></span>
+                <span>${time}</span>
             </div>
             <div>
-                <span>조회수 : <span>조회수 들어가기</span></span>
+                <span>조회수 : <span>${result.views}</span></span>
             </div>
         </div>
     `;
 
-  let postSectionTemplate = `
-        임시 내용
-    `;
+  let postSectionTemplate = `${result.content}`;
 
   postHeader.innerHTML = postHeaderTemplate;
   postSection.innerHTML = postSectionTemplate;
