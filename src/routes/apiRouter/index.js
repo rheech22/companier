@@ -25,7 +25,7 @@ const {
 const {
   isLoggedIn,
   setLoggedInStatus,
-  imageUpload,
+  uploadImages,
 } = require('../../middlewares');
 
 router.get('/get-user', setLoggedInStatus, getUserLoggedIn);
@@ -35,7 +35,7 @@ router.get('/user-detail', isLoggedIn, getUserDetail);
 router.put('/users/:id', isLoggedIn, updateUser);
 router.delete('/users/:id', isLoggedIn, deleteUser);
 
-router.post('/return-imageUrl', imageUpload.single('img'), returnImageUrls); // 이미지 저장 - URL 반환
+router.post('/return-imageUrl', uploadImages.single('img'), returnImageUrls); // 이미지 저장 - URL 반환
 router.post('/clear-images', clearImages); // 이미지 삭제
 
 router.post('/posts', isLoggedIn, createPost);
