@@ -1,12 +1,9 @@
-// 내 댓글 조회하기
+import { pagination } from "../component/pagination.js";
 
-function makeComments() {
-	// 각 컨텐츠 칸을 이루는 HTML 구조
-
+const myComments = (user) => {
 	const data = user.comments;
 	const displayTag = document.querySelector(".myComments__list");
 	const pagesTag = document.querySelector(".myComment__pages ul");
-	console.log(pagesTag);
 	const elementName = "article";
 	const elementClass = "content";
 	const rows = 5;
@@ -36,20 +33,16 @@ function makeComments() {
 		pagesTag
 	);
 
-	// 댓글을 지울 시, 거기에 달린 대댓글은
-	// 1. 같이 지운다. 2. 대댓글은 남기고, 지워진 댓글은 "지워진 댓글입니다" 표시 ?
-
 	const deleteBtns = document.querySelectorAll(".deleteBox > .btn");
 	deleteBtns.forEach((btn) => {
 		btn.addEventListener("click", function (e) {
 			e.preventDefault();
-			// const ele = this.parentElement.parentElement;
-			// const id = ele.querySelector(".content__info__post");
-			// console.log(user.comments.indexOf(id.innerText));
 			const ele = this.parentElement.parentElement.parentElement;
-			if (confirm("댓글을 지우시겠어요?")) displayTag.removeChild(ele);
+			if (confirm("댓글을 지우시겠어요?")) {
+				displayTag.removeChild(ele);
+			}
 		});
 	});
-}
+};
 
-makeComments();
+export { myComments };

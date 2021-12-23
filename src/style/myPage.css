@@ -41,7 +41,7 @@
 
 /* pagination */
 
-.myComment__pages {
+/* .myComment__pages {
 	display: flex;
 	justify-content: center;
 }
@@ -88,7 +88,7 @@
 
 .pagination li a {
 	margin: auto;
-}
+} */
 /* userInfo */
 
 #userInfo {
