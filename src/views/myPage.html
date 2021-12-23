@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,6 +16,7 @@
   <script src="./js/myPosts.js" defer></script>
   <title>Document</title>
 </head>
+
 <body>
   <header>
     <nav>
@@ -30,10 +32,7 @@
           <div class="header__my-page">
             <a href="/myPage">마이페이지</a>
           </div>
-          <button
-                class="btn header__login-btn"
-                onclick="location.href='/auth/kakao/logout'"
-              >로그아웃</button>
+          <button class="btn header__login-btn" onclick="location.href='/auth/kakao/logout'">로그아웃</button>
         </div>
       </div>
     </nav>
@@ -79,7 +78,11 @@
       <!-- 내가 쓴 댓글 -->
       <section id="myComments" class="myPage__select__content">
         <section class="myComments__list"></section>
-        <div class="pagination"></div>
+        <div class="myComment__pages">
+          <div class="prev">이전 페이지</div>
+          <ul class="pagination"></ul>
+          <div class="next">다음 페이지</div>
+        </div>
       </section>
     </section>
     </div>

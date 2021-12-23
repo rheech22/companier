@@ -5,7 +5,8 @@ function makeComments() {
 
 	const data = user.comments;
 	const displayTag = document.querySelector(".myComments__list");
-	const pagesTag = document.querySelector("#myComments > .pagination");
+	const pagesTag = document.querySelector(".myComment__pages ul");
+	console.log(pagesTag);
 	const elementName = "article";
 	const elementClass = "content";
 	const rows = 5;
