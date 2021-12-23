@@ -1,10 +1,12 @@
-const axios = require('axios');
-const multer = require('multer');
-const path = require('path');
 const fs = require('fs');
 
+const axios = require('axios');
+
 const {
-  User, Post, Comment, ReComment,
+  User,
+  Post,
+  Comment,
+  ReComment,
 } = require('../../models');
 
 const getUserLoggedIn = async (req, res) => {
@@ -135,6 +137,12 @@ const getPost = async (req, res) => {
   }
 };
 
+const returnImageUrls = (req, res) => {
+  const { file } = req;
+  const IMG_URL = `http://localhost:3000/uploads/imgs/${file.filename}`;
+  res.json({ url: IMG_URL });
+};
+
 const clearImages = async (req, res) => {
   const {
     body: {
@@ -152,7 +160,6 @@ const clearImages = async (req, res) => {
     });
     res.status(200).end();
   } catch (error) {
-    console.log(error);
     res.status(500).end();
   }
 };
@@ -617,27 +624,6 @@ const updateReComment = async (req, res) => {
   }
 };
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, 'src/uploads/imgs');
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      // console.log('file.originalname', file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
-  }),
-});
-
-const returnImgUrl = (req, res) => {
-  // console.log('전달받은 파일', req.file);
-  // console.log('저장된 파일의 이름', req.file.filename);
-  const IMG_URL = `http://localhost:3000/uploads/imgs/${req.file.filename}`; // 경로 + 파일이름
-  // console.log(IMG_URL);
-  res.json({ url: IMG_URL });
-};
-
 module.exports = {
   createComment,
   deleteComment,
@@ -654,7 +640,6 @@ module.exports = {
   deleteUser,
   getLostPets,
   getUserLoggedIn,
-  returnImgUrl,
-  upload,
+  returnImageUrls,
   clearImages,
 };

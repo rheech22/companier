@@ -18,12 +18,15 @@ const {
   deleteUser,
   getLostPets,
   getUserLoggedIn,
-  returnImgUrl,
-  upload,
+  returnImageUrls,
   clearImages,
 } = require('./apiController');
 
-const { isLoggedIn, setLoggedInStatus } = require('../../middlewares');
+const {
+  isLoggedIn,
+  setLoggedInStatus,
+  imageUpload,
+} = require('../../middlewares');
 
 router.get('/get-user', setLoggedInStatus, getUserLoggedIn);
 
@@ -31,8 +34,9 @@ router.get('/user-detail', isLoggedIn, getUserDetail);
 
 router.put('/users/:id', isLoggedIn, updateUser);
 router.delete('/users/:id', isLoggedIn, deleteUser);
-router.post('/imgFirst', upload.single('img'), returnImgUrl); // 이미지 업로드
-router.post('/clear-images', clearImages);
+
+router.post('/return-imageUrl', imageUpload.single('img'), returnImageUrls); // 이미지 저장 - URL 반환
+router.post('/clear-images', clearImages); // 이미지 삭제
 
 router.post('/posts', isLoggedIn, createPost);
 // id => post.id

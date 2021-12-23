@@ -2,11 +2,11 @@ const postBtn = document.querySelector('.editor__content__submit');
 const title = document.querySelector('.editor__options__title-input');
 
 const imageUrls = []; // 나중에 이미지를 삭제할 때 비교할 비교용 배열
-let deleteFileNames;
+let deleteFileNames; // 다른 함수에서도 접근 가능하도록 전역 선언
 
 const getImageUrl = async (formData) => {
   try {
-    const response = await axios.post('/api/imgFirst', formData, {
+    const response = await axios.post('/api/return-imageUrl', formData, {
       headers: {
         'Content-Type':
             'application/json; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -113,6 +113,7 @@ const setDeleteFiles = (matches, flag) => {
     return deleteFiles;
   }
 
+  // flat === ture ? 전체 이미지 삭제
   const deleteFiles = imageUrls.map((url) => url.split('/imgs/')[1]);
 
   return deleteFiles;
@@ -121,7 +122,9 @@ const setDeleteFiles = (matches, flag) => {
 const getMathes = (content) => {
   // img 경로만 추출
   const pattern = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+
   const matches = [];
+
   let temp = '';
 
   while ((temp = pattern.exec(content))) {
@@ -166,29 +169,32 @@ async function sendPost(e) {
 
   if (postResponse.status === 201) {
     console.log('게시글 등록!');
+    // redirect되기 전에 beforeunload 이벤트 제거
+    window.removeEventListener('beforeunload', handleBeforeUnload);
     window.location.assign('/myPetBoard');
   } else {
     alert('등록에 실패했습니다😭');
   }
 }
 
-postBtn.addEventListener('click', sendPost);
-
-window.addEventListener('beforeunload', async (e) => {
+// 작성 중 페이지 이탈하면 서버 이미지 파일 삭제 요청
+const handleBeforeUnload = async (e) => {
   e.preventDefault();
-  console.log(imageUrls);
 
   const content = quill.root.innerHTML;
 
   const matches = getMathes(content);
-  console.log(matches);
 
+  // 전체 사진 삭제하도록 flag => true
   deleteFileNames = setDeleteFiles(matches, true);
-  console.log(deleteFileNames);
 
   const response = await deleteTempFiles(deleteFileNames);
 
   console.log(response.status);
 
   e.returnValue = '';
-});
+};
+
+postBtn.addEventListener('click', sendPost);
+
+window.addEventListener('beforeunload', handleBeforeUnload);
