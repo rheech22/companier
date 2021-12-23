@@ -9,7 +9,7 @@ const getUserLoggedIn = async (req, res) => {
   try {
     const { isLoggedIn, session } = req;
 
-    if (!isLoggedIn) return res.status(404).end();
+    if (!isLoggedIn) return res.status(401).json({}).end();
 
     const { email } = session.kakao.kakao_account;
 

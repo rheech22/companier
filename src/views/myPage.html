@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,14 +8,10 @@
   <link rel="stylesheet" href="/style/myPage.css" />
   <link rel="stylesheet" href="/style/index.css" />
   <link rel="stylesheet" href="/style/myPetBoard.css" />
-  <script src="./js/dummyUser.js" defer></script>
-  <script src="./js/myPage.js" defer></script>
-  <script src="./js/pagination.js" defer></script>
-  <script src="./js/userChange.js" defer></script>
-  <script src="./js/myComments.js" defer></script>
-  <script src="./js/myPosts.js" defer></script>
+  <script type="module" src="../js/myPage/index.js"></script>
   <title>Document</title>
 </head>
+
 <body>
   <header>
     <nav>
@@ -30,10 +27,7 @@
           <div class="header__my-page">
             <a href="/myPage">마이페이지</a>
           </div>
-          <button
-                class="btn header__login-btn"
-                onclick="location.href='/auth/kakao/logout'"
-              >로그아웃</button>
+          <button class="btn header__login-btn" onclick="location.href='/auth/kakao/logout'">로그아웃</button>
         </div>
       </div>
     </nav>
@@ -76,11 +70,8 @@
         </div>
       </section>
 
+      <section id="myComments" class="myPage__select__content"></section>
       <!-- 내가 쓴 댓글 -->
-      <section id="myComments" class="myPage__select__content">
-        <section class="myComments__list"></section>
-        <div class="pagination"></div>
-      </section>
     </section>
     </div>
   </main>

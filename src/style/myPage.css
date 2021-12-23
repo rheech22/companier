@@ -41,6 +41,16 @@
 
 /* pagination */
 
+/* .myComment__pages {
+	display: flex;
+	justify-content: center;
+}
+
+.prev,
+.next {
+	cursor: pointer;
+}
+
 .pagination {
 	display: flex;
 	flex-wrap: wrap;
@@ -52,25 +62,33 @@
 	transform: translateX(-1.5em);
 }
 
-.pagination button {
+.pagination ul {
+	display: flex;
+	background: var(--main-color-orange);
+	padding: 8px;
+	border-radius: 50px;
+}
+
+.pagination li {
 	width: 20px;
 	height: 20px;
 	margin: 5px;
 	font-size: 10px;
-	border: none;
-	outline: none;
-	appearance: none;
+	display: flex;
 	cursor: pointer;
 }
 
-.pagination button:hover {
+.pagination li:hover {
 	background-color: var(--btn-hover-color);
 }
 
-.pagination button.active {
+.pagination li.active {
 	background-color: var(--main-color-orange);
 }
 
+.pagination li a {
+	margin: auto;
+} */
 /* userInfo */
 
 #userInfo {
