@@ -24,6 +24,7 @@ app.use(cors()); // CORS 미들웨어 등록
 
 app.set("views", `${__dirname}/views`);
 app.use(express.static("src"));
+app.use(express.static("dist"));
 
 // 화면 구성 엔진을 ejs로 설정
 app.set("view engine", "ejs");
