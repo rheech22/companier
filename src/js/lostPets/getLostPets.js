@@ -10,7 +10,7 @@ const getLostPetData = async ({
 }) => {
   try {
     const response = await fetch(
-      `/api/lost-pets?upr_cd${upr_cd}=&org_cd${org_cd}=&upkind=${upkind}&state${state}=&pageNo=${pageNo}&numOfRows=${numOfRows}&bgnde=${bgnde}&endde=${endde}`
+      `/api/lost-pets?upr_cd=${upr_cd}&org_cd=${org_cd}&upkind=${upkind}&state=${state}&pageNo=${pageNo}&numOfRows=${numOfRows}&bgnde=${bgnde}&endde=${endde}`
     );
     const data = response.json();
     return data;

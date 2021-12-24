@@ -42,7 +42,11 @@ const getDistrict = async (req, res) => {
     const {
       data: {
         response: {
-          body: sigungu,
+          body: {
+            items: {
+              item: sigungu,
+            },
+          },
         },
       },
     } = await axios.get(URL);
