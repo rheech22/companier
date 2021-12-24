@@ -108,13 +108,13 @@ const setDeleteFiles = (matches, flag) => {
     const notMatches = imageUrls.filter((url) => !matches.includes(url));
 
     // img 하위 경로 추출
-    const deleteFiles = notMatches.map((url) => url.split('/imgs/')[1]);
+    const deleteFiles = notMatches.map((url) => url.split('/ch/')[1]);
 
     return deleteFiles;
   }
 
   // flat === ture ? 전체 이미지 삭제
-  const deleteFiles = imageUrls.map((url) => url.split('/imgs/')[1]);
+  const deleteFiles = imageUrls.map((url) => url.split('/ch/')[1]);
 
   return deleteFiles;
 };

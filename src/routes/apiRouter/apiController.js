@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const axios = require('axios');
 
 const {
@@ -8,6 +6,8 @@ const {
   Comment,
   ReComment,
 } = require('../../models');
+
+const { s3 } = require('../../middlewares');
 
 const getUserLoggedIn = async (req, res) => {
   try {
@@ -138,9 +138,16 @@ const getPost = async (req, res) => {
 };
 
 const returnImageUrls = (req, res) => {
-  const { file } = req;
-  const IMG_URL = `http://localhost:3000/uploads/imgs/${file.filename}`;
-  res.json({ url: IMG_URL });
+  const {
+    file: { location },
+  } = req;
+  try {
+    console.log(location);
+    res.json({ url: location });
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
 };
 
 const clearImages = async (req, res) => {
@@ -154,8 +161,12 @@ const clearImages = async (req, res) => {
     if (!deleteFileNames) return res.status(204).end();
 
     await deleteFileNames.forEach((fileName) => {
-      fs.unlink(`src/uploads/imgs/${fileName}`, (err) => {
-        console.log(err);
+      s3.deleteObject({
+        Bucket: 'wetube22', // 사용자 버켓 이름
+        Key: `ch/${fileName}`, // 버켓 내 경로
+      }, (err, data) => {
+        if (err) throw err;
+        console.log('s3 deleteObject ', fileName);
       });
     });
     res.status(200).end();

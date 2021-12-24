@@ -1,6 +1,26 @@
 const path = require('path');
-
 const multer = require('multer');
+
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+
+require('dotenv').config();
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_PRIVATE_KEY,
+  region: 'ap-northeast-2',
+});
+
+const multerImages = multer({
+  storage: multerS3({
+    s3,
+    acl: 'public-read',
+    bucket: 'wetube22/ch',
+  }),
+});
+
+const uploadImagesS3 = multerImages.single('img');
 
 const isLoggedIn = (req, res, next) => {
   const { session } = req;
@@ -40,5 +60,7 @@ const uploadImages = multer({
 module.exports = {
   isLoggedIn,
   setLoggedInStatus,
-  uploadImages,
+  // uploadImages,
+  uploadImagesS3,
+  s3,
 };

@@ -1,28 +1,40 @@
 import { mainTag } from "./main.js";
 import { postBody } from "./postBody.js";
+// import { comments } from "./comments_temp.js";
+// import { commentsBody } from "./commentsBody_temp.js";
 import { comments } from "./comments.js";
-import { commentsBody } from "./commentsBody.js";
+import { commentPagination } from "./commentPagination.js";
 import { commentInput } from "./commentInput.js";
 import { articleBottomBtns } from "./articleBottomBtns.js";
 import { checkLoginUser } from "./checkLoginUser.js";
-import { getPetStoryDetail } from "./api/getPetStoryDetail.js";
-import { handlePostComment } from "./handlePostComment.js";
+import { getPetStoryDetail, getReComments } from "./api.js";
+import {
+  handlePostComment,
+  handleCommentToolBox,
+  clickCommentToolBox,
+  handleRePostComment,
+} from "./handleComment.js";
 
 const run = () => {
   window.addEventListener("DOMContentLoaded", async () => {
     let data = await getPetStoryDetail(location.pathname.split("/")[2]);
     let checkLogin = await checkLoginUser();
-    let isLogin = Object.keys(checkLogin).length === 0;
+    let isNotLogin = Object.keys(checkLogin).length === 0;
     let loginInfo = checkLogin;
 
     mainTag();
     postBody(data);
-    commentsBody();
-    comments();
-    commentInput(isLogin);
+    // commentsBody();
+    // comments();
+    comments(data.comments, loginInfo);
+    commentPagination();
+    commentInput(isNotLogin);
     articleBottomBtns(data);
 
     handlePostComment();
+    handleCommentToolBox(loginInfo);
+    handleRePostComment(isNotLogin);
+    clickCommentToolBox();
   });
 };
 
