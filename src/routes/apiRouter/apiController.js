@@ -25,6 +25,34 @@ const getUserLoggedIn = async (req, res) => {
   }
 };
 
+const getDistrict = async (req, res) => {
+  try {
+    const {
+      query: {
+        upr_cd: uprCd,
+      },
+    } = req;
+
+    const { SERVICE_KEY } = process.env;
+
+    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+
+    const URL = `${HOST}/sigungu?serviceKey=${SERVICE_KEY}&upr_cd=${uprCd}`;
+
+    const {
+      data: {
+        response: {
+          body: sigungu,
+        },
+      },
+    } = await axios.get(URL);
+
+    res.json(sigungu);
+  } catch (error) {
+    res.status(500).end();
+  }
+};
+
 const getLostPets = async (req, res) => {
   try {
     const {
@@ -664,4 +692,5 @@ module.exports = {
   getUserLoggedIn,
   returnImageUrls,
   clearImages,
+  getDistrict,
 };
