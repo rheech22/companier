@@ -1,7 +1,7 @@
 const changeName = async () => {
   const name = document.querySelector(".userInfo__modify__input");
   const btn = document.querySelector("#userInfo__modify__btn");
-  const deleteUser = document.querySelector("#userInfo__exit");
+  const deleteUserBtn = document.querySelector("#userInfo__exit");
   const nameRegex = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
 
   const res = await fetch("/api/get-user", {
@@ -10,7 +10,7 @@ const changeName = async () => {
   const data = await res.json();
   const userId = data._id;
 
-  const checkName = async (val) => {
+  const changeName = async (val) => {
     if (!nameRegex.test(val)) {
       alert("닉네임은 한글, 영문, 숫자 2-10자리만 가능합니다.");
     } else {
@@ -20,7 +20,7 @@ const changeName = async () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            nickname: val,
+            nickname: newNickname,
           }),
         });
 
@@ -29,21 +29,37 @@ const changeName = async () => {
         } else {
           alert("닉네임 변경에 실패했습니다.");
         }
+      } else {
+        alert("닉네임 변경을 취소했습니다.");
       }
     }
     name.value = "";
   };
 
+  const deleteUser = async () => {
+    const deleted = await fetch(`/api/users/${userId}`, {
+      method: "DELETE",
+    });
+
+    if (deleted.status === 204) {
+      alert("회원탈퇴가 완료되었습니다.");
+    } else {
+      alert("탈퇴 실패했습니다😭");
+    }
+  };
+
   btn.addEventListener("click", () => {
-    checkName(name.value);
+    changeName(name.value);
   });
 
   name.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") checkName(name.value);
+    if (e.key === "Enter") changeName(name.value);
   });
 
-  deleteUser.addEventListener("click", () => {
-    alert("정말로 탈퇴하시겠어요?");
+  deleteUserBtn.addEventListener("click", () => {
+    if (confirm("정말로 탈퇴하시겠어요?")) {
+      return deleteUser();
+    }
   });
 };
 
