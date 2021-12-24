@@ -17,12 +17,12 @@ const searchFormTemplate = `
         <span>지역</span>
         <select id="sido" name="upr_cd"></select>
         <select id="sigungu" name="org_cd"></select>
-        <select id="shelter" name="care_reg_no"></select>
       </div>
-      <div class="lost-search__kind">
-        <span>품종</span>
-        <select id="upkind" name="up_kind_cd"></select>
-        <select id="kind" name="kind_cd"></select>
+      <div class="lost-search__kind-state">
+        <div class="lost-search__kind">
+          <span>품종</span>
+          <select id="upkind" name="up_kind_cd"></select>
+        </div>
         <div class="lost-search__state">
           <span>상태</span>
           <select id="state" name="state"></select>
@@ -38,9 +38,7 @@ const searchFormTemplate = `
 const searchOptions = {
   sido: "시/도",
   sigungu: "시/군/구",
-  shelter: "보호소",
   upkind: "축종",
-  kind: "품종",
   state: "상태",
 };
 
@@ -97,30 +95,29 @@ const createOptions = (select, options) => {
   }
 };
 
-const getChildOptions = (parentSelect, childSelect) => {
-  parentSelect.addEventListener("change", (e) => {
-    console.log(e.target.value);
-    // fetch
-    childSelect.innerHTML += ``;
-  });
-};
+// const getChildOptions = (parentSelect, childSelect) => {
+//   parentSelect.addEventListener("change", (e) => {
+//     console.log(e.target.value);
+//     // fetch
+//     childSelect.innerHTML += ``;
+//   });
+// };
 
-const setChildOptions = () => {
-  const sidoSelect = document.querySelector("#sido");
-  const sigunguSelect = document.querySelector("#sigungu");
-  const shelterSelect = document.querySelector("#shelter");
-  const upkindSelect = document.querySelector("#upkind");
-  const kindSelect = document.querySelector("#kind");
+// const setChildOptions = () => {
+//   const sidoSelect = document.querySelector("#sido");
+//   const sigunguSelect = document.querySelector("#sigungu");
+//   const shelterSelect = document.querySelector("#shelter");
+//   const upkindSelect = document.querySelector("#upkind");
+//   const kindSelect = document.querySelector("#kind");
 
-  getChildOptions(sidoSelect, sigunguSelect);
-  getChildOptions(sigunguSelect, shelterSelect);
-  getChildOptions(upkindSelect, kindSelect);
-};
+//   getChildOptions(sidoSelect, sigunguSelect);
+//   getChildOptions(sigunguSelect, shelterSelect);
+//   getChildOptions(upkindSelect, kindSelect);
+// };
 
 const paintSearchForm = () => {
   document.querySelector(".lost-search").innerHTML = searchFormTemplate;
   setInitialOptions();
-  setChildOptions();
 };
 
 export { paintSearchForm };
