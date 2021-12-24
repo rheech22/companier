@@ -1,7 +1,16 @@
-const getLostPetData = async (pageNo, limit) => {
+const getLostPetData = async ({
+  pageNo,
+  numOfRows,
+  upkind,
+  upr_cd,
+  org_cd,
+  state,
+  bgnde,
+  endde,
+}) => {
   try {
     const response = await fetch(
-      `/api/lost-pets/?pageNo=${pageNo}&limit=${limit}`
+      `/api/lost-pets?upr_cd${upr_cd}=&org_cd${org_cd}=&upkind=${upkind}&state${state}=&pageNo=${pageNo}&numOfRows=${numOfRows}&bgnde=${bgnde}&endde=${endde}`
     );
     const data = response.json();
     return data;
@@ -18,15 +27,21 @@ const getLostPetList = (data) => {
   return [lostPetList, totalCount];
 };
 
-// let pageNo = 1;
-// const lostPetData = await getLostPetData(pageNo);
-// const [lostPetList, totalCount] = getLostPetList(lostPetData);
+const searchParams = {
+  pageNo: 1,
+  numOfRows: 10,
+  upkind: "",
+  upr_cd: "",
+  org_cd: "",
+  state: "",
+  bgnde: "",
+  endde: "",
+};
 
-const getLostPets = async (pageNo = 1, limit = 10) => {
-  const lostPetData = await getLostPetData(pageNo, limit);
+const getLostPets = async (params) => {
+  const lostPetData = await getLostPetData(params);
   const [lostPetList, totalCount] = getLostPetList(lostPetData);
   return [lostPetList, totalCount];
 };
 
-export { getLostPets };
-// export { lostPetList, totalCount };
+export { getLostPets, searchParams };
