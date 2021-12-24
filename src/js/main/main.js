@@ -2,7 +2,9 @@
 // import "../style/reset.css";
 import { getLostPets, searchParams } from "../lostPets/getLostPets.js";
 import { paintLostPetPreview } from "./mainPreview.js";
+import { myChart } from "./mainChart.js";
 
+// 이미지 슬라이더
 const SHOWING__CLASS = "showing";
 const firstSlide = document.querySelector(".slider__item:first-child");
 function slide() {
@@ -23,6 +25,10 @@ function slide() {
 slide();
 setInterval(slide, 2000);
 
+// 통계
+myChart;
+
+// 보호 게시판 미리보기
 let [lostPetList, totalCount] = await getLostPets({
   ...searchParams,
   numOfRows: 6,
