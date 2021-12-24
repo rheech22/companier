@@ -20,6 +20,7 @@ const {
   getUserLoggedIn,
   returnImageUrls,
   clearImages,
+  getDistrict,
 } = require('./apiController');
 
 const {
@@ -56,5 +57,6 @@ router.delete('/recomments/:id', isLoggedIn, deleteReComment); // 대댓글 삭�
 router.put('/recomments/:id', isLoggedIn, updateReComment); // 대댓글 수정
 
 router.get('/lost-pets', getLostPets);
+router.get('/get-district', getDistrict);
 
 module.exports = router;
