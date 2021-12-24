@@ -13,14 +13,21 @@
   padding: 10px 30px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   background-color: antiquewhite;
   border-radius: 5px;
 }
 
 .lost-search__date,
 .lost-search__place,
-.lost-search__kind {
+.lost-search__kind-state {
   margin: 10px;
+}
+
+.lost-search__kind-state {
+  display: flex;
+  justify-content: space-between;
 }
 
 .lost-search input,
@@ -29,13 +36,12 @@
   height: 28px;
 }
 
-.lost-search__state {
-  display: inline-block;
-  padding-left: 10px;
+.lost-search input {
+  width: 143px;
 }
 
-.lost-search__state select {
-  width: 108px;
+.lost-search__kind-state select {
+  width: 100px;
 }
 
 .search-btn {
