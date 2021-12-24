@@ -14,12 +14,12 @@ const comments = (result, loginInfo) => {
   `;
 
   let commentLi = [];
-
   result.forEach((comment) => {
     const time = `${comment.createdAt.split("-")[0]}년 ${
       comment.createdAt.split("-")[1]
     }월 ${comment.createdAt.split("-")[2].substr(0, 2)}일`;
-    commentLi.push(`
+
+    let commentLiTemplate = `
         <li class="comment__item">
             <article class="comment__wrap">
                 <div class="comment__author">${comment.author.nickname}</div>
@@ -30,8 +30,8 @@ const comments = (result, loginInfo) => {
                 </div>
                 <div class="comment__reply-list">
                     <!-- 대댓글 -->
-                    <ul>
-                        <li></li>
+                    <ul class="reply-list__container">
+                        {{__reply-comments__}}
                     </ul>
                 </div>
                 <div class="comment__tool hidden" data-comment-author-id="${comment.author._id}">
@@ -39,7 +39,38 @@ const comments = (result, loginInfo) => {
                 </div>
             </article>
         </li>
-    `);
+    `;
+
+    console.log(comment.reComments);
+    let reCommentLi = [];
+    if (comment.reComments.length > 0) {
+      comment.reComments.forEach((reComment) => {
+        const reCommentTime = `${reComment.createdAt.split("-")[0]}년 ${
+          reComment.createdAt.split("-")[1]
+        }월 ${reComment.createdAt.split("-")[2].substr(0, 2)}일`;
+        reCommentLi.push(`
+            <li class="reComment__item">
+              <article class="comment__wrap">
+                  <div class="comment__author">${reComment.author.nickname}</div>
+                  <div class="comment__content">${reComment.content}</div>
+                  <div class="comment__info">
+                      <span class="comment__data">${reCommentTime}</span>
+                      <!-- <a href="#" class="comment__link hidden" data-comment-id="${reComment._id}">답글쓰기</a> -->
+                  </div>
+                  <div class="comment__tool hidden" data-comment-author-id="${reComment.author._id}">
+                      <i class="fas fa-ellipsis-v"></i>
+                  </div>
+              </article>
+            </li>
+          `);
+      });
+      commentLiTemplate = commentLiTemplate.replace(
+        " {{__reply-comments__}}",
+        reCommentLi.join("")
+      );
+    }
+
+    commentLi.push(commentLiTemplate);
   });
   commentTemplate = commentTemplate.replace(
     "{{__comments-list__}}",
