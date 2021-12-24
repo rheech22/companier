@@ -8,6 +8,8 @@ module.exports = {
     myPage: "/src/js/myPage/index.js",
     myPetBoard: "/src/js/petStory/searchPetStory.js",
     myPetBoardDetail: "/src/js/petStory/index.js",
+    editorPage: "/src/js/editorPage.js",
+    login: "/src/js/login.js",
   },
   devtool: "inline-source-map",
   plugins: [new CleanWebpackPlugin()],
