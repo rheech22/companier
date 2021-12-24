@@ -73,6 +73,7 @@ const parentOptions = {
   },
 };
 
+// 초기 옵션 생성: placeholder, 전체 선택
 const setInitialOptions = () => {
   const selects = document.querySelectorAll(".lost-search select");
   selects.forEach((select) => {
@@ -95,29 +96,33 @@ const createOptions = (select, options) => {
   }
 };
 
-// const getChildOptions = (parentSelect, childSelect) => {
-//   parentSelect.addEventListener("change", (e) => {
-//     console.log(e.target.value);
-//     // fetch
-//     childSelect.innerHTML += ``;
-//   });
-// };
+// 시군구 옵션 동적 생성
+const getSigunguData = async (upr_cd) => {
+  try {
+    const response = await fetch(`/api/get-district/?upr_cd=${upr_cd}`);
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// const setChildOptions = () => {
-//   const sidoSelect = document.querySelector("#sido");
-//   const sigunguSelect = document.querySelector("#sigungu");
-//   const shelterSelect = document.querySelector("#shelter");
-//   const upkindSelect = document.querySelector("#upkind");
-//   const kindSelect = document.querySelector("#kind");
-
-//   getChildOptions(sidoSelect, sigunguSelect);
-//   getChildOptions(sigunguSelect, shelterSelect);
-//   getChildOptions(upkindSelect, kindSelect);
-// };
+const setSigunguOptions = async (upr_cd) => {
+  const sigunguSelect = document.querySelector("#sigungu");
+  sigunguSelect.innerHTML = `
+    <option value="" disabled selected hidden>시/군/구 선택</option>
+    <option value="">전체</option>
+  `;
+  const sigungu = await getSigunguData(upr_cd);
+  sigungu.forEach((item) => {
+    const { orgCd, orgdownNm } = item;
+    sigunguSelect.innerHTML += `<option value="${orgCd}">${orgdownNm}</option>`;
+  });
+};
 
 const paintSearchForm = () => {
   document.querySelector(".lost-search").innerHTML = searchFormTemplate;
   setInitialOptions();
 };
 
-export { paintSearchForm };
+export { paintSearchForm, setSigunguOptions };
