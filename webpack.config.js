@@ -6,6 +6,8 @@ module.exports = {
     lostMainPage: "/src/js/lostPets/lostMainPage.js",
     lostDetailPage: "/src/js/lostPets/lostDetailPage.js",
     myPage: "/src/js/myPage/index.js",
+    myPetBoard: "/src/js/petStory/searchPetStory.js",
+    myPetBoardDetail: "/src/js/petStory/index.js",
   },
   devtool: "inline-source-map",
   plugins: [new CleanWebpackPlugin()],
