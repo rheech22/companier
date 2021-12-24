@@ -32,12 +32,12 @@ const handlePostComment = async () => {
 };
 
 const handleCommentToolBox = (loginInfo) => {
-  const commentTool = document.querySelectorAll(".comment__tool");
-  commentTool.forEach((el) => {
-    if (el.dataset.commentAuthorId === loginInfo._id) {
-      el.classList.remove("hidden");
-    }
-  });
+  // const commentTool = document.querySelectorAll(".comment__tool");
+  // commentTool.forEach((el) => {
+  //   if (el.dataset.commentAuthorId === loginInfo._id) {
+  //     el.classList.remove("hidden");
+  //   }
+  // });
 };
 
 const clickCommentToolBox = () => {
@@ -51,17 +51,37 @@ const clickCommentToolBox = () => {
 };
 
 const handleRePostComment = (isNotLogin) => {
-  const reCommentLink = document.querySelectorAll(".comment__link");
+  // const reCommentLink = document.querySelectorAll(".comment__link");
+  // if (!isNotLogin) {
+  //   reCommentLink.forEach((el) => {
+  //     el.classList.remove("hidden");
+  //     el.addEventListener("click", (e) => {
+  //       e.preventDefault();
+  //       console.log(e.target);
+  //       // TODO:대댓글 입력창 생성 -> api 요청  -> 화면 렌더링(대댓글 css 만들기)
+  //     });
+  //   });
+  // }
+};
 
+const showHiddenBox = (loginInfo, isNotLogin) => {
+  const commentTool = document.querySelectorAll(".comment__tool");
+  commentTool.forEach((el) => {
+    if (el.dataset.commentAuthorId === loginInfo._id) {
+      el.classList.remove("hidden");
+    }
+  });
+
+  const reCommentLink = document.querySelectorAll(".comment__link");
   if (!isNotLogin) {
     reCommentLink.forEach((el) => {
       el.classList.remove("hidden");
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        console.log(e.target);
-        // TODO:대댓글 입력창 생성 -> api 요청  -> 화면 렌더링(대댓글 css 만들기)
-      });
     });
+  }
+
+  const articleBottomBtn = document.querySelector(".detail-bottom__left");
+  if (loginInfo._id === articleBottomBtn.dataset.authorId) {
+    articleBottomBtn.classList.remove("hidden");
   }
 };
 
@@ -70,4 +90,5 @@ export {
   handleCommentToolBox,
   clickCommentToolBox,
   handleRePostComment,
+  showHiddenBox,
 };

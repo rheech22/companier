@@ -13,6 +13,7 @@ import {
   handleCommentToolBox,
   clickCommentToolBox,
   handleRePostComment,
+  showHiddenBox,
 } from "./handleComment.js";
 
 const run = () => {
@@ -31,6 +32,7 @@ const run = () => {
     commentInput(isNotLogin);
     articleBottomBtns(data);
 
+    showHiddenBox(loginInfo, isNotLogin);
     handlePostComment();
     handleCommentToolBox(loginInfo);
     handleRePostComment(isNotLogin);
