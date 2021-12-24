@@ -28,12 +28,12 @@ const run = () => {
     mainTag();
     postBody(data);
     comments(data.comments, loginInfo);
-    commentPagination();
+    //commentPagination();
     commentInput(isNotLogin);
     articleBottomBtns(data);
 
     showHiddenBox(loginInfo, isNotLogin);
-    handlePostComment();
+    handlePostComment(loginInfo, isNotLogin);
     handleRePostComment(loginInfo);
     clickCommentToolBox();
   });
