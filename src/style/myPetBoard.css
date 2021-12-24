@@ -29,11 +29,23 @@
   margin-bottom: 1.7rem;
 }
 
+.main-content__img {
+  width: 200px;
+  height: 250px;
+}
+
 .main-content__info {
   display: flex;
   justify-content: center;
   flex-direction: column;
   line-height: 1.6;
+}
+
+.main-content__title {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .main__upload {
