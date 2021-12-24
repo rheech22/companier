@@ -31,15 +31,17 @@ const getPosts = async (req, res) => {
 
     if (!query.title && !query.content) searchConditions.$or = [{}];
 
-    const [total, posts] = await Promise.all([
-      Post.countDocuments(searchConditions),
-      Post.find(searchConditions)
-        .lean()
-        .sort({ createdAt: -1 })
-        .skip(perPage * (page - 1))
-        .limit(perPage)
-        .populate('author'),
-    ]);
+    const total = await Post.countDocuments(searchConditions);
+
+    const posts = await Post.find(searchConditions)
+      .lean()
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .populate({
+        path: 'author',
+        select: 'nickname',
+      });
 
     const totalPage = Math.ceil(total / perPage);
 
