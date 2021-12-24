@@ -1,15 +1,22 @@
 import { pagination } from "../component/pagination.js";
+const myPosts = async () => {
+  const response = await fetch(`/api/user-detail`);
+  const user = await response.json();
+  postsTemplate(user);
+};
 
-const myPosts = (user) => {
-	const displayTag = document.querySelector(".main-content__section");
-	const pagesTag = document.querySelector(".main__container > .pagination");
-	const data = user.posts;
-	const elementName = "article";
-	const elementClass = "main-content__article";
-	const rows = 8;
-	const makeHTML = (obj) => {
-		const { title, author, views } = obj;
-		return `<a href="./myPage.html">
+const postsTemplate = (user) => {
+  const displayTag = document.querySelector(".main-content__section");
+  const pagesTag = document.querySelector(".main__container > .pagination");
+  const data = user.posts;
+  const elementName = "article";
+  const elementClass = "main-content__article";
+  const rows = 8;
+  const pageCut = 10;
+  const makeHTML = (obj) => {
+    console.log(obj);
+    const { title, author, views } = obj;
+    return `<a href="./myPage.html">
               <div class="main-content__wrap">
                 <div class="main-content__img">
                   <img src="https://via.placeholder.com/200x250/B2B2B2/FFFFFF/?text=NO%20Image" alt="">
@@ -25,17 +32,18 @@ const myPosts = (user) => {
               </div>
             </a>
             `;
-	};
+  };
 
-	pagination(
-		data,
-		rows,
-		displayTag,
-		elementName,
-		elementClass,
-		makeHTML,
-		pagesTag
-	);
+  pagination(
+    data,
+    rows,
+    displayTag,
+    elementName,
+    elementClass,
+    makeHTML,
+    pagesTag,
+    pageCut
+  );
 };
 
 export { myPosts };
