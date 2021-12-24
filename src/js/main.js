@@ -1,7 +1,8 @@
-// slide
+import '../style/index.css';
+import '../style/reset.css';
 
-const SHOWING__CLASS = "showing";
-const firstSlide = document.querySelector(".slider__item:first-child");
+const SHOWING__CLASS = 'showing';
+const firstSlide = document.querySelector('.slider__item:first-child');
 function slide() {
   const currentSilde = document.querySelector(`.${SHOWING__CLASS}`);
   if (currentSilde) {
@@ -21,8 +22,8 @@ slide();
 setInterval(slide, 2000);
 
 // chart
-const news__description = document.querySelector(".news__description");
-const ctx = document.getElementById("myChart");
+const news__description = document.querySelector('.news__description');
+const ctx = document.getElementById('myChart');
 const data = [11, 2, 1];
 const sum = data.reduce((a, b) => a + b);
 news__description.innerText = `
@@ -32,13 +33,13 @@ ${sum}마리가 새 가족을 만났습니다!
 `;
 
 const myChart = new Chart(ctx, {
-  type: "doughnut",
+  type: 'doughnut',
   options: {
     responsive: false,
     plugins: {
       title: {
         display: true,
-        text: "지난 주 입양 통계",
+        text: '지난 주 입양 통계',
         padding: {
           // top: 10,
         },
@@ -46,12 +47,12 @@ const myChart = new Chart(ctx, {
     },
   },
   data: {
-    labels: ["강아지", "고양이", "기타"],
+    labels: ['강아지', '고양이', '기타'],
     datasets: [
       {
-        label: "My First Dataset",
-        data: data,
-        backgroundColor: ["#ecbb7f", "#a48772", "#a47272"],
+        label: 'My First Dataset',
+        data,
+        backgroundColor: ['#ecbb7f', '#a48772', '#a47272'],
         hoverOffset: 4,
       },
     ],
