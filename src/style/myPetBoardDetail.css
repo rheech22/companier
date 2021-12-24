@@ -193,3 +193,18 @@
 .hidden {
   visibility: hidden;
 }
+
+.reply-list__container {
+  margin-left: 35px;
+  padding-top: 12px;
+}
+
+.reply-list__item {
+  margin: 12px 0 10px 48px;
+  padding: 8px;
+}
+
+.reComment__item:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
