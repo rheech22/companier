@@ -139,11 +139,7 @@ async function sendPost(e) {
 
   const matches = getMathes(content);
 
-  console.log(matches);
-
   deleteFileNames = setDeleteFiles(matches);
-
-  console.log(deleteFileNames);
 
   // 등록취소된 파일 삭제 요청
   const deleteResponse = await deleteTempFiles(deleteFileNames);
@@ -174,7 +170,7 @@ async function sendPost(e) {
     window.removeEventListener('beforeunload', handleBeforeUnload);
     window.location.assign('/myPetBoard');
   } else {
-    alert('등록에 실패했습니다😭');
+    alert('업데이트에 실패했습니다😭');
   }
 }
 
