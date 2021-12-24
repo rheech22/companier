@@ -28,18 +28,29 @@ const getUserLoggedIn = async (req, res) => {
 const getLostPets = async (req, res) => {
   try {
     const {
-      query: { limit, pageNo },
+      query: {
+        pageNo,
+        numOfRows,
+        upkind,
+        upr_cd: uprCd,
+        org_cd: orgCd,
+        state,
+        bgnde,
+        endde,
+      },
     } = req;
 
     const { SERVICE_KEY } = process.env;
 
     const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
 
-    const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${limit}&ServiceKey=${SERVICE_KEY}`;
+    const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
 
     const {
       data: {
-        response: { body: lostPets },
+        response: {
+          body: lostPets,
+        },
       },
     } = await axios.get(URL);
 
