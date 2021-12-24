@@ -86,7 +86,10 @@ const getPostDetail = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findOne({ _id: id }).populate('author');
+    const post = await Post.findOne({ _id: id }).populate({
+      path: 'author',
+      select: 'nickname',
+    });
 
     if (!post) res.status(404).end();
 
