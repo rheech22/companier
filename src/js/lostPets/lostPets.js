@@ -14,7 +14,7 @@ const createLostPetItem = (item) => {
 
   const lostPetTemplate = `
     <article class="lost-content__item">
-      <a href="./lostPets/${desertionNo}">
+      <a href="/lostPets/${desertionNo}">
         <div class="lost-content__img-container">
           <img
             class="lost-content__img"
