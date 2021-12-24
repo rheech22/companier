@@ -13,9 +13,9 @@ const postsTemplate = (user) => {
   const elementClass = "main-content__article";
   const rows = 8;
   const pageCut = 10;
+  const author = user.nickname;
   const makeHTML = (obj) => {
-    console.log(obj);
-    const { title, author, views, _id } = obj;
+    const { title, views, _id } = obj;
     return `<a href="/myPetBoard/${_id}">
               <div class="main-content__wrap">
                 <div class="main-content__img">
