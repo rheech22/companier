@@ -3,6 +3,7 @@ const changeName = async () => {
   const btn = document.querySelector("#userInfo__modify__btn");
   const deleteUserBtn = document.querySelector("#userInfo__exit");
   const nameRegex = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
+  const nickname = document.querySelector(".myPage__profile__nickname");
 
   const res = await fetch("/api/get-user", {
     method: "GET",
@@ -25,6 +26,7 @@ const changeName = async () => {
         });
 
         if (changed.status === 200) {
+          nickname.innerHTML = `<span>닉네임 ${newNickname}</span>`;
           alert(`${newNickname}님 안녕하세요`);
         } else {
           alert("닉네임 변경에 실패했습니다.");
