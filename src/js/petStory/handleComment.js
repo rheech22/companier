@@ -13,13 +13,13 @@ const apiPostComment = async (commentValue, wroteReComment) => {
   );
 
   if (response.status === 201) {
-    // TODO: 댓글 화면에 렌더링, 페이지네이션 함수 재실행
+    return true;
   } else {
     alert("댓글 입력에 실패했습니다.");
+    return false;
   }
 };
 
-// 대댓글 작성
 const apiPostReComment = async (commentId, wroteReComment) => {
   const response = await fetch(`/api/${commentId}/recomments`, {
     method: "POST",
@@ -32,8 +32,6 @@ const apiPostReComment = async (commentId, wroteReComment) => {
   });
 
   if (response.status === 201) {
-    // TODO: 댓글 화면에 렌더링, 페이지네이션 함수 재실행
-    console.log("대댓글 작성 성공");
     return true;
   } else {
     alert("댓글 입력에 실패했습니다.");
@@ -41,14 +39,54 @@ const apiPostReComment = async (commentId, wroteReComment) => {
   }
 };
 
-const handlePostComment = async () => {
+const handlePostComment = async (loginInfo, isNotLogin) => {
   const submitCommentBtn = document.querySelector(".comment-feed__button");
   submitCommentBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const commentValue = document.querySelector(
       ".comment-feed__textarea"
     ).value;
-    apiPostComment(commentValue);
+
+    let success = apiPostComment(commentValue);
+    if (success) {
+      /*
+      const commentList = document.querySelector(".comment__list");
+      let liTag = document.createElement("li");
+      liTag.innerHTML = `
+        <li class="comment__item">
+          <article class="comment__wrap">
+              <div class="comment__author">${loginInfo.nickname}</div>
+              <div class="comment__content">${commentValue}</div>
+              <div class="comment__info">
+                  <span class="comment__data">${new Date().getFullYear()}년 ${
+        new Date().getMonth() + 1
+      }월 ${new Date().getDate()}일</span>
+                  <a href="#" class="comment__link hidden" data-comment-id="${
+                    loginInfo._id
+                  }">답글쓰기</a>
+              </div>
+              <div class="comment__reply-list">
+                  <!-- 대댓글 -->
+                  <ul class="reply-list__container">
+                     
+                  </ul>
+              </div>
+              <div class="comment__tool hidden" data-comment-author-id="${
+                loginInfo._id
+              }">
+                  <i class="fas fa-ellipsis-v"></i>
+              </div>
+          </article>
+        </li>
+      `;
+      commentList.append(liTag);
+      showHiddenBox(loginInfo, isNotLogin);
+      */
+      //  임시
+      location.reload();
+    }
+    // TODO: 댓글 화면에 렌더링, 페이지네이션 함수 재실행
+
     document.querySelector(".comment-feed__textarea").value = "";
   });
 };
@@ -64,16 +102,13 @@ const clickCommentToolBox = () => {
 };
 
 const handleRePostComment = (loginInfo) => {
-  const reCommentLinks = document.querySelectorAll(".comment__link"); // 답글쓰기
+  const reCommentLinks = document.querySelectorAll(".comment__link");
 
-  // if (!isNotLogin) {
   reCommentLinks.forEach((reCommentLink) => {
     let flag = true;
 
     reCommentLink.addEventListener("click", (e) => {
       e.preventDefault();
-      // console.log(e);
-      // console.log(e.target.parentElement.parentElement.children[3].firstElementChild);
 
       if (flag) {
         const li = document.createElement("li");
@@ -127,18 +162,12 @@ const handleRePostComment = (loginInfo) => {
               `;
             }
 
-            e.target.parentElement.parentElement.parentElement.innerHTML =
-              wroteReComment;
             flag = true;
-            //console.log(reCommentLink.dataset.commentId);
           });
         });
       }
-
-      // TODO:대댓글 입력창 생성 -> api 요청  -> 화면 렌더링(대댓글 css 만들기)
     });
   });
-  //}
 };
 
 const showHiddenBox = (loginInfo, isNotLogin) => {

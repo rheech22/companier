@@ -164,7 +164,29 @@
   margin-bottom: 30px;
 }
 
-.detail-bottom__update,
+.detail-bottom__left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.detail-bottom__update {
+  width: 60px;
+  height: 32px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--main-color-orange);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-size: 15px;
+  margin-right: 5px;
+}
+
 .detail-bottom__delete {
   width: 60px;
   height: 32px;
@@ -173,6 +195,7 @@
   cursor: pointer;
   background-color: var(--main-color-orange);
   color: #fff;
+  font-size: 15px;
 }
 
 .detail-bottom__link {
