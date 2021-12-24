@@ -75,7 +75,7 @@ const parentOptions = {
   },
 };
 
-const setInitialOption = () => {
+const setInitialOptions = () => {
   const selects = document.querySelectorAll(".lost-search select");
   selects.forEach((select) => {
     const { id } = select;
@@ -96,16 +96,31 @@ const createOptions = (select, options) => {
     select.innerHTML += `<option value="${value}">${key}</option>`;
   }
 };
-// const sidoSelect = document.querySelector("#sido");
-// const sigunguSelect = document.querySelector("#sigungu");
-// const shelterSelect = document.querySelector("#shelter");
-// const upkindSelect = document.querySelector("#upkind");
-// const kindSelect = document.querySelector("#kind");
-// const stateSelect = document.querySelector("#state");
+
+const getChildOptions = (parentSelect, childSelect) => {
+  parentSelect.addEventListener("change", (e) => {
+    console.log(e.target.value);
+    // fetch
+    childSelect.innerHTML += ``;
+  });
+};
+
+const setChildOptions = () => {
+  const sidoSelect = document.querySelector("#sido");
+  const sigunguSelect = document.querySelector("#sigungu");
+  const shelterSelect = document.querySelector("#shelter");
+  const upkindSelect = document.querySelector("#upkind");
+  const kindSelect = document.querySelector("#kind");
+
+  getChildOptions(sidoSelect, sigunguSelect);
+  getChildOptions(sigunguSelect, shelterSelect);
+  getChildOptions(upkindSelect, kindSelect);
+};
 
 const paintSearchForm = () => {
   document.querySelector(".lost-search").innerHTML = searchFormTemplate;
-  setInitialOption();
+  setInitialOptions();
+  setChildOptions();
 };
 
 export { paintSearchForm };
