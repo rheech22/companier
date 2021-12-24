@@ -3,9 +3,9 @@ const articleBottomBtns = (result) => {
   articleBottomBtnsSection.classList.add("detail-bottom__button");
 
   let articleBottomBtnTemplate = `
-    <div class="detail-bottom__left">
-        <button type="button" class="detail-bottom__update" data-post-id="${result._id}" data-author-id="${result.author._id}">수정</button>
-        <button type="button" class="detail-bottom__delete" data-post-id="${result._id}" data-author-id="${result.author._id}">삭제</button>
+    <div class="detail-bottom__left hidden" data-author-id="${result.author._id}">
+        <button type="button" class="detail-bottom__update" data-post-id="${result._id}">수정</button>
+        <button type="button" class="detail-bottom__delete" data-post-id="${result._id}">삭제</button>
     </div>
     <div class="detail-bottom__right">
         <div class="detail-bottom__link">
