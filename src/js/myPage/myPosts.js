@@ -15,8 +15,8 @@ const postsTemplate = (user) => {
   const pageCut = 10;
   const makeHTML = (obj) => {
     console.log(obj);
-    const { title, author, views } = obj;
-    return `<a href="./myPage.html">
+    const { title, author, views, _id } = obj;
+    return `<a href="/myPetBoard/${_id}">
               <div class="main-content__wrap">
                 <div class="main-content__img">
                   <img src="https://via.placeholder.com/200x250/B2B2B2/FFFFFF/?text=NO%20Image" alt="">
