@@ -18,7 +18,7 @@ const commentsTemplate = (user) => {
     console.log(data);
     const { parentPost, content, createdAt, _id } = data;
     return `<form class = "content__info">
-					<a href=${parentPost} class="content__info__link">
+					<a href=/myPetBoard/${parentPost} class="content__info__link">
 						<p class="content__info__comment">${content}</p>
 						<p class="content__info__post">${createdAt}</p>
 					</a>
