@@ -2,8 +2,8 @@ const searchFormTemplate = `
   <div class="lost-search__box">
     <form
       id="lostSearchForm"
-      method="get"
-      action="./"
+      method="GET"
+      action="./lostPets"
       accept-charset="utf-8"
       autocomplete="off"
     >
@@ -29,7 +29,7 @@ const searchFormTemplate = `
         </div>
       </div>
       <div class="search-btn-container">
-        <button class="btn search-btn"><a href="#">검색</a></button>
+        <button class="btn search-btn">검색</button>
       </div>
     </form>
   </div>
