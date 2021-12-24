@@ -68,6 +68,11 @@ const comments = (result, loginInfo) => {
         " {{__reply-comments__}}",
         reCommentLi.join("")
       );
+    } else {
+      commentLiTemplate = commentLiTemplate.replace(
+        " {{__reply-comments__}}",
+        ""
+      );
     }
 
     commentLi.push(commentLiTemplate);
