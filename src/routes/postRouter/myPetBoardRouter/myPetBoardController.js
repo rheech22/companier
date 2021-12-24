@@ -1,4 +1,4 @@
-const { Post } = require("../../../models");
+const { Post, User } = require('../../../models');
 
 // 근황 게시판 페이지
 const getPosts = async (req, res) => {
@@ -7,21 +7,21 @@ const getPosts = async (req, res) => {
 
     const page = Number(query.page || 1); // url 쿼리에서 page 받기, 기본값 1
     const perPage = Number(query.perPage || 15); // url 쿼리에서 peRage 받기, 기본값 15
-    const title = query.title || "";
-    const content = query.content || "";
-    const author = query.author || "";
+    const title = query.title || '';
+    const content = query.content || '';
+    const author = query.author || '';
 
     const titleSearch = {
       title: {
         $regex: query.title || /^(?![\s\S])/,
-        $options: "i",
+        $options: 'i',
       },
     };
 
     const contentSearch = {
       content: {
         $regex: query.content || /^(?![\s\S])/,
-        $options: "i",
+        $options: 'i',
       },
     };
 
@@ -38,7 +38,7 @@ const getPosts = async (req, res) => {
         .sort({ createdAt: -1 })
         .skip(perPage * (page - 1))
         .limit(perPage)
-        .populate("author"),
+        .populate('author'),
     ]);
 
     const totalPage = Math.ceil(total / perPage);
@@ -54,18 +54,16 @@ const getPosts = async (req, res) => {
         .sort({ createdAt: -1 })
         .skip(0)
         .limit(0)
-        .populate("author");
-      const authorRegex = new RegExp(`${query.author}`, "gi");
-      const authorsPosts = allPosts.filter((post) =>
-        post.author.nickname.match(authorRegex)
-      );
+        .populate('author');
+      const authorRegex = new RegExp(`${query.author}`, 'gi');
+      const authorsPosts = allPosts.filter((post) => post.author.nickname.match(authorRegex));
       authors.posts = authorsPosts.slice((page - 1) * perPage, page * perPage);
       authors.pages = authorsPosts.length
         ? Math.ceil(authorsPosts.length / perPage)
         : 1;
     }
 
-    res.render("myPetBoard.html", {
+    res.render('myPetBoard.html', {
       isLogined: req.isLoggedIn,
       posts: query.author ? authors.posts : posts,
       page,
@@ -77,7 +75,7 @@ const getPosts = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).redirect("/");
+    res.status(500).redirect('/');
   }
 };
 
@@ -86,7 +84,7 @@ const getPostDetail = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findOne({ _id: id }).populate("author");
+    const post = await Post.findOne({ _id: id }).populate('author');
 
     if (!post) res.status(404).end();
 
@@ -94,30 +92,49 @@ const getPostDetail = async (req, res) => {
 
     post.save();
 
-    res.render("myPetBoardDetail.html", {
+    res.render('myPetBoardDetail.html', {
       isLogined: req.isLoggedIn,
       data: post,
     });
   } catch (error) {
-    res.status(500).redirect("/");
+    res.status(500).redirect('/');
   }
 };
 
 const getWritePage = (req, res) => {
   try {
-    res.render("editorPage.html");
+    res.render('editorPage.html');
   } catch (error) {
     console.log(error);
-    res.status(500).redirect("/");
+    res.status(500).redirect('/');
   }
 };
 
-const getUpdatePage = (req, res) => {
+const getUpdatePage = async (req, res) => {
   try {
-    res.render("editorUpdatePage.html");
+    const {
+      params: {
+        id,
+      },
+      session,
+    } = req;
+
+    const { email } = session.kakao.kakao_account;
+
+    const user = await User.findOne({ email });
+
+    const post = await Post.findOne({ _id: id }).populate('author');
+
+    const { author } = post;
+
+    if (user.id !== author.id) return res.status(401).end();
+
+    res.render('editorUpdatePage.html');
   } catch (error) {
-    console.log(error);
-    res.status(500).redirect("/");
+    if (error.kind === 'ObjectId') {
+      return res.status(400).end();
+    }
+    res.status(500).redirect('/');
   }
 };
 

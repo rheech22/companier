@@ -307,7 +307,7 @@ const deletePost = async (req, res) => {
 const updatePost = async (req, res) => {
   const {
     params: { id },
-    body: { title, content },
+    body: { title, content, thumbnail },
     session,
   } = req;
 
@@ -331,6 +331,7 @@ const updatePost = async (req, res) => {
       {
         title,
         content,
+        thumbnail: thumbnail || '',
       },
     );
 

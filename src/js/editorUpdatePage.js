@@ -1,8 +1,3 @@
-import '../style/editorPage.css';
-import '../style/index.css';
-import '../style/reset.css';
-import '../style/lostPets.css';
-
 const postBtn = document.querySelector('.editor__content__submit');
 const title = document.querySelector('.editor__options__title-input');
 
@@ -85,10 +80,11 @@ const deleteTempFiles = async (deleteFileNames) => {
   return response;
 };
 
-const postContents = async ({ titleText, content, thumbnail }) => {
+const updatePost = async ({ titleText, content, thumbnail }) => {
+  const postId = window.location.href.split('/writePage/')[1];
   const response = await axios({
-    method: 'POST',
-    url: '/api/posts',
+    method: 'PUT',
+    url: `/api/posts/${postId}`,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -143,7 +139,11 @@ async function sendPost(e) {
 
   const matches = getMathes(content);
 
+  console.log(matches);
+
   deleteFileNames = setDeleteFiles(matches);
+
+  console.log(deleteFileNames);
 
   // 등록취소된 파일 삭제 요청
   const deleteResponse = await deleteTempFiles(deleteFileNames);
@@ -162,14 +162,14 @@ async function sendPost(e) {
   const contents = {
     titleText: title.value,
     content,
-    thumbnail: matches[0],
+    thumbnail: matches.length > 0 ? matches[0] : '',
   };
 
-  // 게시글 등록 API 요청
-  const postResponse = await postContents(contents);
+  // 게시글 업데이트 API 요청
+  const updateResponse = await updatePost(contents);
 
-  if (postResponse.status === 201) {
-    console.log('게시글 등록!');
+  if (updateResponse.status === 200) {
+    console.log('게시글 업뎃!');
     // redirect되기 전에 beforeunload 이벤트 제거
     window.removeEventListener('beforeunload', handleBeforeUnload);
     window.location.assign('/myPetBoard');
@@ -196,6 +196,34 @@ const handleBeforeUnload = async (e) => {
   e.returnValue = '';
 };
 
-postBtn.addEventListener('click', sendPost);
+const getPostContent = async () => {
+  const postId = window.location.href.split('/writePage/')[1];
+  const response = await axios({
+    url: `/api/posts/${postId}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
+};
 
-window.addEventListener('beforeunload', handleBeforeUnload);
+const renderPost = async () => {
+  const post = await getPostContent();
+
+  const {
+    data: {
+      title: postTitle,
+      content,
+    },
+  } = post;
+
+  quill.root.innerHTML = content;
+  title.value = postTitle;
+};
+
+window.addEventListener('DOMContentLoaded', (e) => {
+  renderPost();
+  postBtn.addEventListener('click', sendPost);
+  window.addEventListener('beforeunload', handleBeforeUnload);
+});
