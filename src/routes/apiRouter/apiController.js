@@ -1,13 +1,8 @@
-const axios = require('axios');
+const axios = require("axios");
 
-const {
-  User,
-  Post,
-  Comment,
-  ReComment,
-} = require('../../models');
+const { User, Post, Comment, ReComment } = require("../../models");
 
-const { s3 } = require('../../middlewares');
+const { s3 } = require("../../middlewares");
 
 const getUserLoggedIn = async (req, res) => {
   try {
@@ -28,14 +23,13 @@ const getUserLoggedIn = async (req, res) => {
 const getDistrict = async (req, res) => {
   try {
     const {
-      query: {
-        upr_cd: uprCd,
-      },
+      query: { upr_cd: uprCd },
     } = req;
 
     const { SERVICE_KEY } = process.env;
 
-    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+    const HOST =
+      "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc";
 
     const URL = `${HOST}/sigungu?serviceKey=${SERVICE_KEY}&upr_cd=${uprCd}`;
 
@@ -43,9 +37,7 @@ const getDistrict = async (req, res) => {
       data: {
         response: {
           body: {
-            items: {
-              item: sigungu,
-            },
+            items: { item: sigungu },
           },
         },
       },
@@ -74,15 +66,14 @@ const getLostPets = async (req, res) => {
 
     const { SERVICE_KEY } = process.env;
 
-    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+    const HOST =
+      "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc";
 
     const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
 
     const {
       data: {
-        response: {
-          body: lostPets,
-        },
+        response: { body: lostPets },
       },
     } = await axios.get(URL);
 
@@ -121,7 +112,7 @@ const updateUser = async (req, res) => {
       { _id: id },
       {
         nickname,
-      },
+      }
     );
 
     const user = await User.findOne({ _id: id });
@@ -144,7 +135,7 @@ const deleteUser = async (req, res) => {
 
     req.session.save();
 
-    res.redirect(204, '/');
+    res.redirect(204, "/");
   } catch (error) {
     res.status(500);
   }
@@ -155,25 +146,25 @@ const getPost = async (req, res) => {
     const { id } = req.params;
 
     const post = await Post.findOne({ _id: id })
-      .populate('author', 'email nickname')
+      .populate("author", "email nickname")
       .populate({
-        path: 'comments',
+        path: "comments",
         populate: {
-          path: 'author',
-          select: 'nickname',
+          path: "author",
+          select: "nickname",
         },
       })
       .populate({
-        path: 'comments.reComments',
+        path: "comments.reComments",
         populate: {
-          path: 'author',
-          select: 'nickname',
+          path: "author",
+          select: "nickname",
         },
       });
 
     res.status(200).json(post).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -195,22 +186,23 @@ const returnImageUrls = (req, res) => {
 
 const clearImages = async (req, res) => {
   const {
-    body: {
-      deleteFileNames,
-    },
+    body: { deleteFileNames },
   } = req;
 
   try {
     if (!deleteFileNames) return res.status(204).end();
 
     await deleteFileNames.forEach((fileName) => {
-      s3.deleteObject({
-        Bucket: 'wetube22', // 사용자 버켓 이름
-        Key: `ch/${fileName}`, // 버켓 내 경로
-      }, (err, data) => {
-        if (err) throw err;
-        console.log('s3 deleteObject ', fileName);
-      });
+      s3.deleteObject(
+        {
+          Bucket: "wetube22", // 사용자 버켓 이름
+          Key: `ch/${fileName}`, // 버켓 내 경로
+        },
+        (err, data) => {
+          if (err) throw err;
+          console.log("s3 deleteObject ", fileName);
+        }
+      );
     });
     res.status(200).end();
   } catch (error) {
@@ -220,11 +212,7 @@ const clearImages = async (req, res) => {
 
 const createPost = async (req, res) => {
   const {
-    body: {
-      title,
-      content,
-      thumbnail,
-    },
+    body: { title, content, thumbnail },
     session,
   } = req;
 
@@ -264,7 +252,7 @@ const deletePost = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    const post = await Post.findOne({ _id: id }).populate('author');
+    const post = await Post.findOne({ _id: id }).populate("author");
 
     const { author } = post;
 
@@ -285,23 +273,25 @@ const deletePost = async (req, res) => {
 
     // 유저 댓글에서 포스트와 연관된 댓글 모두 삭제
     const newUserComments = user.comments.filter(
-      (item) => item.parentPost.toString() !== id,
+      (item) => item.parentPost.toString() !== id
     );
 
     user.comments = newUserComments;
 
     // 유저 대댓글에서 포스트와 연관된 대댓글 모두 삭제
     const newUserReComments = user.reComments.filter(
-      (item) => item.parentPost.toString() !== id,
+      (item) => item.parentPost.toString() !== id
     );
 
     user.reComments = newUserReComments;
 
     user.save();
 
-    res.status(204).end();
+    res.status(204);
+    res.redirect("/myPetBoard");
+    res.end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -324,7 +314,7 @@ const updatePost = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    const post = await Post.findOne({ _id: id }).populate('author');
+    const post = await Post.findOne({ _id: id }).populate("author");
 
     const { author } = post;
 
@@ -335,8 +325,8 @@ const updatePost = async (req, res) => {
       {
         title,
         content,
-        thumbnail: thumbnail || '',
-      },
+        thumbnail: thumbnail || "",
+      }
     );
 
     const updatedUserPost = user.posts.find((item) => item.id === id);
@@ -348,7 +338,7 @@ const updatePost = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -389,7 +379,7 @@ const createComment = async (req, res) => {
 
     res.status(201).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -409,8 +399,8 @@ const deleteComment = async (req, res) => {
 
     // 댓글 삭제
     const comment = await Comment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentPost');
+      .populate("author")
+      .populate("parentPost");
 
     const { author, parentPost } = comment;
 
@@ -433,7 +423,7 @@ const deleteComment = async (req, res) => {
 
     res.status(204).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -458,8 +448,8 @@ const updateComment = async (req, res) => {
 
     // 댓글 수정
     const comment = await Comment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentPost');
+      .populate("author")
+      .populate("parentPost");
 
     const { author, parentPost } = comment;
 
@@ -485,7 +475,7 @@ const updateComment = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -508,7 +498,7 @@ const createReComment = async (req, res) => {
       return res.status(404).end();
     }
 
-    const comment = await Comment.findOne({ _id: id }).populate('parentPost');
+    const comment = await Comment.findOne({ _id: id }).populate("parentPost");
 
     // 대댓글 생성
     const newReComment = await ReComment.create({
@@ -526,11 +516,11 @@ const createReComment = async (req, res) => {
 
     // 포스트에 대댓글 추가
     const post = await Post.findOne({ _id: parentPost.id }).populate(
-      'comments',
+      "comments"
     );
 
     const updatedPostComment = post.comments.find(
-      (item) => item.id === comment.id,
+      (item) => item.id === comment.id
     );
 
     updatedPostComment.reComments.push(newReComment);
@@ -542,7 +532,7 @@ const createReComment = async (req, res) => {
 
     res.status(201).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -562,8 +552,8 @@ const deleteReComment = async (req, res) => {
 
     // 대댓글 삭제
     const reComment = await ReComment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentComment');
+      .populate("author")
+      .populate("parentComment");
 
     const { author, parentComment } = reComment;
 
@@ -573,7 +563,7 @@ const deleteReComment = async (req, res) => {
 
     // 댓글에 포함된 대댓글 삭제
     const comment = await Comment.findOne({ _id: parentComment.id }).populate(
-      'parentPost',
+      "parentPost"
     );
 
     if (!comment) {
@@ -603,7 +593,7 @@ const deleteReComment = async (req, res) => {
 
     res.status(204).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
@@ -628,8 +618,8 @@ const updateReComment = async (req, res) => {
 
     // 대댓글 수정
     const reComment = await ReComment.findOne({ _id: id })
-      .populate('author')
-      .populate('parentComment');
+      .populate("author")
+      .populate("parentComment");
 
     const { author, parentComment } = reComment;
 
@@ -639,7 +629,7 @@ const updateReComment = async (req, res) => {
 
     // 댓글에 포함된 대댓글 수정
     const comment = await Comment.findOne({ _id: parentComment.id }).populate(
-      'parentPost',
+      "parentPost"
     );
 
     const updatedReComment = comment.reComments.find((item) => item.id === id);
@@ -656,7 +646,7 @@ const updateReComment = async (req, res) => {
     const updatedComment = post.comments.find((item) => item.id === comment.id);
 
     const updatedPostReComment = updatedComment.reComments.find(
-      (item) => item.id === id,
+      (item) => item.id === id
     );
 
     updatedPostReComment.content = content;
@@ -672,7 +662,7 @@ const updateReComment = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
-    if (error.kind === 'ObjectId') {
+    if (error.kind === "ObjectId") {
       return res.status(400).end();
     }
     res.status(500).end();
