@@ -50,37 +50,68 @@ i {
 
 #myPage {
 	margin-top: 128px;
+	max-width: 640px;
+	flex-direction: column;
+	align-items: stretch;
+	display: flex;
 }
 
 .myPage__profile {
-	display: block;
-	text-align: center;
+	display: grid;
+	grid-template-columns: repeat(4, 160px);
+	grid-template-rows: repeat(4, 40px);
+	grid-template-areas:
+		"pi nickname nickname nickname"
+		"pi nickname nickname nickname"
+		"pi email email email"
+		"pi created_at created_at created_at";
+}
+
+.myPage__profile__nickname,
+.myPage__profile__email,
+.myPage__profile__createdAt {
+	text-align: right;
 }
 
 .myPage__profile__email,
-.myPage__profile__nickname,
 .myPage__profile__createdAt {
-	display: block;
+	color: #95a5a6;
+	font-size: 0.8em;
+}
+
+.myPage__profile__nickname {
+	grid-area: nickname;
+	color: var(--main-color-orange);
+	font-weight: bold;
+	font-size: 2.4em;
+}
+
+.myPage__profile__email {
+	grid-area: email;
+}
+
+.myPage__profile__createdAt {
+	grid-area: created_at;
 }
 
 .myPage__profile__image {
 	background-position: center;
 	background-size: cover;
 	display: block;
-	height: 128px;
-	width: 128px;
+	margin: 8px;
 	background-image: url(https://img4.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/24/holapet/20210524031851701wnid.jpg);
 	border-radius: 50%;
 	box-shadow: 0 0 8px #bdc3c7;
+	grid-area: pi;
 }
 
-.myPage__select,
+/* .myPage__select,
 .userInfo {
 	display: flex;
-}
+} */
 
 .myPage__select {
-	margin-top: 24px;
+	margin: 24px 0 48px;
 }
 
 .myPage__select .list {
@@ -128,6 +159,7 @@ i {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
+	align-items: center;
 }
 
 .myComment__pages {
@@ -160,12 +192,16 @@ i {
 
 .pagination li {
 	font-size: 14px;
-	margin: 16px;
+	padding: 8px;
+	margin: 8px;
 	cursor: pointer;
+	width: 32px;
+	text-align: center;
 }
 
 .pagination li:hover {
-	color: var(--btn-hover-color);
+	background-color: #ecf0f1;
+	border-radius: 50%;
 }
 
 .pagination li.active {
@@ -179,35 +215,43 @@ i {
 /* userInfo */
 
 #userInfo {
+	display: flex;
+	justify-content: center;
 }
 
 .userInfo__modify {
-	display: flex;
-	height: 1.8em;
-	margin-bottom: 1.5em;
+	max-width: 480px;
 }
 
-.userInfo__modify__name,
+.userInfo__modify > * {
+	margin-bottom: 8px;
+}
+
+/* .userInfo__modify__name,
 .userInfo__modify__input {
 	margin-right: 1em;
 }
 
-.userInfo__modify__input {
-	text-align: center;
-}
 .userInfo__modify__name {
 	padding-top: 5px;
+} */
+.userInfo__modify__input {
+	text-align: center;
+	padding: 3px;
 }
 
-#userInfo__modify__btn {
-	height: 100%;
-	width: 5em;
+.userInfo__modify .btn {
+	width: 100%;
+	height: auto;
+	padding: 4px 16px;
+	font-size: 0.8em;
+	margin-bottom: 8px;
 }
 
-#userInfo__exit {
+/* #userInfo__exit {
 	width: 5em;
 	font-size: 1em;
-}
+} */
 
 /* 내가 쓴 글 */
 
@@ -219,28 +263,33 @@ i {
 
 #myComments {
 	display: none;
-	margin: auto;
-	width: 50%;
+	flex-direction: column;
 }
 
 .myComments__list {
-	width: 100%;
-	height: 24em;
 }
 
 .content {
 	height: 15%;
-	margin-bottom: 0.7em;
+	border-bottom: 1px dashed #bdc3c7;
+}
+.myComments__list > .content:last-child {
+	border-bottom: none;
+}
+.myComments__list > .content:nth-child(2n-1) {
+	background-color: #f1f2f6;
+}
+.myComments__list > .content:nth-child(2n) {
+	background-color: #ecf0f1;
 }
 
 .content__info {
 	display: flex;
+	padding: 8px;
 }
 
 .content__info__link {
-	display: block;
 	width: 100%;
-	margin-bottom: 0.5em;
 }
 
 .content__info__comment {
@@ -248,12 +297,13 @@ i {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 70%;
+	color: #2c3e50;
+	margin-bottom: 6px;
 }
 
 .content__info__post {
 	color: #95a5a6;
-	font-size: 0.8em;
-	margin-top: 8px;
+	font-size: 0.75em;
 }
 
 .deleteBox {
