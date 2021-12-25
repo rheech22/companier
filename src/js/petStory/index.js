@@ -1,7 +1,6 @@
 import { mainTag } from "./main.js";
 import { postBody } from "./postBody.js";
 import { comments } from "./comments.js";
-import { commentPagination } from "./commentPagination.js";
 import { commentInput } from "./commentInput.js";
 import { articleBottomBtns } from "./articleBottomBtns.js";
 import { checkLoginUser } from "./checkLoginUser.js";
@@ -27,14 +26,13 @@ const run = () => {
 
     mainTag();
     postBody(data);
-    comments(data.comments, loginInfo);
-    //commentPagination();
+    comments(data.comments);
     commentInput(isNotLogin);
     articleBottomBtns(data);
 
     showHiddenBox(loginInfo, isNotLogin);
-    handlePostComment(loginInfo, isNotLogin);
-    handleRePostComment(loginInfo);
+    handlePostComment();
+    handleRePostComment();
     clickCommentToolBox();
   });
 };
