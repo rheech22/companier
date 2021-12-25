@@ -2,7 +2,6 @@ import { pagination } from "../component/pagination.js";
 const myPosts = async () => {
 	const response = await fetch(`/api/user-detail`);
 	const user = await response.json();
-	console.log(user);
 	postsTemplate(user);
 };
 

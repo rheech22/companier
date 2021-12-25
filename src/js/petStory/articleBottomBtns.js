@@ -5,11 +5,11 @@ const articleBottomBtns = (result) => {
   let articleBottomBtnTemplate = `
     <div class="detail-bottom__left hidden" data-author-id="${result.author._id}">
         <a class="detail-bottom__update" href="/myPetBoard/writePage/${result._id}">수정</a>
-        <a class="detail-bottom__update" href="/api/posts/delete/${result._id}">삭제</a>
+        <button type="button" class="detail-bottom__delete" data-post-id="${result._id}">삭제</button>
     </div>
     <div class="detail-bottom__right">
         <div class="detail-bottom__link">
-            <a href="#">목록으로</a>
+            <a href="javascript:history.back();" >목록으로</a>
         </div>
     </div>  
   `;
