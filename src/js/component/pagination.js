@@ -63,9 +63,8 @@ const pagination = (
 		const li = document.createElement("li");
 		li.innerHTML = page;
 
-		if (currentPage === page) li.classList.add("active");
 		li.addEventListener("click", function (e) {
-			e.preventDefault();
+			if (currentPage === page) li.classList.add("active");
 			currentPage = page;
 			displayList(data, displayTag, rows, currentPage);
 			const current_btn = document.querySelector(".pagination li.active");
@@ -81,7 +80,7 @@ const pagination = (
 			last - pageCut < 1
 				? last
 				: last % pageCut !== 0
-				? first + 4
+				? first + pageCut
 				: last - pageCut;
 		currentPage = first;
 		displayList(data, displayTag, rows, currentPage);

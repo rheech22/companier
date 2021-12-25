@@ -98,7 +98,7 @@ const commentPagination = (
 			last - pageCut < 1
 				? last
 				: last % pageCut !== 0
-				? first + 4
+				? first + pageCut - 1
 				: last - pageCut;
 		currentPage = first;
 		displayList(data, displayTag, rows, currentPage);
