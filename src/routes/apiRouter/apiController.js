@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const mockData = require('./mockData');
+
 const {
   User, Post, Comment, ReComment,
 } = require('../../models');
@@ -65,17 +67,35 @@ const getLostPets = async (req, res) => {
       },
     } = req;
 
-    const { SERVICE_KEY } = process.env;
+    const { data } = mockData;
 
-    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+    console.log(data.items.item.length);
 
-    const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
+    // const { SERVICE_KEY } = process.env;
 
-    const {
-      data: {
-        response: { body: lostPets },
+    // const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+
+    // const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
+
+    // const {
+    //   data: {
+    //     response: { body: lostPets },
+    //   },
+    // } = await axios.get(URL);
+
+    const parsedItem = [...data.items.item].slice((pageNo - 1) * numOfRows, numOfRows * pageNo);
+
+    const lostPets = {
+      items: {
+        item: parsedItem,
       },
-    } = await axios.get(URL);
+      numOfRows,
+      pageNo,
+      totalCount: 600,
+    };
+
+    if (upkind === '422400') lostPets.totalCount = 300;
+    if (upkind === '429900') lostPets.totalCount = 100;
 
     res.json(lostPets);
   } catch (error) {
