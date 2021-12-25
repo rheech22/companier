@@ -7,7 +7,7 @@ const myPage = async () => {
 };
 
 function myPageTemplate(user) {
-	line();
+	// line();
 	const tabList = document.querySelectorAll(".myPage__select .list a");
 	const contents = document.querySelectorAll(".myPage__select__content");
 	const email = document.querySelector(".myPage__profile__email");

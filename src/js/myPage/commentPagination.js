@@ -20,7 +20,6 @@ const commentPagination = (
 	let first = last <= pageCut ? 1 : last - pageCut;
 	last = last > totalPage ? totalPage : last;
 
-	// 요청하는 페이지의 컨텐츠를 화면에 표시
 	const deleteComment = async (id) => {
 		const res = await fetch(`/api/comments/${id}`, {
 			method: "DELETE",
@@ -30,6 +29,7 @@ const commentPagination = (
 		});
 	};
 
+	// 요청하는 페이지의 컨텐츠를 화면에 표시
 	function displayList(items, wrapper, rows_per_page, page) {
 		wrapper.innerHTML = "";
 		page--;
