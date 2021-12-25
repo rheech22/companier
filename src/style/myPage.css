@@ -1,3 +1,51 @@
+i {
+  position: absolute;
+  background: linear-gradient(transparent, #f00);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  top: 10px;
+  animation: animate 6s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background: linear-gradient(transparent, green);
+    transform: translateX(calc(-100% - 800px));
+    opacity: 1;
+  }
+
+  20% {
+    background: linear-gradient(transparent, purple);
+    opacity: 0;
+  }
+
+  32% {
+    background: linear-gradient(transparent, --btn-hover-color);
+    opacity: 0;
+  }
+
+  50% {
+    background: linear-gradient(transparent, var(--btn-hover-color));
+    transform: translateX(calc(100% + 400px));
+    opacity: 1;
+  }
+
+  68% {
+    background: linear-gradient(transparent, var(--btn-hover-color));
+    opacity: 0;
+  }
+
+  80% {
+    background: linear-gradient(transparent, #f00);
+    opacity: 0;
+  }
+  100% {
+    background: linear-gradient(transparent, var(--btn-hover-color));
+    transform: translateX(calc(-100% - 800px));
+    opacity: 1;
+  }
+}
+
 /* myPage */
 #myPage {
   width: 100%;
@@ -28,26 +76,40 @@
 }
 
 .myPage__select {
-  margin-bottom: 2em;
+  height: 100px;
+  width: 50%;
+  margin: auto;
+  display: flex;
 }
 
 .myPage__select .list {
   overflow: hidden;
   margin: auto;
-  font-size: 1.1em;
+  display: flex;
+  justify-content: center;
 }
 
 .myPage__select .list li {
-  float: left;
-  margin-right: 14px;
+  margin: auto;
 }
 
-.myPage__select .list li.is__on .myPage__select__category {
+.myPage__select .list a {
+  display: block;
+  width: 100%;
+  background-color: var(--main-color-orange);
+  padding: 8px 16px;
+}
+
+.myPage__select .list a.is__on {
+  background-color: var(--btn-hover-color);
+}
+
+.myPage__select .list a.is__on .myPage__select__category {
   font-weight: bold;
 }
 
 .myPage__select .list .myPage__select__category {
-  font-size: 13px;
+  font-size: 16px;
 }
 
 /* pagination */
