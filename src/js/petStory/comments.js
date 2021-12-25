@@ -35,7 +35,17 @@ const comments = (result, loginInfo) => {
                     </ul>
                 </div>
                 <div class="comment__tool hidden" data-comment-author-id="${comment.author._id}">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i class="fas fa-ellipsis-v tool"></i>
+                    <div class="tool__box hidden">
+                      <ul class="tool__list">
+                        <li class="tool__item">
+                          <a href="#">수정</a>
+                        </li>
+                        <li class="tool__item">
+                          <a href="#">삭제</a>
+                        </li>
+                      </ul>
+                    </div>
                 </div>
             </article>
         </li>
@@ -57,8 +67,18 @@ const comments = (result, loginInfo) => {
                       <span class="comment__data">${reCommentTime}</span>
                       <!-- <a href="#" class="comment__link hidden" data-comment-id="${reComment._id}">답글쓰기</a> -->
                   </div>
-                  <div class="comment__tool hidden" data-comment-author-id="${reComment.author._id}">
-                      <i class="fas fa-ellipsis-v"></i>
+                  <div class="comment__tool hidden tool" data-comment-author-id="${reComment.author._id}">
+                      <i class="fas fa-ellipsis-v tool"></i>
+                      <div class="tool__box hidden">
+                        <ul class="tool__list">
+                          <li class="tool__item">
+                            <a href="#">수정</a>
+                          </li>
+                          <li class="tool__item">
+                            <a href="#">삭제</a>
+                          </li>
+                        </ul>
+                      </div>
                   </div>
               </article>
             </li>
