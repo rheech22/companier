@@ -1,4 +1,4 @@
-import { line } from "./main.js";
+import { line } from "./line.js";
 
 const myPage = async () => {
   const response = await fetch(`/api/user-detail`);
