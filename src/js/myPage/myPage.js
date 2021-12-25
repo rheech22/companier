@@ -1,9 +1,9 @@
-import { line } from "./line.js";
+//import { line } from "./line.js";
 
 const myPage = async () => {
-	const response = await fetch(`/api/user-detail`);
-	const user = await response.json();
-	myPageTemplate(user);
+  const response = await fetch(`/api/user-detail`);
+  const user = await response.json();
+  myPageTemplate(user);
 };
 
 function myPageTemplate(user) {
@@ -19,7 +19,7 @@ function myPageTemplate(user) {
 		user.createdAt.split("-")[1]
 	}월 ${user.createdAt.split("-")[2].substr(0, 2)}일`;
 
-	let activeContent = "";
+  let activeContent = "";
 
 	for (let i = 0; i < tabList.length; i++) {
 		tabList[i].addEventListener("click", function (e) {
