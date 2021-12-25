@@ -259,3 +259,23 @@
 .tool__list {
   line-height: 2.3;
 }
+
+.update__cancle {
+  margin-right: 5px;
+}
+
+.reComment-feed__button {
+  border: none;
+  min-width: 40px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  color: #424242;
+}
+
+.mypet-datail__body img {
+  max-width: 780px;
+  max-height: 460px;
+}
