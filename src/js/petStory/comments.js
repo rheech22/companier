@@ -1,6 +1,8 @@
+import { getTime } from '../utils';
+
 const comments = (result, loginInfo) => {
-  const commentSection = document.createElement("section");
-  commentSection.classList.add("datail-comment__container");
+  const commentSection = document.createElement('section');
+  commentSection.classList.add('datail-comment__container');
 
   let commentTemplate = `
       <section class="comment-feed">
@@ -11,11 +13,13 @@ const comments = (result, loginInfo) => {
     </section>              
   `;
 
-  let commentLi = [];
+  const commentLi = [];
   result.forEach((comment) => {
-    const time = `${comment.createdAt.split("-")[0]}년 ${
-      comment.createdAt.split("-")[1]
-    }월 ${comment.createdAt.split("-")[2].substr(0, 2)}일`;
+    const parsedTime = getTime(comment.createdAt);
+
+    const { year, months, date } = parsedTime;
+
+    const time = `${year}년 ${months}월 ${date}일`;
 
     let commentLiTemplate = `
         <li class="comment__item">
@@ -51,12 +55,13 @@ const comments = (result, loginInfo) => {
         </li>
     `;
 
-    let reCommentLi = [];
+    const reCommentLi = [];
     if (comment.reComments.length > 0) {
       comment.reComments.forEach((reComment) => {
-        const reCommentTime = `${reComment.createdAt.split("-")[0]}년 ${
-          reComment.createdAt.split("-")[1]
-        }월 ${reComment.createdAt.split("-")[2].substr(0, 2)}일`;
+        const reParsedTime = getTime(reComment.createdAt);
+
+        const { year: y, months: m, date: d } = reParsedTime;
+        const reCommentTime = `${y}년 ${m}월 ${d}일`;
         reCommentLi.push(`
             <li class="reComment__item">
               <article class="comment__wrap">
@@ -86,25 +91,25 @@ const comments = (result, loginInfo) => {
           `);
       });
       commentLiTemplate = commentLiTemplate.replace(
-        " {{__reply-comments__}}",
-        reCommentLi.join("")
+        ' {{__reply-comments__}}',
+        reCommentLi.join(''),
       );
     } else {
       commentLiTemplate = commentLiTemplate.replace(
-        " {{__reply-comments__}}",
-        ""
+        ' {{__reply-comments__}}',
+        '',
       );
     }
 
     commentLi.push(commentLiTemplate);
   });
   commentTemplate = commentTemplate.replace(
-    "{{__comments-list__}}",
-    commentLi.join("")
+    '{{__comments-list__}}',
+    commentLi.join(''),
   );
 
   commentSection.innerHTML = commentTemplate;
-  document.querySelector(".mypet-datail__content").appendChild(commentSection);
+  document.querySelector('.mypet-datail__content').appendChild(commentSection);
 };
 
 export { comments };
