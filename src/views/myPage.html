@@ -34,9 +34,9 @@
     <section id="myPage">
       <div class="myPage__profile">
         <span class="myPage__profile__image"></span>
-        <span class="myPage__profile__email">이메일</span>
-        <span class="myPage__profile__nickname">닉2네임</span>
-        <span class="myPage__profile__createdAt">가입일</span>
+        <span class="myPage__profile__nickname"></span>
+        <span class="myPage__profile__email"></span>
+        <span class="myPage__profile__createdAt"></span>
       </div>
       <div class="myPage__select">
         <ul class="list">
@@ -54,14 +54,17 @@
 
       <!-- 회원정보 수정 -->
       <section id="userInfo" class="myPage__select__content">
-        <div class="userInfo__modify">
-          <h4 class="userInfo__modify__name">별명</h4>
-          <input class="userInfo__modify__input" type="text" placeholder="바꿀 닉네임을 입력하세요" />
+        <form class="userInfo__modify">
+          <div class="userInfo__modify__div">
+            <label for="userInfo__modify__nickname_input">별명</label>
+            <input id="userInfo__modify__nickname_input" class="userInfo__modify__input" type="text"
+              placeholder="바꿀 닉네임을 입력하세요" />
+          </div>
           <button id="userInfo__modify__btn" class="btn" type="submit">
             수정
           </button>
-        </div>
-        <button id="userInfo__exit" class="btn">회원 탈퇴</button>
+          <button id="userInfo__exit" class="btn">회원 탈퇴</button>
+        </form>
       </section>
 
       <!-- 내가 쓴 글 -->
