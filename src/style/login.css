@@ -62,6 +62,7 @@
 
 .kakao__button {
   background-color: #fee500;
+  cursor: pointer;
 }
 
 .login__logo {
