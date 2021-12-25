@@ -3,9 +3,9 @@ import { getTime } from '../utils';
 const postBody = (result) => {
   const parsedTime = getTime(result.createdAt);
 
-  const { year, months, date } = parsedTime;
+  const { year, month, date } = parsedTime;
 
-  const time = `${year}년 ${months}월 ${date}일`;
+  const time = `${year}년 ${month}월 ${date}일`;
 
   const postHeader = document.createElement('header');
   const postSection = document.createElement('section');

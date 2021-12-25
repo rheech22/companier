@@ -17,9 +17,9 @@ const comments = (result, loginInfo) => {
   result.forEach((comment) => {
     const parsedTime = getTime(comment.createdAt);
 
-    const { year, months, date } = parsedTime;
+    const { year, month, date } = parsedTime;
 
-    const time = `${year}년 ${months}월 ${date}일`;
+    const time = `${year}년 ${month}월 ${date}일`;
 
     let commentLiTemplate = `
         <li class="comment__item">
@@ -60,7 +60,7 @@ const comments = (result, loginInfo) => {
       comment.reComments.forEach((reComment) => {
         const reParsedTime = getTime(reComment.createdAt);
 
-        const { year: y, months: m, date: d } = reParsedTime;
+        const { year: y, month: m, date: d } = reParsedTime;
         const reCommentTime = `${y}년 ${m}월 ${d}일`;
         reCommentLi.push(`
             <li class="reComment__item">
