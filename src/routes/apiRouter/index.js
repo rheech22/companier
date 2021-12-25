@@ -21,6 +21,7 @@ const {
   returnImageUrls,
   clearImages,
   getDistrict,
+  myPetBoardPreview,
 } = require("./apiController");
 
 const {
@@ -58,5 +59,5 @@ router.put("/recomments/:id", isLoggedIn, updateReComment); // 대댓글 수정
 
 router.get("/lost-pets", getLostPets);
 router.get("/get-district", getDistrict);
-
+router.get("/getMyPetBoardPreview", myPetBoardPreview);
 module.exports = router;

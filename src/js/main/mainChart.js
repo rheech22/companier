@@ -42,11 +42,7 @@ const news__description = document.querySelector(".news__description");
 const ctx = document.getElementById("myChart");
 const data = [dogCount, catCount, othersCount];
 
-news__description.innerHTML = `
-오늘은<br>
-<span style="color: var(--main-color-orange)">${totalCount}</span>마리의 반려동물이<br>
-가족을 기다리고 있습니다.<br>
-새로운 가족이 되어주세요!<br>
+news__description.innerHTML = `오늘은<br><span style="color: var(--main-color-orange)">${totalCount}</span>마리의 반려동물이<br>가족을 기다리고 있습니다.<br>새로운 가족이 되어주세요!<br>
 `;
 
 const myChart = new Chart(ctx, {

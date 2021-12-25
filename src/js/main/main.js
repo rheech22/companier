@@ -1,7 +1,8 @@
 // import "../style/index.css";
 // import "../style/reset.css";
 import { getLostPets, searchParams } from "../lostPets/getLostPets.js";
-import { paintLostPetPreview } from "./mainPreview.js";
+import { getMyPetBoard } from "../petStory/getPreview.js";
+import { paintLostPetPreview, paintMyPetBoardPreview } from "./mainPreview.js";
 import { myChart } from "./mainChart.js";
 
 // 이미지 슬라이더
@@ -33,4 +34,7 @@ let [lostPetList, totalCount] = await getLostPets({
   ...searchParams,
   numOfRows: 6,
 });
+let myPetBoardList = await getMyPetBoard();
+
 paintLostPetPreview(lostPetList);
+paintMyPetBoardPreview(myPetBoardList);

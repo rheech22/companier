@@ -17,6 +17,29 @@ const createLostPetPreview = (item) => {
   return lostPetPreviewTemplate;
 };
 
+const createMyPetBoardPreview = (item) => {
+  const { _id, title, thumbnail } = item;
+
+  const lostPetPreviewTemplate = `
+        <div class="board__content">
+          <a href="/myPetBoard/${_id}">
+            <img
+                class="board__img"
+                src="${
+                  thumbnail != null
+                    ? thumbnail
+                    : "https://via.placeholder.com/200x250/B2B2B2/FFFFFF/?text=NO%20Image"
+                }"
+                alt=""
+            />
+            <h4 class="content__title">${title}</h4>
+          </a>
+        </div>
+  `;
+
+  return lostPetPreviewTemplate;
+};
+
 const paintLostPetPreview = (lostPetList) => {
   const lostPetItems = lostPetList.map(createLostPetPreview);
   const lostBoardContent = document.querySelector(
@@ -25,4 +48,12 @@ const paintLostPetPreview = (lostPetList) => {
   lostBoardContent.innerHTML = lostPetItems.join("");
 };
 
-export { paintLostPetPreview };
+const paintMyPetBoardPreview = (previewAry) => {
+  const petBoardItems = previewAry.map(createMyPetBoardPreview);
+  const myPetBoardContent = document.querySelector(
+    ".board__story .board__contentsBox"
+  );
+  myPetBoardContent.innerHTML = petBoardItems.join("");
+};
+
+export { paintLostPetPreview, paintMyPetBoardPreview };

@@ -669,6 +669,24 @@ const updateReComment = async (req, res) => {
   }
 };
 
+const myPetBoardPreview = async (req, res) => {
+  try {
+    const posts = await Post.find({}).sort({ createdAt: "desc" });
+    let previewAry = [];
+
+    console.log("posts의 길이: ", posts.length);
+    console.log("인덱스 테스트: ", posts[0]);
+
+    for (let i = 0; i < 6; i++) {
+      previewAry.push(posts[i]);
+    }
+
+    res.json({ data: previewAry });
+  } catch (error) {
+    res.status(500).end();
+  }
+};
+
 module.exports = {
   createComment,
   deleteComment,
@@ -688,4 +706,5 @@ module.exports = {
   returnImageUrls,
   clearImages,
   getDistrict,
+  myPetBoardPreview,
 };
