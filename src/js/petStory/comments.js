@@ -1,6 +1,4 @@
 const comments = (result, loginInfo) => {
-  console.log(loginInfo._id); // 로그인한 유저 id
-  console.log(loginInfo);
   const commentSection = document.createElement("section");
   commentSection.classList.add("datail-comment__container");
 
@@ -22,11 +20,13 @@ const comments = (result, loginInfo) => {
     let commentLiTemplate = `
         <li class="comment__item">
             <article class="comment__wrap">
-                <div class="comment__author">${comment.author.nickname}</div>
-                <div class="comment__content">${comment.content}</div>
-                <div class="comment__info">
-                    <span class="comment__data">${time}</span>
-                    <a href="#" class="comment__link hidden" data-comment-id="${comment._id}">답글쓰기</a>
+                <div class="comment__box">
+                  <div class="comment__author">${comment.author.nickname}</div>
+                  <div class="comment__content">${comment.content}</div>
+                  <div class="comment__info">
+                      <span class="comment__data">${time}</span>
+                      <a href="#" class="comment__link hidden" data-comment-id="${comment._id}">답글쓰기</a>
+                  </div>
                 </div>
                 <div class="comment__reply-list">
                     <!-- 대댓글 -->
@@ -39,10 +39,10 @@ const comments = (result, loginInfo) => {
                     <div class="tool__box hidden">
                       <ul class="tool__list">
                         <li class="tool__item">
-                          <a href="#">수정</a>
+                          <a href="#" class="tool__update" data-comment-id="${comment._id}">수정</a>
                         </li>
-                        <li class="tool__item">
-                          <a href="#">삭제</a>
+                        <li class="tool__item tool__delete" data-comment-id="${comment._id}">삭제
+                         <!-- <a href="#" class="tool__delete" data-comment-id="${comment._id}">삭제</a> -->
                         </li>
                       </ul>
                     </div>
@@ -51,7 +51,6 @@ const comments = (result, loginInfo) => {
         </li>
     `;
 
-    console.log(comment.reComments);
     let reCommentLi = [];
     if (comment.reComments.length > 0) {
       comment.reComments.forEach((reComment) => {
@@ -61,21 +60,23 @@ const comments = (result, loginInfo) => {
         reCommentLi.push(`
             <li class="reComment__item">
               <article class="comment__wrap">
-                  <div class="comment__author">${reComment.author.nickname}</div>
-                  <div class="comment__content">${reComment.content}</div>
-                  <div class="comment__info">
-                      <span class="comment__data">${reCommentTime}</span>
-                      <!-- <a href="#" class="comment__link hidden" data-comment-id="${reComment._id}">답글쓰기</a> -->
+                  <div class="comment__box">
+                    <div class="comment__author">${reComment.author.nickname}</div>
+                    <div class="comment__content">${reComment.content}</div>
+                    <div class="comment__info">
+                        <span class="comment__data">${reCommentTime}</span>
+                        <!-- <a href="#" class="comment__link hidden" data-comment-id="${reComment._id}">답글쓰기</a> -->
+                    </div>
                   </div>
-                  <div class="comment__tool hidden tool" data-comment-author-id="${reComment.author._id}">
+                  <div class="comment__tool hidden" data-comment-author-id="${reComment.author._id}">
                       <i class="fas fa-ellipsis-v tool"></i>
                       <div class="tool__box hidden">
                         <ul class="tool__list">
                           <li class="tool__item">
-                            <a href="#">수정</a>
+                            <a href="#" class="tool__recomment-update">수정</a>
                           </li>
-                          <li class="tool__item">
-                            <a href="#">삭제</a>
+                          <li class="tool__item tool__delete">삭제
+                            <!-- <a href="#" class="tool__recomment-delete">삭제</a> -->
                           </li>
                         </ul>
                       </div>

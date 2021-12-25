@@ -1,5 +1,4 @@
 const commentInput = (isNotLogin) => {
-  console.log(isNotLogin);
   const commentInputForm = document.createElement("form");
 
   if (isNotLogin)

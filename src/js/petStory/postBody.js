@@ -1,5 +1,4 @@
 const postBody = (result) => {
-  console.log(result);
   const time = `${result.createdAt.split("-")[0]}년 ${
     result.createdAt.split("-")[1]
   }월 ${result.createdAt.split("-")[2].substr(0, 2)}일`;
