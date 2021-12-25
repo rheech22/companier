@@ -217,6 +217,10 @@
   visibility: hidden;
 }
 
+.display__hidden {
+  display: none;
+}
+
 .reply-list__container {
   margin-left: 35px;
   padding-top: 12px;

@@ -3,7 +3,7 @@ const commentInput = (isNotLogin) => {
   const commentInputForm = document.createElement("form");
 
   if (isNotLogin)
-    commentInputForm.classList.add("comment-feed__form", "hidden");
+    commentInputForm.classList.add("comment-feed__form", "display__hidden");
   else commentInputForm.classList.add("comment-feed__form");
 
   let commentInputTemplate = `
