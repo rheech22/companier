@@ -16,7 +16,7 @@ const changeName = async () => {
       alert("닉네임은 한글, 영문, 숫자 2-10자리만 가능합니다.");
     } else {
       if (confirm("정말로 바꾸시겠어요?")) {
-        const newNickname = val;
+        const newNickname = val.replace(/ /gi, "");
         const changed = await fetch(`/api/users/${userId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
