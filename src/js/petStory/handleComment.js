@@ -165,7 +165,7 @@ const clickCommentToolBox = () => {
           .parentElement.children[0];
       let toolBox =
         e.target.parentElement.parentElement.parentElement.parentElement;
-      toolBox.classList.add("hidden"); // 등록하면 다시 보여줘야 됨
+      toolBox.classList.add("hidden");
       locationComment.innerHTML = `
         <div class="comment-feed__input">
           <div class="comment-feed__content">
@@ -223,10 +223,14 @@ const clickCommentToolBox = () => {
         e.target.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
       }
     }
+
+    // 대댓글 수정
+    //대댓글 마크업 구조랑 클래스명 재정비 후 작업
+
+    // 대댓글 삭제
   });
 };
 
-// 대댓글
 const handleRePostComment = (loginInfo) => {
   const reCommentLinks = document.querySelectorAll(".comment__link");
 
@@ -253,7 +257,6 @@ const handleRePostComment = (loginInfo) => {
         e.target.parentElement.parentElement.parentElement.children[1].children[0].append(
           li
         );
-        // e.target.parentElement.parentElement.parentElement.children[3].firstElementChild.append(li);
         flag = false;
 
         const submitReCommentBtn = document.querySelectorAll(
