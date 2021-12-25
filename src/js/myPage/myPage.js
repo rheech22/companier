@@ -20,6 +20,7 @@ function myPageTemplate(user) {
   nickname.innerHTML = user.nickname;
 
   const parsedTime = getTime(user.createdAt);
+
   const { year, month, date } = parsedTime;
 
   createdAt.innerHTML = `가입일 ${year}년 ${month}월 ${date}일`;

@@ -5,6 +5,8 @@ const postBody = (result) => {
 
   const { year, month, date } = parsedTime;
 
+  console.log(month);
+
   const time = `${year}년 ${month}월 ${date}일`;
 
   const postHeader = document.createElement('header');
