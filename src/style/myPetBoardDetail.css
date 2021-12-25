@@ -217,6 +217,10 @@
   visibility: hidden;
 }
 
+.display__hidden {
+  display: none;
+}
+
 .reply-list__container {
   margin-left: 35px;
   padding-top: 12px;
@@ -230,4 +234,28 @@
 .reComment__item:not(:last-child) {
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px;
+}
+
+.tool__box {
+  width: 78px;
+  position: absolute;
+  top: 24px;
+  right: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 82px;
+  padding: 10px 0;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  box-shadow: 0 1px 12px 0 rgb(0 0 0 / 6%);
+  background-color: #fff;
+  box-sizing: border-box;
+  color: #000;
+  font-size: 15px;
+}
+
+.tool__list {
+  line-height: 2.3;
 }

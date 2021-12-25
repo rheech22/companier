@@ -71,10 +71,20 @@ const handlePostComment = async (loginInfo, isNotLogin) => {
                      
                   </ul>
               </div>
-              <div class="comment__tool hidden" data-comment-author-id="${
+              <div class="comment__tool hidden tool" data-comment-author-id="${
                 loginInfo._id
               }">
-                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v tool"></i>
+                    <div class="tool__box">
+                      <ul class="tool__list">
+                        <li class="tool__item">
+                          <a href="#">수정</a>
+                        </li>
+                        <li class="tool__item">
+                          <a href="#">삭제</a>
+                        </li>
+                      </ul>
+                    </div>
               </div>
           </article>
         </li>
@@ -85,7 +95,6 @@ const handlePostComment = async (loginInfo, isNotLogin) => {
       //  임시
       location.reload();
     }
-    // TODO: 댓글 화면에 렌더링, 페이지네이션 함수 재실행
 
     document.querySelector(".comment-feed__textarea").value = "";
   });
@@ -93,12 +102,20 @@ const handlePostComment = async (loginInfo, isNotLogin) => {
 
 const clickCommentToolBox = () => {
   const commentTool = document.querySelectorAll(".comment__tool");
-  commentTool.forEach((el) => {
-    el.addEventListener("click", (e) => {
-      console.log(e.target);
-      // TODO: 수정 삭제 모달창 넣어주기 -> api 요청 -> 화면 렌더링
-    });
+  const commentUl = document.querySelector(".comment__list");
+
+  commentUl.addEventListener("click", (e) => {
+    if (e.target.classList.contains("tool")) {
+      e.target.nextElementSibling.classList.toggle("hidden");
+    }
   });
+
+  // commentTool.forEach((el) => {
+  //   el.addEventListener("click", (e) => {
+  //     console.log(e.target);
+  //     // TODO: 수정 삭제 모달창 넣어주기 -> api 요청 -> 화면 렌더링
+  //   });
+  // });
 };
 
 const handleRePostComment = (loginInfo) => {
@@ -153,10 +170,20 @@ const handleRePostComment = (loginInfo) => {
                           loginInfo._id
                         }">답글쓰기</a> -->
                     </div>
-                    <div class="comment__tool" data-comment-author-id="${
+                    <div class="comment__tool tool" data-comment-author-id="${
                       loginInfo._id
                     }">
-                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v tool"></i>
+                        <div class="tool__box hidden">
+                          <ul class="tool__list">
+                            <li class="tool__item">
+                              <a href="#">수정</a>
+                            </li>
+                            <li class="tool__item">
+                              <a href="#">삭제</a>
+                            </li>
+                          </ul>
+                        </div>
                     </div>
                 </article>
               `;
