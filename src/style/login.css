@@ -61,7 +61,9 @@
 }
 
 .kakao__button {
-  background-color: #fee500;
+  background-color: #FEE500;
+  border-radius: 12px;
+  color: #000000;
   cursor: pointer;
 }
 
