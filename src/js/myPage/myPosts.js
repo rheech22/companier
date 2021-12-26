@@ -1,4 +1,4 @@
-import { commentPagination } from "./commentPagination.js";
+import { postPagination } from "./postPagination.js";
 
 const myPosts = async () => {
   const response = await fetch(`/api/user-detail`);
@@ -22,16 +22,14 @@ const commentsTemplate = (user) => {
     }월 ${createdAt.split("-")[2].substr(0, 2)}일`;
     return `<form class = "content__info">
 					<a href=/myPetBoard/${_id} class="content__info__link">
-						<p class="content__info__comment">${title}</p>
+            <p class="content__info__title">${title}</p>
+						<p class="content__info__comment">${content}</p>
 						<p class="content__info__post">작성일: ${time}</p>
 					</a>
-					<div class="deleteBox">
-						<button class="btn" data-comment-id="${_id}">삭제</button>
-					</div>
 				</form>`;
   };
 
-  commentPagination(
+  postPagination(
     data,
     rows,
     displayTag,

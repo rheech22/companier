@@ -255,9 +255,6 @@ main {
   flex-direction: column;
 }
 
-.myComments__list {
-}
-
 .content {
   height: 15%;
   border-bottom: 1px dashed #bdc3c7;
@@ -281,6 +278,7 @@ main {
   width: 100%;
 }
 
+.content__info__title,
 .content__info__comment {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -288,6 +286,10 @@ main {
   width: 70%;
   color: #2c3e50;
   margin-bottom: 6px;
+}
+
+.content__info__comment {
+  font-size: 0.9em;
 }
 
 .content__info__post {
@@ -299,16 +301,3 @@ main {
   display: flex;
   align-items: center;
 }
-
-/* .content__seperator {
-	position: relative;
-	width: 100%;
-	top: 0.5em;
-}
-
-.content__seperator__line {
-	background: rgba(0, 0, 0, 0.2);
-	height: 1px;
-	width: 100%;
-	bottom: 0.7em;
-} */
