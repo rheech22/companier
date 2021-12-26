@@ -38,7 +38,6 @@ a {
 
 /* header */
 #wrap {
-  /* max-width: 2560px; */
   position: relative;
 }
 
@@ -55,6 +54,7 @@ nav {
 
 .header {
   width: 46.875vw;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,7 +77,7 @@ nav {
 }
 
 .header__menu-list li {
-  margin-left: 60px;
+  margin-left: 2.3438vw;
 }
 
 .header__menu-list li:hover {
@@ -91,7 +91,7 @@ nav {
 
 .header__my-page {
   font-size: 16px;
-  margin-right: 30px;
+  margin-right: 1.1719vw;
 }
 
 .header__my-page:hover {
@@ -103,8 +103,6 @@ nav {
 .container {
   width: 46.875vw;
   margin: 0 auto;
-  display: block;
-  margin: auto;
 }
 
 /* carousel */
@@ -112,21 +110,16 @@ nav {
 .slider {
   width: 100%;
   position: relative;
-  display: flex;
   height: 20em;
   transform: translateY(100px);
   background-color: gray;
   justify-content: center;
-  margin-bottom: 10em;
 }
 
 .slider__item {
   margin: auto;
   width: 100%;
   height: 20em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: white;
   position: absolute;
   top: 0;
@@ -153,48 +146,35 @@ nav {
 }
 
 /* news & board*/
-
 .news {
   width: 100%;
   height: 320px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: crimson;
+  margin-top: 150px;
 }
 
 .news__description,
-.news__statistics {
+.news__statistics,
+.board__save,
+.board__story {
   width: 45%;
   height: 100%;
-  background-color: cadetblue;
 }
 
 .news__statistics #myChart {
-  width: 300px;
+  width: 11.718vw;
   height: 300px;
   margin: 0 auto;
 }
 
 .board {
   width: 100%;
-  /* height: 100%;Zz */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: blueviolet;
-}
-
-.board__save {
-  width: 50%;
-  height: 100%;
-  background-color: lightcoral;
-}
-
-.board__story {
-  width: 50%;
-  height: 100%;
-  background-color: lightcyan;
+  padding: 5vh 0vh;
 }
 
 .board__titleBox {
@@ -213,6 +193,8 @@ nav {
 
 .content__title {
   font-size: 1em;
+  padding-bottom: 2vh;
+  text-align: center;
 }
 
 .board__img {
@@ -222,14 +204,15 @@ nav {
   object-fit: cover;
 }
 
+/* footer */
 footer {
-  width: 46.875%;
   margin: 0 auto;
-  margin-top: 300px;
   background-color: #fafafa;
 }
 
 .footer__container {
+  width: 46.875vw;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -239,11 +222,12 @@ footer {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 50px 0px 50px 0px;
 }
 
 .footer__top--msg {
-  width: 200px;
+  width: 7.812vw;
   height: 50px;
   background-color: var(--main-color-orange);
 }
@@ -253,8 +237,7 @@ footer {
 }
 
 .footer__top--logo {
-  width: 55px;
-  height: 50px;
+  width: 2.148vw;
 }
 
 .footer__top--logo img {
@@ -272,10 +255,6 @@ footer {
 
 .footer__bottom__title {
   font-size: 21px;
-}
-
-.footer__bottom__left {
-  width: 175px;
 }
 
 .footer__bottom__left li {
@@ -302,15 +281,11 @@ footer {
 }
 
 .footer__copyright {
-  padding: 30px 0px;
+  padding: 3vh 0vh;
   margin: 0 auto;
 }
 
 @media (max-width: 1920px) {
-  #wrap {
-    /* background-color: green; */
-  }
-
   .header {
     width: 62.5vw;
   }
@@ -320,23 +295,43 @@ footer {
     padding-top: 20vh;
   }
 
-  footer {
+  .footer__container {
     width: 62.5vw;
+  }
+
+  .footer__top--msg {
+    width: 30vw;
+    height: auto;
+  }
+
+  .footer__top--logo {
+    width: 3vw;
+  }
+}
+
+@media (max-width: 1440px) {
+  .header {
+    width: 80vw;
+  }
+
+  .container {
+    width: 80vw;
+  }
+
+  .footer__container {
+    width: 80vw;
+  }
+
+  .footer__top--logo {
+    width: 4vw;
   }
 }
 
 @media (max-width: 768px) {
-  #wrap {
-    /* width: 100%; */
-  }
-
-  header {
-    text-align: center;
-  }
-
   .header {
-    width: 100%;
+    width: 100vw;
     display: block;
+    text-align: center;
   }
 
   .header__left {
@@ -346,7 +341,6 @@ footer {
   .header__menu-list {
     display: block;
     background-color: bisque;
-    /* justify-content: space-between; */
   }
 
   .header__menu-list li {
@@ -370,6 +364,11 @@ footer {
     margin: 0;
   }
 
+  .container {
+    width: 90vw;
+    padding-top: 10vh;
+  }
+
   .news,
   .board {
     flex-direction: column;
@@ -387,7 +386,6 @@ footer {
   .board__story {
     width: 100%;
     height: 100%;
-    /* background-color: cadetblue; */
   }
 
   .board__save,
@@ -397,6 +395,25 @@ footer {
 
   footer {
     margin-top: 50px;
+  }
+
+  .footer__container {
+    width: 90vw;
+  }
+
+  .footer__top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer__top--msg {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer__top--logo {
+    width: 10vw;
+    margin-top: 5vh;
   }
 
   .footer__bottom {
