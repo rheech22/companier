@@ -14,7 +14,7 @@ const commentPagination = (
   pageCut
 ) => {
   let currentPage = 1;
-  const totalPage = Math.ceil(data.length / rows);
+  let totalPage = Math.ceil(data.length / rows);
   let pageGroup = Math.ceil(currentPage / pageCut);
   let last = pageGroup * pageCut;
   let first = last <= pageCut ? 1 : last - pageCut;
@@ -51,10 +51,14 @@ const commentPagination = (
         if (confirm("댓글을 삭제하시겠습니까?")) {
           const id = e.target.getAttribute("data-comment-id");
           data = data.filter((comment) => comment._id !== id);
-          await deleteComment(id);
-
+          totalPage = Math.ceil(data.length / rows);
+          pageGroup = Math.ceil(currentPage / pageCut);
+          last = pageGroup * pageCut;
+          first = last <= pageCut ? 1 : last - pageCut;
+          last = last > totalPage ? totalPage : last;
           displayList(data, displayTag, rows, currentPage);
           setupPagination(first, last, pageTag);
+          await deleteComment(id);
         }
       });
       wrapper.appendChild(element);
@@ -86,14 +90,17 @@ const commentPagination = (
     const li = document.createElement("li");
     li.innerHTML = page;
 
-    if (currentPage === page) li.classList.add("active");
     li.addEventListener("click", function (e) {
-      e.preventDefault();
-      currentPage = page;
-      displayList(data, displayTag, rows, currentPage);
-      const current_btn = document.querySelector(".pagination li.active");
-      current_btn.classList.remove("active");
-      li.classList.add("active");
+      if (currentPage === page) {
+        li.classList.add("active");
+      } else {
+        e.preventDefault();
+        currentPage = page;
+        const current_btn = document.querySelector(".pagination li.active");
+        current_btn.classList.remove("active");
+        li.classList.add("active");
+        displayList(data, displayTag, rows, currentPage);
+      }
     });
     return li;
   }
