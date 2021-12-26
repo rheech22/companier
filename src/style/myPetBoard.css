@@ -12,8 +12,13 @@
 
 .main__title {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 50px 0 25px 0;
+}
+
+.main__title p {
+  margin-top: 1vh;
 }
 
 .main-content__section {
