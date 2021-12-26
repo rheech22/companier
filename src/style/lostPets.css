@@ -1,5 +1,5 @@
 .lost {
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 110px;
   padding-bottom: 50px;
@@ -57,17 +57,16 @@
 
 /* 유기동물 리스트 */
 .lost-content {
-  width: 80%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px 0;
-  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 50vw;
+  padding-top: 30px;
 }
 
 .lost-content__item a {
   width: 350px;
   display: flex;
-  margin: 0 auto;
+  padding: 15px;
   cursor: pointer;
 }
 
@@ -81,8 +80,25 @@
 .lost-content__info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   padding: 10px 15px;
+}
+
+.lost-content__kind-sex {
+  font-weight: 700;
+}
+
+.lost-content__date,
+.lost-content__place,
+.lost-content__special {
+  font-size: 14px;
+}
+
+.lost-content__date {
+  margin-top: 5px;
+}
+.lost-content__special {
+  margin-bottom: 5px;
 }
 
 /* 페이지네이션 */
@@ -92,11 +108,9 @@
 }
 
 .page-btn {
-  /* padding: 5px 10px; */
   width: 30px;
   height: 30px;
   margin: 0px 2px;
-  /* text-align: center; */
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -113,59 +127,8 @@
   border-radius: 4px;
 }
 
-/* .pagination .prev-btn,
-.pagination .next-btn {
-  background-color: white;
-  color: black;
-} */
-
-/* .lost .pagination li:hover {
-  border-radius: 50%;
+@media (max-width: 768px) {
+  .lost {
+    padding-top: 180px;
+  }
 }
-
-.lost .pagination {
-  width: 400px;
-  height: 100px;
-}
-
-.lost .pagination ul {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.lost .pagination ul li {
-  font-size: 16px;
-  margin: auto;
-  cursor: pointer;
-}
-
-.lost .pagination ul li.numb {
-  height: 20px;
-  width: 20px;
-}
-
-.lost .pagination span {
-  margin: auto;
-}
-
-.pagination ul li.dots {
-  font-size: 22px;
-  cursor: default;
-}
-
-.pagination ul li.dots:hover {
-  background-color: var(--main-color-orange);
-}
-
-.pagination ul li.prev:hover {
-  border-radius: 25px 5px 5px 25px;
-}
-
-.pagination ul li.next:hover {
-  border-radius: 5px 25px 25px 5px;
-}
-
-.pagination ul li.active {
-  background-color: var(--btn-hover-color);
-} */
