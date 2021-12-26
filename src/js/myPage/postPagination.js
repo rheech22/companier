@@ -3,7 +3,7 @@
 // 처리할 data, 처리할 열 갯수, 화면 적용할 Tag,
 // Tag 내부의 element, element의 class, element.innerHTML, pagination할 Tag
 
-const commentPagination = (
+const postPagination = (
   data,
   rows,
   displayTag,
@@ -100,4 +100,4 @@ const commentPagination = (
   setupPagination(first, last, pageTag);
 };
 
-export { commentPagination };
+export { postPagination };
