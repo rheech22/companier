@@ -36,57 +36,6 @@ a {
   background-color: var(--btn-hover-color);
 }
 
-/* pagination */
-/* 
-.comment__pages {
-  display: flex;
-  justify-content: center;
-}
-
-.prev,
-.next {
-  cursor: pointer;
-}
-
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.main__container .pagination {
-  transform: translateX(-1.5em);
-}
-
-.pagination ul {
-  display: flex;
-  background: var(--main-color-orange);
-  padding: 8px;
-  border-radius: 50px;
-}
-
-.pagination li {
-  width: 20px;
-  height: 20px;
-  margin: 5px;
-  font-size: 10px;
-  display: flex;
-  cursor: pointer;
-}
-
-.pagination li:hover {
-  background-color: var(--btn-hover-color);
-}
-
-.pagination li.active {
-  background-color: var(--main-color-orange);
-}
-
-.pagination li a {
-  margin: auto;
-} */
-
 /* header */
 #wrap {
   /* max-width: 2560px; */
@@ -368,6 +317,7 @@ footer {
 
   .container {
     width: 62.5vw;
+    padding-top: 20vh;
   }
 
   footer {

@@ -150,7 +150,7 @@ i {
 
 /* pagination */
 
-.container {
+main {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -172,10 +172,6 @@ i {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-}
-
-.main__container .pagination {
-  transform: translateX(-1.5em);
 }
 
 .pagination ul {

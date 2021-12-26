@@ -4,7 +4,6 @@ import { changeName } from "./userChange.js";
 import { myPosts } from "./myPosts.js";
 import "../../style/myPage.css";
 import "../../style/index.css";
-import "../../style/myPetBoard.css";
 
 const run = () => {
   window.addEventListener("DOMContentLoaded", () => {
