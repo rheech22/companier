@@ -67,9 +67,7 @@ const getLostPets = async (req, res) => {
       },
     } = req;
 
-    const { data } = mockData;
-
-    console.log(data.items.item.length);
+    // 공공 API 요청 코드
 
     // const { SERVICE_KEY } = process.env;
 
@@ -82,6 +80,12 @@ const getLostPets = async (req, res) => {
     //     response: { body: lostPets },
     //   },
     // } = await axios.get(URL);
+
+    // res.json(lostPets);
+
+    // mock data 요청 코드
+
+    const { data } = mockData;
 
     const parsedItem = [...data.items.item].slice((pageNo - 1) * numOfRows, numOfRows * pageNo);
 
