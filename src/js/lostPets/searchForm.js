@@ -120,9 +120,15 @@ const setSigunguOptions = async (upr_cd) => {
   });
 };
 
+// 검색 폼 생성
 const paintSearchForm = () => {
   document.querySelector(".lost-search").innerHTML = searchFormTemplate;
   setInitialOptions();
+
+  const sidoSelect = document.querySelector("#sido");
+  sidoSelect.addEventListener("change", (e) => {
+    setSigunguOptions(e.target.value);
+  });
 };
 
-export { paintSearchForm, setSigunguOptions };
+export { paintSearchForm };

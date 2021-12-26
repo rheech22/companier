@@ -1,3 +1,14 @@
+const searchParams = {
+  pageNo: 1,
+  numOfRows: 10,
+  upkind: "",
+  upr_cd: "",
+  org_cd: "",
+  state: "",
+  bgnde: "",
+  endde: "",
+};
+
 const getLostPetData = async ({
   pageNo,
   numOfRows,
@@ -25,17 +36,6 @@ const getLostPetList = (data) => {
     totalCount,
   } = data;
   return [lostPetList, totalCount];
-};
-
-const searchParams = {
-  pageNo: 1,
-  numOfRows: 10,
-  upkind: "",
-  upr_cd: "",
-  org_cd: "",
-  state: "",
-  bgnde: "",
-  endde: "",
 };
 
 const getLostPets = async (params) => {
