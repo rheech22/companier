@@ -9,6 +9,7 @@
 
 body {
   font-family: "Nanum Gothic", sans-serif;
+  min-width: 345px;
 }
 
 * {
@@ -186,8 +187,14 @@ nav {
 .board__titleBox {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5em;
   font-size: 1.2em;
+}
+
+.board__link {
+  font-size: 1em;
+  text-decoration: underline;
 }
 
 .board__contentsBox {
@@ -253,12 +260,28 @@ footer {
 .footer__top--msg {
   width: 7.812vw;
   height: 50px;
-  background-color: var(--main-color-orange);
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: black;            
+  box-shadow: 0 0 20px #eee;
+  display: block;
+}
+
+.footer__top--msg {
+  background-image: linear-gradient(to right, #ff9933 0%, #FFC837  51%, #ff9933  100%);
 }
 
 .footer__top--msg h2 {
-  text-align: left;
+  padding: 10px;
+  text-align: left;  
 }
+
+.footer__top--msg:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
 
 .footer__top--logo {
   width: 2.148vw;
@@ -440,7 +463,7 @@ footer {
   }
 
   .footer__top--msg {
-    width: 100%;
+    width: 80%;
     height: auto;
   }
 
