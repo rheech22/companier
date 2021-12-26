@@ -1,5 +1,7 @@
 const createLostPetPreview = (item) => {
-  const { desertionNo, popfile, kindCd, sexCd } = item;
+  const {
+    desertionNo, popfile, kindCd, sexCd,
+  } = item;
 
   const lostPetPreviewTemplate = `
         <div class="board__content">
@@ -25,11 +27,7 @@ const createMyPetBoardPreview = (item) => {
           <a href="/myPetBoard/${_id}">
             <img
                 class="board__img"
-                src="${
-                  thumbnail != null
-                    ? thumbnail
-                    : "https://via.placeholder.com/200x250/B2B2B2/FFFFFF/?text=NO%20Image"
-                }"
+                src="${thumbnail || 'https://via.placeholder.com/200x250/B2B2B2/FFFFFF/?text=NO%20Image'}"
                 alt=""
             />
             <h4 class="content__title">${title}</h4>
@@ -43,17 +41,17 @@ const createMyPetBoardPreview = (item) => {
 const paintLostPetPreview = (lostPetList) => {
   const lostPetItems = lostPetList.map(createLostPetPreview);
   const lostBoardContent = document.querySelector(
-    ".board__save .board__contentsBox"
+    '.board__save .board__contentsBox',
   );
-  lostBoardContent.innerHTML = lostPetItems.join("");
+  lostBoardContent.innerHTML = lostPetItems.join('');
 };
 
 const paintMyPetBoardPreview = (previewAry) => {
   const petBoardItems = previewAry.map(createMyPetBoardPreview);
   const myPetBoardContent = document.querySelector(
-    ".board__story .board__contentsBox"
+    '.board__story .board__contentsBox',
   );
-  myPetBoardContent.innerHTML = petBoardItems.join("");
+  myPetBoardContent.innerHTML = petBoardItems.join('');
 };
 
 export { paintLostPetPreview, paintMyPetBoardPreview };
