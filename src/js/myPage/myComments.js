@@ -1,6 +1,4 @@
-import { commentPagination } from './commentPagination.js';
-
-import { getTime } from '../utils.js';
+import { commentPagination } from "./commentPagination.js";
 
 const myComments = async () => {
   const response = await fetch(`/api/user-detail`);
@@ -9,9 +7,8 @@ const myComments = async () => {
 };
 
 const commentsTemplate = (user) => {
-  // 댓글 정보를 최신 작성순으로 정렬
   const data = user.comments.reverse();
-  const displayTag = document.querySelector(".myComments__list");
+  const displayTag = document.querySelector("#myComments > .contents");
   const pagesTag = document.querySelector(".myComment__pages ul");
   const elementName = "article";
   const elementClass = "content";
@@ -24,8 +21,8 @@ const commentsTemplate = (user) => {
     }월 ${createdAt.split("-")[2].substr(0, 2)}일`;
     return `<form class = "content__info">
 					<a href=/myPetBoard/${parentPost} class="content__info__link">
-						<p class="content__info__comment">${content}</p>
-						<p class="content__info__post">작성일: ${time}</p>
+						<p class="content__info__content">${content}</p>
+						<p class="content__info__regdate">작성일: ${time}</p>
 					</a>
 					<div class="deleteBox">
 						<button class="btn" data-comment-id="${_id}">삭제</button>
