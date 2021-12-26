@@ -35,6 +35,7 @@ main {
   border-radius: 50%;
   box-shadow: 0 0 8px #bdc3c7;
   grid-area: pi;
+  position: relative;
 }
 
 .myPage__profile__nickname,
@@ -85,13 +86,21 @@ main {
   background-color: var(--main-color-orange);
   padding: 8px 16px;
   border-radius: 3px;
+  transition: all ease-in 0.3s;
+}
+
+.myPage__select .list :not(li.is__on) .myPage__select__category:hover {
+  font-weight: bold;
+  background-color: var(--btn-hover-color);
+  transform: scale(1.04);
+  opacity: 0.7;
 }
 
 .myPage__select .list a.is__on {
   background-color: var(--btn-hover-color);
 }
 
-.myPage__select .list a.is__on .myPage__select__category {
+.myPage__select .list li.is__on .myPage__select__category {
   color: #f1c40f;
   font-weight: bold;
 }
@@ -239,6 +248,40 @@ main {
   width: 72px;
   height: 24px;
   font-size: 12px;
+}
+
+/* spinner */
+
+.spinner {
+  width: 104%;
+  height: 104%;
+  background: linear-gradient(to right, var(--main-color-orange), white);
+  position: relative;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  animation-delay: 1s;
+  z-index: -1;
+  margin: -2%;
+  display: none;
+}
+
+.myPage__profile__image:hover > .spinner {
+  display: block;
+}
+
+.spinner::before {
+  content: "";
+  z-index: 1;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }
 
 /* 반응형 */
