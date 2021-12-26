@@ -38,17 +38,21 @@ const commentPagination = (
     const end = start + rows_per_page;
     const paginatedItems = items.slice(start, end);
 
+    // content 태그에 들어갈 HTML 작성하는 함수
     paginatedItems.map((obj) => {
       const element = document.createElement(elementName);
       element.classList.add(className);
       element.innerHTML = makeHTML(obj);
+
+      // 삭제 버튼을 눌렀을 때의 함수
       const deleteBtn = element.querySelector(".deleteBox > .btn");
       deleteBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         if (confirm("댓글을 삭제하시겠습니까?")) {
           const id = e.target.getAttribute("data-comment-id");
-          data = data.filter((s) => s._id !== id);
+          data = data.filter((comment) => comment._id !== id);
           await deleteComment(id);
+
           displayList(data, displayTag, rows, currentPage);
           setupPagination(first, last, pageTag);
         }

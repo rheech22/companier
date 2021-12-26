@@ -134,7 +134,6 @@ const clickCommentToolBox = () => {
       e.target.nextElementSibling.classList.toggle("hidden");
     }
 
-    // 부모 댓글 수정
     if (e.target.classList.contains("tool__update")) {
       e.preventDefault();
       let commentId = e.target.dataset.commentId;
@@ -184,7 +183,6 @@ const clickCommentToolBox = () => {
         });
     }
 
-    // 부모 댓글 삭제
     if (e.target.classList.contains("tool__delete")) {
       let commentId = e.target.dataset.commentId;
 
@@ -198,7 +196,6 @@ const clickCommentToolBox = () => {
       }
     }
 
-    // 대댓글 수정
     if (e.target.classList.contains("tool__re--update")) {
       e.preventDefault();
       let reCommentId = e.target.dataset.commentId;
@@ -248,7 +245,6 @@ const clickCommentToolBox = () => {
         });
     }
 
-    // 대댓글 삭제
     if (e.target.classList.contains("tool__re-delete")) {
       let reCommentId = e.target.dataset.commentId;
 
