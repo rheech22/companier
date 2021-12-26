@@ -1,20 +1,17 @@
-// import { line } from "./line.js";
-
-import { getTime } from '../utils';
+import { getTime } from "../utils";
 
 const myPage = async () => {
-  const response = await fetch('/api/user-detail');
+  const response = await fetch("/api/user-detail");
   const user = await response.json();
   myPageTemplate(user);
 };
 
 function myPageTemplate(user) {
-  // line();
-  const tabList = document.querySelectorAll('.myPage__select .list a');
-  const contents = document.querySelectorAll('.myPage__select__content');
-  const email = document.querySelector('.myPage__profile__email');
-  const nickname = document.querySelector('.myPage__profile__nickname');
-  const createdAt = document.querySelector('.myPage__profile__createdAt');
+  const tabList = document.querySelectorAll(".myPage__select .list a");
+  const contents = document.querySelectorAll(".myPage__select__content");
+  const email = document.querySelector(".myPage__profile__email");
+  const nickname = document.querySelector(".myPage__profile__nickname");
+  const createdAt = document.querySelector(".myPage__profile__createdAt");
 
   email.innerHTML = user.email;
   nickname.innerHTML = user.nickname;
@@ -25,18 +22,18 @@ function myPageTemplate(user) {
 
   createdAt.innerHTML = `가입일 ${year}년 ${month}월 ${date}일`;
 
-  let activeContent = '';
+  let activeContent = "";
 
   for (let i = 0; i < tabList.length; i++) {
-    tabList[i].addEventListener('click', (e) => {
+    tabList[i].addEventListener("click", (e) => {
       e.preventDefault();
       for (let j = 0; j < tabList.length; j++) {
-        tabList[j].classList.remove('is__on');
-        contents[j].style.display = 'none';
+        tabList[j].classList.remove("is__on");
+        contents[j].style.display = "none";
       }
-      e.target.classList.add('is__on');
-      activeContent = e.target.getAttribute('href');
-      document.querySelector(activeContent).style.display = 'flex';
+      e.target.classList.add("is__on");
+      activeContent = e.target.getAttribute("href");
+      document.querySelector(activeContent).style.display = "flex";
     });
   }
 }
