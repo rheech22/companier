@@ -1,6 +1,6 @@
 const comments = (result) => {
-  const commentSection = document.createElement("section");
-  commentSection.classList.add("datail-comment__container");
+  const commentSection = document.createElement('section');
+  commentSection.classList.add('datail-comment__container');
 
   let commentTemplate = `
       <section class="comment-feed">
@@ -11,17 +11,17 @@ const comments = (result) => {
     </section>              
   `;
 
-  let commentLi = [];
+  const commentLi = [];
   result.forEach((comment) => {
-    const time = `${comment.createdAt.split("-")[0]}년 ${
-      comment.createdAt.split("-")[1]
-    }월 ${comment.createdAt.split("-")[2].substr(0, 2)}일`;
+    const time = `${comment.createdAt.split('-')[0]}년 ${
+      comment.createdAt.split('-')[1]
+    }월 ${comment.createdAt.split('-')[2].substr(0, 2)}일`;
 
     let commentLiTemplate = `
         <li class="comment__item">
             <article class="comment__wrap">
                 <div class="comment__box">
-                  <div class="comment__author">${comment.author.nickname}</div>
+                  <div class="comment__author">${comment.author ? comment.author.nickname : '탈퇴한 유저'}</div>
                   <div class="comment__content">${comment.content}</div>
                   <div class="comment__info">
                       <span class="comment__data">${time}</span>
@@ -34,7 +34,7 @@ const comments = (result) => {
                         {{__reply-comments__}}
                     </ul>
                 </div>
-                <div class="comment__tool hidden" data-comment-author-id="${comment.author._id}">
+                <div class="comment__tool hidden" data-comment-author-id="${comment.author?._id}">
                     <i class="fas fa-ellipsis-v tool"></i>
                     <div class="tool__box hidden">
                       <ul class="tool__list">
@@ -50,23 +50,23 @@ const comments = (result) => {
         </li>
     `;
 
-    let reCommentLi = [];
+    const reCommentLi = [];
     if (comment.reComments.length > 0) {
       comment.reComments.forEach((reComment) => {
-        const reCommentTime = `${reComment.createdAt.split("-")[0]}년 ${
-          reComment.createdAt.split("-")[1]
-        }월 ${reComment.createdAt.split("-")[2].substr(0, 2)}일`;
+        const reCommentTime = `${reComment.createdAt.split('-')[0]}년 ${
+          reComment.createdAt.split('-')[1]
+        }월 ${reComment.createdAt.split('-')[2].substr(0, 2)}일`;
         reCommentLi.push(`
             <li class="reComment__item">
               <article class="comment__wrap">
                   <div class="comment__box">
-                    <div class="comment__author">${reComment.author.nickname}</div>
+                    <div class="comment__author">${reComment.author ? reComment.author.nickname : '탈퇴한 유저'}</div>
                     <div class="comment__content">${reComment.content}</div>
                     <div class="comment__info">
                         <span class="comment__data">${reCommentTime}</span>
                     </div>
                   </div>
-                  <div class="comment__tool hidden" data-comment-author-id="${reComment.author._id}">
+                  <div class="comment__tool hidden" data-comment-author-id="${reComment.author?._id}">
                       <i class="fas fa-ellipsis-v tool"></i>
                       <div class="tool__box hidden">
                         <ul class="tool__list">
@@ -82,25 +82,25 @@ const comments = (result) => {
           `);
       });
       commentLiTemplate = commentLiTemplate.replace(
-        " {{__reply-comments__}}",
-        reCommentLi.join("")
+        ' {{__reply-comments__}}',
+        reCommentLi.join(''),
       );
     } else {
       commentLiTemplate = commentLiTemplate.replace(
-        " {{__reply-comments__}}",
-        ""
+        ' {{__reply-comments__}}',
+        '',
       );
     }
 
     commentLi.push(commentLiTemplate);
   });
   commentTemplate = commentTemplate.replace(
-    "{{__comments-list__}}",
-    commentLi.join("")
+    '{{__comments-list__}}',
+    commentLi.join(''),
   );
 
   commentSection.innerHTML = commentTemplate;
-  document.querySelector(".mypet-datail__content").appendChild(commentSection);
+  document.querySelector('.mypet-datail__content').appendChild(commentSection);
 };
 
 export { comments };
