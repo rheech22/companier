@@ -312,4 +312,8 @@ main {
   .myPage__profile__image {
     margin-bottom: 30px;
   }
+
+  .myPage__profile__image:hover > .spinner {
+    display: none;
+  }
 }
