@@ -1,8 +1,14 @@
 /* global setting */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
 :root {
   --main-color-orange: #ff9933;
   --btn-hover-color: #e07e1c;
   --border-gray: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: "Nanum Gothic", sans-serif;
 }
 
 * {
