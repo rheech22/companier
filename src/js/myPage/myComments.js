@@ -22,8 +22,8 @@ const commentsTemplate = (user) => {
       parentPost, content, createdAt, _id,
     } = data;
     const parsedTime = getTime(createdAt);
-    const { years, month, date } = parsedTime;
-    const time = `${years}년 ${month}월 ${date}일`;
+    const { year, month, date } = parsedTime;
+    const time = `${year}년 ${month}월 ${date}일`;
     return `<form class = "content__info">
 					<a href=/myPetBoard/${parentPost} class="content__info__link">
 						<p class="content__info__comment">${content}</p>
