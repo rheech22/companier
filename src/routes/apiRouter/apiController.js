@@ -95,11 +95,12 @@ const getLostPets = async (req, res) => {
       },
       numOfRows,
       pageNo,
-      totalCount: 600,
+      totalCount: 1430,
     };
 
     if (upkind === '422400') lostPets.totalCount = 300;
     if (upkind === '429900') lostPets.totalCount = 100;
+    if (upkind === '417000') lostPets.totalCount = 1030;
 
     res.json(lostPets);
   } catch (error) {
