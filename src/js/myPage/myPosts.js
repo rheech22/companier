@@ -9,7 +9,7 @@ const myPosts = async () => {
 const commentsTemplate = (user) => {
   // 댓글 정보를 최신 작성순으로 정렬
   const data = user.posts.reverse();
-  const displayTag = document.querySelector(".myPosts__list");
+  const displayTag = document.querySelector("#myPosts > .contents");
   const pagesTag = document.querySelector(".myPosts__pages ul");
   const elementName = "article";
   const elementClass = "content";
@@ -23,8 +23,8 @@ const commentsTemplate = (user) => {
     return `<form class = "content__info">
 					<a href=/myPetBoard/${_id} class="content__info__link">
             <p class="content__info__title">${title}</p>
-						<p class="content__info__comment">${content}</p>
-						<p class="content__info__post">작성일: ${time}</p>
+						<p class="content__info__cotent">${content}</p>
+						<p class="content__info__regdate">작성일: ${time}</p>
 					</a>
 				</form>`;
   };
