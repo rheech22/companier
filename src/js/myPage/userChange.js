@@ -16,6 +16,8 @@ const changeName = async () => {
       alert("변경할 닉네임을 입력해주세요");
     } else if (!nameRegex.test(val)) {
       alert("닉네임은 한글, 영문, 숫자 2-10자리만 가능합니다.");
+    } else if (val === data.nickname) {
+      alert("현재 이름과 동일합니다.");
     } else {
       if (confirm("정말로 바꾸시겠어요?")) {
         const newNickname = val.replace(/ /gi, "");
@@ -28,7 +30,7 @@ const changeName = async () => {
         });
 
         if (changed.status === 200) {
-          nickname.innerHTML = `<span>닉네임 ${newNickname}</span>`;
+          nickname.innerHTML = newNickname;
           alert(`${newNickname}님 안녕하세요`);
         } else {
           alert("닉네임 변경에 실패했습니다.");
