@@ -1,4 +1,3 @@
-import { mainTag } from "./main.js";
 import { myComments } from "./myComments.js";
 import { myPage } from "./myPage.js";
 import { changeName } from "./userChange.js";
@@ -9,7 +8,6 @@ import "../../style/myPetBoard.css";
 
 const run = () => {
   window.addEventListener("DOMContentLoaded", () => {
-    mainTag();
     myPage();
     changeName();
     myPosts();
