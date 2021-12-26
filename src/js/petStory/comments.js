@@ -1,4 +1,4 @@
-const comments = (result, loginInfo) => {
+const comments = (result) => {
   const commentSection = document.createElement("section");
   commentSection.classList.add("datail-comment__container");
 
@@ -42,7 +42,6 @@ const comments = (result, loginInfo) => {
                           <a href="#" class="tool__update" data-comment-id="${comment._id}">수정</a>
                         </li>
                         <li class="tool__item tool__delete" data-comment-id="${comment._id}">삭제
-                         <!-- <a href="#" class="tool__delete" data-comment-id="${comment._id}">삭제</a> -->
                         </li>
                       </ul>
                     </div>
@@ -65,7 +64,6 @@ const comments = (result, loginInfo) => {
                     <div class="comment__content">${reComment.content}</div>
                     <div class="comment__info">
                         <span class="comment__data">${reCommentTime}</span>
-                        <!-- <a href="#" class="comment__link hidden" data-comment-id="${reComment._id}">답글쓰기</a> -->
                     </div>
                   </div>
                   <div class="comment__tool hidden" data-comment-author-id="${reComment.author._id}">
@@ -73,11 +71,9 @@ const comments = (result, loginInfo) => {
                       <div class="tool__box hidden">
                         <ul class="tool__list">
                           <li class="tool__item">
-                            <a href="#" class="tool__recomment-update">수정</a>
+                            <a href="#" class="tool__re--update" data-comment-id="${reComment._id}">수정</a>
                           </li>
-                          <li class="tool__item tool__delete">삭제
-                            <!-- <a href="#" class="tool__recomment-delete">삭제</a> -->
-                          </li>
+                          <li class="tool__item tool__re-delete" data-comment-id="${reComment._id}">삭제</li>
                         </ul>
                       </div>
                   </div>

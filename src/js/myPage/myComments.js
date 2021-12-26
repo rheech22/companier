@@ -1,4 +1,6 @@
-import { commentPagination } from "./commentPagination.js";
+import { commentPagination } from './commentPagination.js';
+
+import { getTime } from '../utils.js';
 
 const myComments = async () => {
   const response = await fetch(`/api/user-detail`);

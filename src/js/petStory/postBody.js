@@ -1,14 +1,20 @@
+import { getTime } from '../utils';
+
 const postBody = (result) => {
-  const time = `${result.createdAt.split("-")[0]}년 ${
-    result.createdAt.split("-")[1]
-  }월 ${result.createdAt.split("-")[2].substr(0, 2)}일`;
+  const parsedTime = getTime(result.createdAt);
 
-  const postHeader = document.createElement("header");
-  const postSection = document.createElement("section");
+  const { year, month, date } = parsedTime;
 
-  postHeader.classList.add("mypet-datail__header");
-  postSection.classList.add("mypet-datail__body");
-  let postHeaderTemplate = `
+  console.log(month);
+
+  const time = `${year}년 ${month}월 ${date}일`;
+
+  const postHeader = document.createElement('header');
+  const postSection = document.createElement('section');
+
+  postHeader.classList.add('mypet-datail__header');
+  postSection.classList.add('mypet-datail__body');
+  const postHeaderTemplate = `
         <div class="mypet-datail__title">
             <h1>${result.title}</h1>
         </div>
@@ -23,13 +29,13 @@ const postBody = (result) => {
         </div>
     `;
 
-  let postSectionTemplate = `${result.content}`;
+  const postSectionTemplate = `${result.content}`;
 
   postHeader.innerHTML = postHeaderTemplate;
   postSection.innerHTML = postSectionTemplate;
 
-  document.querySelector(".mypet-datail__content").appendChild(postHeader);
-  document.querySelector(".mypet-datail__content").appendChild(postSection);
+  document.querySelector('.mypet-datail__content').appendChild(postHeader);
+  document.querySelector('.mypet-datail__content').appendChild(postSection);
 };
 
 export { postBody };

@@ -1,4 +1,4 @@
-const apiPostComment = async (commentValue, wroteReComment) => {
+const apiPostComment = async (commentValue) => {
   const response = await fetch(
     `/api/${location.pathname.split("/")[2]}/comments`,
     {
@@ -15,7 +15,7 @@ const apiPostComment = async (commentValue, wroteReComment) => {
   if (response.status === 201) {
     return true;
   } else {
-    alert("댓글 입력에 실패했습니다.");
+    alert("댓글 작성에 실패했습니다.");
     return false;
   }
 };
@@ -34,7 +34,7 @@ const apiPostReComment = async (commentId, wroteReComment) => {
   if (response.status === 201) {
     return true;
   } else {
-    alert("댓글 입력에 실패했습니다.");
+    alert("댓글 작성에 실패했습니다.");
     return false;
   }
 };
@@ -53,7 +53,7 @@ const apiUpdateComment = async (updateCommentValue, commentId) => {
   if (response.status === 200) {
     return true;
   } else {
-    alert("댓글 입력에 실패했습니다.");
+    alert("댓글 수정에 실패했습니다.");
     return false;
   }
 };
@@ -69,12 +69,47 @@ const apiDeleteComment = async (commentId) => {
   if (response.status === 204) {
     return true;
   } else {
-    alert("댓글 입력에 실패했습니다.");
+    alert("댓글 삭제에 실패했습니다.");
     return false;
   }
 };
 
-const handlePostComment = async (loginInfo, isNotLogin) => {
+const apiReCommentDeleteComment = async (recommentId) => {
+  const response = await fetch(`/api/recomments/${recommentId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+
+  if (response.status === 204) {
+    return true;
+  } else {
+    alert("댓글 삭제에 실패했습니다.");
+    return false;
+  }
+};
+
+const apiReUpdateComment = async (updateReCommentValue, reCommentId) => {
+  const response = await fetch(`/api/recomments/${reCommentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      content: updateReCommentValue,
+    }),
+  });
+
+  if (response.status === 200) {
+    return true;
+  } else {
+    alert("댓글 수정에 실패했습니다.");
+    return false;
+  }
+};
+
+const handlePostComment = async () => {
   const submitCommentBtn = document.querySelector(".comment-feed__button");
   submitCommentBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -84,63 +119,14 @@ const handlePostComment = async (loginInfo, isNotLogin) => {
 
     let success = apiPostComment(commentValue);
     if (success) {
-      /*
-      const commentList = document.querySelector(".comment__list");
-      let liTag = document.createElement("li");
-      liTag.innerHTML = `
-        <li class="comment__item">
-          <article class="comment__wrap">
-              <div class="comment__box">
-                <div class="comment__author">${loginInfo.nickname}</div>
-                <div class="comment__content">${commentValue}</div>
-                <div class="comment__info">
-                    <span class="comment__data">${new Date().getFullYear()}년 ${
-          new Date().getMonth() + 1
-        }월 ${new Date().getDate()}일</span>
-                    <a href="#" class="comment__link hidden" data-comment-id="${
-                      loginInfo._id
-                    }">답글쓰기</a>
-                </div>
-              </div>
-              <div class="comment__reply-list">
-                  <!-- 대댓글 -->
-                  <ul class="reply-list__container">
-                     
-                  </ul>
-              </div>
-              <div class="comment__tool hidden" data-comment-author-id="${
-                loginInfo._id
-              }">
-                  <i class="fas fa-ellipsis-v tool"></i>
-                    <div class="tool__box">
-                      <ul class="tool__list">
-                        <li class="tool__item">
-                          <a href="#" class="tool__update" data-comment-id="${comment._id}">수정</a>
-                        </li>
-                        <li class="tool__item" tool__delete>
-                          <!-- <a href="#" class="tool__delete" data-comment-id="${comment._id}">삭제</a> -->
-                        </li>
-                      </ul>
-                    </div>
-              </div>
-          </article>
-        </li>
-      `;
-      commentList.append(liTag);
-      showHiddenBox(loginInfo, isNotLogin);
-      */
-      //  임시
       setTimeout(() => {
         location.reload();
       }, 500);
     }
-
-    document.querySelector(".comment-feed__textarea").value = "";
   });
 };
 
 const clickCommentToolBox = () => {
-  const commentTool = document.querySelectorAll(".comment__tool");
   const commentUl = document.querySelector(".comment__list");
 
   commentUl.addEventListener("click", (e) => {
@@ -151,9 +137,7 @@ const clickCommentToolBox = () => {
     // 부모 댓글 수정
     if (e.target.classList.contains("tool__update")) {
       e.preventDefault();
-      console.log(e);
       let commentId = e.target.dataset.commentId;
-      console.log(commentId);
       let copyParentHTML =
         e.target.parentElement.parentElement.parentElement.parentElement
           .parentElement.children[0].innerHTML;
@@ -165,7 +149,8 @@ const clickCommentToolBox = () => {
           .parentElement.children[0];
       let toolBox =
         e.target.parentElement.parentElement.parentElement.parentElement;
-      toolBox.classList.add("hidden"); // 등록하면 다시 보여줘야 됨
+      toolBox.classList.add("hidden");
+
       locationComment.innerHTML = `
         <div class="comment-feed__input">
           <div class="comment-feed__content">
@@ -185,17 +170,10 @@ const clickCommentToolBox = () => {
             e.target.parentElement.parentElement.children[0].children[0].value;
           let success = apiUpdateComment(updateCommentValue, commentId);
           if (success) {
-            locationComment.innerHTML = `
-                  <div class="comment__author">동길홍</div>
-                    <div class="comment__content">${updateCommentValue}</div>
-                    <div class="comment__info">
-                        <span class="comment__data">2021년 12월 25일</span>
-                        <a href="#" class="comment__link" data-comment-id="61c6ab59c97ecabcb5a9421b">답글쓰기</a>
-                  </div>
-            `;
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
           }
-          toolBox.classList.remove("hidden");
-          console.log(e);
         });
 
       document
@@ -204,30 +182,89 @@ const clickCommentToolBox = () => {
           locationComment.innerHTML = copyParentHTML;
           toolBox.classList.remove("hidden");
         });
-
-      console.log("부모 댓글 수정하기 클릭");
     }
 
     // 부모 댓글 삭제
     if (e.target.classList.contains("tool__delete")) {
-      console.log(e.target);
       let commentId = e.target.dataset.commentId;
-      let copyParentContent =
+
+      if (confirm("댓글을 삭제하시겠습니까?")) {
+        let success = apiDeleteComment(commentId);
+        if (success) {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        }
+      }
+    }
+
+    // 대댓글 수정
+    if (e.target.classList.contains("tool__re--update")) {
+      e.preventDefault();
+      let reCommentId = e.target.dataset.commentId;
+      let reCopyParentHTML =
+        e.target.parentElement.parentElement.parentElement.parentElement
+          .parentElement.children[0].innerHTML;
+      let reCopyParentContent =
         e.target.parentElement.parentElement.parentElement.parentElement
           .parentElement.children[0].children[1].innerText;
+      let reLocationComment =
+        e.target.parentElement.parentElement.parentElement.parentElement
+          .parentElement.children[0];
+      let toolBox =
+        e.target.parentElement.parentElement.parentElement.parentElement;
 
-      const result = confirm("댓글을 삭제하시겠습니까?");
-      if (result) {
-        let success = apiDeleteComment(commentId);
+      toolBox.classList.add("hidden");
+      reLocationComment.innerHTML = `
+        <div class="comment-feed__input">
+          <div class="comment-feed__content">
+            <textarea class="comment-feed__textarea" placeholder="댓글을 입력하세요">${reCopyParentContent}</textarea>
+          </div>
+          <div class="comment-feed__submit">
+            <button class="comment-feed__button update__cancle" type="button">취소</button>
+            <button class="comment-feed__button update__submit" type="button">등록</button>
+          </div>
+        </div>
+      `;
 
-        e.target.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+      document
+        .querySelector(".update__submit")
+        .addEventListener("click", (e) => {
+          let updateReCommentValue =
+            e.target.parentElement.parentElement.children[0].children[0].value;
+          let success = apiReUpdateComment(updateReCommentValue, reCommentId);
+          if (success) {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          }
+        });
+
+      document
+        .querySelector(".update__cancle")
+        .addEventListener("click", (e) => {
+          reLocationComment.innerHTML = reCopyParentHTML;
+          toolBox.classList.remove("hidden");
+        });
+    }
+
+    // 대댓글 삭제
+    if (e.target.classList.contains("tool__re-delete")) {
+      let reCommentId = e.target.dataset.commentId;
+
+      if (confirm("댓글을 삭제하시겠습니까?")) {
+        let success = apiReCommentDeleteComment(reCommentId);
+        if (success) {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        }
       }
     }
   });
 };
 
-// 대댓글
-const handleRePostComment = (loginInfo) => {
+const handleRePostComment = () => {
   const reCommentLinks = document.querySelectorAll(".comment__link");
 
   reCommentLinks.forEach((reCommentLink) => {
@@ -249,18 +286,17 @@ const handleRePostComment = (loginInfo) => {
               </div>
             </div>
           `;
-        console.log(e);
+
         e.target.parentElement.parentElement.parentElement.children[1].children[0].append(
           li
         );
-        // e.target.parentElement.parentElement.parentElement.children[3].firstElementChild.append(li);
         flag = false;
 
         const submitReCommentBtn = document.querySelectorAll(
           ".reComment-feed__button"
         );
         submitReCommentBtn.forEach((submitReComment) => {
-          submitReComment.addEventListener("click", (e) => {
+          submitReComment.addEventListener("click", async (e) => {
             let wroteReComment =
               e.target.parentElement.previousElementSibling.children[0].value;
 
@@ -268,41 +304,12 @@ const handleRePostComment = (loginInfo) => {
               reCommentLink.dataset.commentId,
               wroteReComment
             );
-            if (success) {
-              li.innerHTML = `
-                <article class="comment__wrap">
-                    <div class="comment__box">
-                      <div class="comment__author">${loginInfo.nickname}</div>
-                      <div class="comment__content">${wroteReComment}</div>
-                      <div class="comment__info">
-                          <span class="comment__data">${new Date().getFullYear()}년 ${
-                new Date().getMonth() + 1
-              }월 ${new Date().getDate()}일</span>
-                          <!-- <a href="#" class="comment__link hidden" data-comment-id="${
-                            loginInfo._id
-                          }">답글쓰기</a> -->
-                      </div>
-                    </div>
-                    <div class="comment__tool" data-comment-author-id="${
-                      loginInfo._id
-                    }">
-                        <i class="fas fa-ellipsis-v tool"></i>
-                        <div class="tool__box hidden">
-                          <ul class="tool__list">
-                            <li class="tool__item">
-                              <a href="#" class="tool__recomment-update">수정</a>
-                            </li>
-                            <li class="tool__item tool__delete">삭제
-                             <!-- <a href="#" class="tool__recomment-delete">삭제</a> -->
-                            </li>
-                          </ul>
-                        </div>
-                    </div>
-                </article>
-              `;
-            }
 
-            flag = true;
+            if (success) {
+              setTimeout(() => {
+                location.reload();
+              }, 1000);
+            }
           });
         });
       }

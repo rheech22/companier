@@ -1,38 +1,44 @@
-//import { line } from "./line.js";
+// import { line } from "./line.js";
+
+import { getTime } from '../utils';
 
 const myPage = async () => {
-  const response = await fetch(`/api/user-detail`);
+  const response = await fetch('/api/user-detail');
   const user = await response.json();
   myPageTemplate(user);
 };
 
 function myPageTemplate(user) {
-	// line();
-	const tabList = document.querySelectorAll(".myPage__select .list a");
-	const contents = document.querySelectorAll(".myPage__select__content");
-	const email = document.querySelector(".myPage__profile__email");
-	const nickname = document.querySelector(".myPage__profile__nickname");
-	const createdAt = document.querySelector(".myPage__profile__createdAt");
-	email.innerHTML = user.email;
-	nickname.innerHTML = user.nickname;
-	createdAt.innerHTML = `가입일 ${user.createdAt.split("-")[0]}년 ${
-		user.createdAt.split("-")[1]
-	}월 ${user.createdAt.split("-")[2].substr(0, 2)}일`;
+  // line();
+  const tabList = document.querySelectorAll('.myPage__select .list a');
+  const contents = document.querySelectorAll('.myPage__select__content');
+  const email = document.querySelector('.myPage__profile__email');
+  const nickname = document.querySelector('.myPage__profile__nickname');
+  const createdAt = document.querySelector('.myPage__profile__createdAt');
 
-  let activeContent = "";
+  email.innerHTML = user.email;
+  nickname.innerHTML = user.nickname;
 
-	for (let i = 0; i < tabList.length; i++) {
-		tabList[i].addEventListener("click", function (e) {
-			e.preventDefault();
-			for (let j = 0; j < tabList.length; j++) {
-				tabList[j].classList.remove("is__on");
-				contents[j].style.display = "none";
-			}
-			e.target.classList.add("is__on");
-			activeContent = e.target.getAttribute("href");
-			document.querySelector(activeContent).style.display = "flex";
-		});
-	}
+  const parsedTime = getTime(user.createdAt);
+
+  const { year, month, date } = parsedTime;
+
+  createdAt.innerHTML = `가입일 ${year}년 ${month}월 ${date}일`;
+
+  let activeContent = '';
+
+  for (let i = 0; i < tabList.length; i++) {
+    tabList[i].addEventListener('click', (e) => {
+      e.preventDefault();
+      for (let j = 0; j < tabList.length; j++) {
+        tabList[j].classList.remove('is__on');
+        contents[j].style.display = 'none';
+      }
+      e.target.classList.add('is__on');
+      activeContent = e.target.getAttribute('href');
+      document.querySelector(activeContent).style.display = 'flex';
+    });
+  }
 }
 
 export { myPage };
