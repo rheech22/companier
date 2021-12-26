@@ -25,10 +25,14 @@ const commentsTemplate = (user) => {
 						<p class="content__info__regdate">작성일: ${time}</p>
 					</a>
 					<div class="deleteBox">
-						<button class="btn" data-comment-id="${_id}">삭제</button>
+						<button class="btn" data-comment-id="${_id}" onclick="${deleteContent}">삭제</button>
 					</div>
 				</form>`;
   };
+
+  function deleteContent() {
+    console.log(1234);
+  }
 
   commentPagination(
     data,
