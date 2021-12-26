@@ -7,7 +7,6 @@ const myPosts = async () => {
 };
 
 const commentsTemplate = (user) => {
-  // 댓글 정보를 최신 작성순으로 정렬
   const data = user.posts.reverse();
   const displayTag = document.querySelector("#myPosts > .contents");
   const pagesTag = document.querySelector(".myPosts__pages ul");

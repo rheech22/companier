@@ -91,7 +91,7 @@ const postPagination = (
   next.addEventListener("click", () => {
     last = last + pageCut > totalPage ? totalPage : last + pageCut;
     first = first + pageCut > totalPage ? first : first + pageCut;
-    currentPage = first;
+    currentPage = pageCut > totalPage ? totalPage : first;
     displayList(data, displayTag, rows, currentPage);
     setupPagination(first, last, pageTag);
   });
