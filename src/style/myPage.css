@@ -243,9 +243,11 @@ main {
   font-size: 12px;
 }
 
+/* 반응형 */
+
 @media (max-width: 768px) {
   main {
-    padding-top: 20vh;
+    padding-top: 15vh;
   }
 
   .myPage__profile {
@@ -264,6 +266,10 @@ main {
   .myPage__profile__email,
   .myPage__profile__createdAt {
     text-align: center;
+  }
+
+  .myPage__profile__image {
+    margin-bottom: 30px;
   }
 }
 
