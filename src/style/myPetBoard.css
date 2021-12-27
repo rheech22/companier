@@ -140,3 +140,9 @@
 .main__search-form *:not(:last-child) {
   margin-right: 5px;
 }
+
+@media (max-width: 980px) {
+  .main__title {
+    margin-top: 35px;
+  }
+}
