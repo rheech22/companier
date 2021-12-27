@@ -156,7 +156,14 @@ const clickCommentToolBox = () => {
       let toolBox =
         e.target.parentElement.parentElement.parentElement.parentElement;
       toolBox.classList.add("hidden");
-      locationComment.innerHTML = `
+
+      e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].classList.add(
+        "display__hidden"
+      );
+
+      const div = document.createElement("div");
+      div.classList.add("comment__box");
+      div.innerHTML = `
         <div class="comment-feed__input">
           <div class="comment-feed__content">
             <textarea class="comment-feed__textarea" placeholder="댓글을 입력하세요">${copyParentContent}</textarea>
@@ -167,6 +174,10 @@ const clickCommentToolBox = () => {
           </div>
         </div>
       `;
+
+      e.target.parentElement.parentElement.parentElement.parentElement.parentElement.prepend(
+        div
+      );
 
       document
         .querySelector(".update__submit")
@@ -184,7 +195,10 @@ const clickCommentToolBox = () => {
       document
         .querySelector(".update__cancle")
         .addEventListener("click", (e) => {
-          locationComment.innerHTML = copyParentHTML;
+          e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].classList.remove(
+            "display__hidden"
+          );
+          e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].remove();
           toolBox.classList.remove("hidden");
         });
     }

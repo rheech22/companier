@@ -4,7 +4,7 @@ import { comments } from "./comments.js";
 import { commentInput } from "./commentInput.js";
 import { articleBottomBtns } from "./articleBottomBtns.js";
 import { checkLoginUser } from "./checkLoginUser.js";
-import { getPetStoryDetail, getReComments } from "./api.js";
+import { getPetStoryDetail } from "./api.js";
 import {
   handlePostComment,
   clickCommentToolBox,
