@@ -14,7 +14,7 @@ const createLostPetDetail = (item) => {
         <tbody>
           <tr>
             <th>공고번호</th>
-            <td>${item.noticeNo}</td>
+            <td colspan="3">${item.noticeNo}</td>
           </tr>
           <tr>
             <th>공고기간</th>
