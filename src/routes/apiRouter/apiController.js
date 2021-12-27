@@ -69,40 +69,40 @@ const getLostPets = async (req, res) => {
 
     // 공공 API 요청 코드
 
-    // const { SERVICE_KEY } = process.env;
+    const { SERVICE_KEY } = process.env;
 
-    // const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
+    const HOST = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc';
 
-    // const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
+    const URL = `${HOST}/abandonmentPublic?pageNo=${pageNo}&numOfRows=${numOfRows}&upkind=${upkind}&upr_cd=${uprCd}&org_cd=${orgCd}&state=${state}&bgnde=${bgnde}&endde=${endde}&ServiceKey=${SERVICE_KEY}`;
 
-    // const {
-    //   data: {
-    //     response: { body: lostPets },
-    //   },
-    // } = await axios.get(URL);
+    const {
+      data: {
+        response: { body: lostPets },
+      },
+    } = await axios.get(URL);
 
-    // res.json(lostPets);
+    res.json(lostPets);
 
     // mock data 요청 코드
 
-    const { data } = mockData;
+    // const { data } = mockData;
 
-    const parsedItem = [...data.items.item].slice((pageNo - 1) * numOfRows, numOfRows * pageNo);
+    // const parsedItem = [...data.items.item].slice((pageNo - 1) * numOfRows, numOfRows * pageNo);
 
-    const lostPets = {
-      items: {
-        item: parsedItem,
-      },
-      numOfRows,
-      pageNo,
-      totalCount: 220,
-    };
+    // const lostPets = {
+    //   items: {
+    //     item: parsedItem,
+    //   },
+    //   numOfRows,
+    //   pageNo,
+    //   totalCount: 220,
+    // };
 
-    if (upkind === '422400') lostPets.totalCount = 10;
-    if (upkind === '429900') lostPets.totalCount = 30;
-    if (upkind === '417000') lostPets.totalCount = 180;
+    // if (upkind === '422400') lostPets.totalCount = 10;
+    // if (upkind === '429900') lostPets.totalCount = 30;
+    // if (upkind === '417000') lostPets.totalCount = 180;
 
-    res.json(lostPets);
+    // res.json(lostPets);
   } catch (error) {
     res.status(500);
   }
