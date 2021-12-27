@@ -52,7 +52,7 @@
   margin: 30px auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   .lost-detail {
     padding-top: 180px;
   }
