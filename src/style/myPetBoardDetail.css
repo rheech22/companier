@@ -279,3 +279,9 @@
   max-width: 780px;
   max-height: 460px;
 }
+
+@media (max-width: 980px) {
+  .mypet-datail__content {
+    margin-top: 45px;
+  }
+}
