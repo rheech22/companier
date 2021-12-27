@@ -1,19 +1,15 @@
-import { getTime } from '../utils';
+import { getTime } from "../utils";
 
 const postBody = (result) => {
   const parsedTime = getTime(result.createdAt);
-
   const { year, month, date } = parsedTime;
-
-  console.log(month);
-
   const time = `${year}년 ${month}월 ${date}일`;
 
-  const postHeader = document.createElement('header');
-  const postSection = document.createElement('section');
+  const postHeader = document.createElement("header");
+  const postSection = document.createElement("section");
 
-  postHeader.classList.add('mypet-datail__header');
-  postSection.classList.add('mypet-datail__body');
+  postHeader.classList.add("mypet-datail__header");
+  postSection.classList.add("mypet-datail__body");
   const postHeaderTemplate = `
         <div class="mypet-datail__title">
             <h1>${result.title}</h1>
@@ -34,8 +30,8 @@ const postBody = (result) => {
   postHeader.innerHTML = postHeaderTemplate;
   postSection.innerHTML = postSectionTemplate;
 
-  document.querySelector('.mypet-datail__content').appendChild(postHeader);
-  document.querySelector('.mypet-datail__content').appendChild(postSection);
+  document.querySelector(".mypet-datail__content").appendChild(postHeader);
+  document.querySelector(".mypet-datail__content").appendChild(postSection);
 };
 
 export { postBody };

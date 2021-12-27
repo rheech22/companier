@@ -130,12 +130,19 @@ const clickCommentToolBox = () => {
   const commentUl = document.querySelector(".comment__list");
 
   commentUl.addEventListener("click", (e) => {
+    document.querySelectorAll(".tool__box").forEach((el) => {
+      el.classList.add("hidden");
+    });
+
     if (e.target.classList.contains("tool")) {
       e.target.nextElementSibling.classList.toggle("hidden");
     }
 
     if (e.target.classList.contains("tool__update")) {
       e.preventDefault();
+      document.querySelectorAll(".tool__box").forEach((el) => {
+        el.classList.add("hidden");
+      });
       let commentId = e.target.dataset.commentId;
       let copyParentHTML =
         e.target.parentElement.parentElement.parentElement.parentElement
@@ -149,7 +156,6 @@ const clickCommentToolBox = () => {
       let toolBox =
         e.target.parentElement.parentElement.parentElement.parentElement;
       toolBox.classList.add("hidden");
-
       locationComment.innerHTML = `
         <div class="comment-feed__input">
           <div class="comment-feed__content">
@@ -193,11 +199,18 @@ const clickCommentToolBox = () => {
             location.reload();
           }, 1000);
         }
+      } else {
+        document.querySelectorAll(".tool__box").forEach((el) => {
+          el.classList.add("hidden");
+        });
       }
     }
 
     if (e.target.classList.contains("tool__re--update")) {
       e.preventDefault();
+      document.querySelectorAll(".tool__box").forEach((el) => {
+        el.classList.add("hidden");
+      });
       let reCommentId = e.target.dataset.commentId;
       let reCopyParentHTML =
         e.target.parentElement.parentElement.parentElement.parentElement
@@ -255,6 +268,10 @@ const clickCommentToolBox = () => {
             location.reload();
           }, 1000);
         }
+      } else {
+        document.querySelectorAll(".tool__box").forEach((el) => {
+          el.classList.add("hidden");
+        });
       }
     }
   });
