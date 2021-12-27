@@ -402,7 +402,8 @@ const createComment = async (req, res) => {
     user.comments.push(newComment);
     user.save();
 
-    res.status(201).end();
+    res.status(201);
+    res.json(newComment);
   } catch (error) {
     if (error.kind === 'ObjectId') {
       return res.status(400).end();
@@ -555,7 +556,8 @@ const createReComment = async (req, res) => {
     user.reComments.push(newReComment);
     user.save();
 
-    res.status(201).end();
+    res.status(201);
+    res.json(newReComment);
   } catch (error) {
     if (error.kind === 'ObjectId') {
       return res.status(400).end();
