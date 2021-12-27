@@ -227,6 +227,10 @@ main {
 	margin-bottom: 6px;
 }
 
+.content__info__title {
+	font-weight: bold;
+}
+
 .content__info__content {
 	font-size: 0.9em;
 }
