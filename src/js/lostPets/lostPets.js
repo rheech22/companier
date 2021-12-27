@@ -47,6 +47,7 @@ const createLostPetItem = (item) => {
 };
 
 const paintLostPets = (lostPetList) => {
+  if (lostPetList === undefined) return;
   const lostPetItems = lostPetList.map(createLostPetItem);
   document.querySelector(".lost-content").innerHTML = lostPetItems.join("");
 };

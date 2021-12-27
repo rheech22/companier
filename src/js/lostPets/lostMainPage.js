@@ -19,8 +19,15 @@ if (location.pathname === "/lostPets") {
     searchParams.endde = document.querySelector("#endDate").value;
 
     let [lostPetList, totalCount] = await getLostPets(searchParams);
-    paintLostPets(lostPetList);
-    setPagination(totalCount, searchParams.numOfRows);
+    if (lostPetList === undefined || totalCount === 0) {
+      const lostContent = document.querySelector(".lost-content");
+      lostContent.innerHTML = `<div class="no-result">검색 결과가 없습니다.</div>`;
+      const pagination = document.querySelector(".lost .pagination");
+      pagination.innerHTML = "";
+    } else {
+      paintLostPets(lostPetList);
+      setPagination(totalCount, searchParams.numOfRows);
+    }
   };
 
   const searchBtn = document.querySelector(".lost-search .search-btn");
