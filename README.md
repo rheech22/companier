@@ -8,6 +8,8 @@
     - MongoDB, AWS S3 연동 및 관리 작업 수행
   - Front-end 관련
     - 반응형 디자인 일부 개선
+ - 첫 팀프로젝트 경험을 회고로 남겨봤습니다.
+  ([BlogLink](https://railend.tistory.com/category/%ED%9A%8C%EA%B3%A0))
 
 ## 프로젝트 구성 안내
 
